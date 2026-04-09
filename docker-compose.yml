@@ -1,0 +1,9 @@
+version: '3.8'
+services:
+  backend-api:
+    # GANTI "usernameanda" dengan username Docker Hub Anda yang asli
+    image: ramaandikaa/oxysystem-backend:latest
+    container_name: oxysystem-backend-app
+    ports:
+      - "9091:9091"
+    restart: always # Jika server EC2 mati/restart, aplikasi akan otomatis nyala lagi

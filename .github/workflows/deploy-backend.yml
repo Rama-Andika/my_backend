@@ -24,6 +24,14 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
+      - name: Inject application.properties
+        run: |
+          echo "${{ secrets.PROPERTIES }}" > src/main/resources/application.properties
+
+      - name: Inject application-prod.properties
+        run: |
+          echo "${{ secrets.PROD_PROPERTIES }}" > src/main/resources/application-prod.properties
+
       - name: Build with Maven
         # 2. Skip test agar build tidak gagal karena masalah koneksi database di server GitHub
         run: mvn clean package -DskipTests

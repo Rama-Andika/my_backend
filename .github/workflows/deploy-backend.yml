@@ -39,24 +39,24 @@ jobs:
           strip_components: 1
 
       - name: Restart Spring Boot in EC2
-          uses: appleboy/ssh-action@v1.0.3
-          with:
-            host: ${{ secrets.EC2_HOST }}
-            username: ${{ secrets.EC2_USERNAME }}
-            key: ${{ secrets.EC2_KEY }}
-            script: |
-              echo "Mencari aplikasi yang sedang berjalan..."
-              # Cari PID khusus untuk proses java, abaikan proses grep/bash
-              PID=$(ps aux | grep 'java -jar /home/ubuntu/akidsmaginepg-backend.jar' | grep -v grep | awk '{print $2}')
-              
-              if [ -n "$PID" ]; then
-                echo "Mematikan aplikasi lama dengan PID: $PID"
-                kill -9 $PID
-              else
-                echo "Tidak ada aplikasi lama yang berjalan."
-              fi
-              
-              echo "Menjalankan aplikasi versi terbaru..."
-              # Tambahkan < /dev/null agar SSH tidak menggantung
-              nohup java -jar /home/ubuntu/akidsmaginepg-backend.jar --spring.profiles.active=prod > /home/ubuntu/log.txt 2>&1 < /dev/null &
-              echo "Deploy selesai!"
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_KEY }}
+          script: |
+            echo "Mencari aplikasi yang sedang berjalan..."
+            # Cari PID khusus untuk proses java, abaikan proses grep/bash
+            PID=$(ps aux | grep 'java -jar /home/ubuntu/akidsmaginepg-backend.jar' | grep -v grep | awk '{print $2}')
+            
+            if [ -n "$PID" ]; then
+              echo "Mematikan aplikasi lama dengan PID: $PID"
+              kill -9 $PID
+            else
+              echo "Tidak ada aplikasi lama yang berjalan."
+            fi
+            
+            echo "Menjalankan aplikasi versi terbaru..."
+            # Tambahkan < /dev/null agar SSH tidak menggantung
+            nohup java -jar /home/ubuntu/akidsmaginepg-backend.jar --spring.profiles.active=prod > /home/ubuntu/log.txt 2>&1 < /dev/null &
+            echo "Deploy selesai!"

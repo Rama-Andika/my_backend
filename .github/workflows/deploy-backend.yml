@@ -24,6 +24,14 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
+      - name: Inject application.properties
+        run: |
+          echo "${{ secrets.PROPERTIES }}" > src/main/resources/application.properties
+
+      - name: Inject application-prod.properties
+        run: |
+          echo "${{ secrets.PROD_PROPERTIES }}" > src/main/resources/application-prod.properties
+
       - name: Build .jar with Maven
         run: mvn clean package -DskipTests
 
@@ -62,16 +70,24 @@ jobs:
               sudo usermod -aG docker ubuntu
             fi
             
-            # Matikan aplikasi Java versi lama (yang tidak pakai docker) jika masih ada
-            PID=$(pgrep -f 'akidsmaginepg-backend.jar') || true
+            # Matikan aplikasi Java versi lama SECARA AMAN (anti bunuh diri)
+            # Trik [j]ava membuat pencarian mengabaikan proses grep/bash itu sendiri
+            PID=$(ps aux | grep '[j]ava -jar.*akidsmaginepg-backend.jar' | awk '{print $2}')
             if [ -n "$PID" ]; then
+              echo "Menemukan aplikasi lama dengan PID $PID, mematikan..."
               kill -9 $PID || true
+            else
+              echo "Tidak ada aplikasi Java lama yang berjalan."
             fi
             
             # Masuk ke folder home, jalankan Docker Compose
             cd /home/ubuntu
-            docker compose pull # Tarik image terbaru dari Docker Hub
-            docker compose up -d # Jalankan di background
+            echo "Menarik Docker Image terbaru..."
+            docker compose pull 
+            
+            echo "Menyalakan Container..."
+            docker compose up -d 
             
             # Bersihkan image lama agar disk EC2 tidak penuh
             docker image prune -f
+            echo "Deploy Docker selesai!"

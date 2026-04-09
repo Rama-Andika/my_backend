@@ -32,7 +32,7 @@ public class SecurityConfig  {
                 .cors().and()
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/rest/auth/**","/api/partner/grabmart/oauth/**", "/api/partner/grabfood/oauth/**", "/api/grabmart/**", "/api/grabfood/**", "/api/sync-categories",
+                .antMatchers("/","/rest/auth/**","/api/partner/grabmart/oauth/**", "/api/partner/grabfood/oauth/**", "/api/grabmart/**", "/api/grabfood/**", "/api/sync-categories",
                         "/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**", "/swagger-resources/**", "/webjars/**", "/config","/favicon.ico",
                         "/api/export/**").permitAll()
                 .anyRequest().authenticated()

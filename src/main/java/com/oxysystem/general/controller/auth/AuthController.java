@@ -91,4 +91,9 @@ public class AuthController {
         SuccessResponse<LoginResponse> response = new SuccessResponse<>("success", loginResponse);
         return ResponseEntity.ok(response);
     }
+
+    @GetMapping("/")
+    public String index(){
+        return "Hello World";
+    }
 }

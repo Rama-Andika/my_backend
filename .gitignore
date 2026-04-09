@@ -1,0 +1,63 @@
+# General Java
+*.class
+*.log
+*.out
+*.err
+
+# Build Tools
+target/
+.gradle/
+build/
+dependency-reduced-pom.xml
+release.properties
+!.mvn/wrapper/maven-wrapper.jar
+
+# Spring Boot
+*.pid
+application-*
+application.yml
+
+# OS-Specific
+.DS_Store
+Thumbs.db
+desktop.ini
+*~
+
+# Sensitive Files
+.env
+*.key
+*.crt
+*.pem
+
+HELP.md
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+### STS ###
+.apt_generated
+.factorypath
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+# Ignore application.properties
+/src/main/resources/application.properties
+
+# Optionally ignore other configuration files, if any
+/src/main/resources/application-dev.properties
+/src/main/resources/application-prod.properties

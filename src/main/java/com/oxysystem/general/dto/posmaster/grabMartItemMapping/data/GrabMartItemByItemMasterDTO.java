@@ -1,0 +1,32 @@
+package com.oxysystem.general.dto.posmaster.grabMartItemMapping.data;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.util.List;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class GrabMartItemByItemMasterDTO {
+    private String itemId;
+    private String description;
+    private String grabUnit;
+    private Double value;
+    private String grabItemGroupId;
+    private String grabItemCategoryId;
+    private Integer isPublished;
+    private String specialType;
+    private List<Location> locations;
+
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    public static class Location {
+        private String id;
+        private boolean check;
+    }
+}

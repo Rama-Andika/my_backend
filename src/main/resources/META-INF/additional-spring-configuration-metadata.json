@@ -1,0 +1,23 @@
+{
+  "properties": [
+    {
+      "name": "grabmart.client-id",
+      "type": "java.lang.String",
+      "description": "Description for grab mart.client-id."
+    },
+    {
+      "name": "grabmart.client-secret",
+      "type": "java.lang.String",
+      "description": "Description for grab mart.client-secret."
+    },
+    {
+      "name": "grab.api-environments",
+      "type": "java.lang.String",
+      "description": "Description for grab.api-environments."
+    },
+    {
+      "name": "grabmart.endpoint.update-menu-notification",
+      "type": "java.lang.String",
+      "description": "Description for grabmart.endpoint.update-menu-notification."
+    },
+  ] }

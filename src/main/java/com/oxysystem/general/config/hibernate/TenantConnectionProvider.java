@@ -14,12 +14,14 @@ import javax.sql.DataSource;
 import java.util.concurrent.TimeUnit;
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
+import com.github.benmanes.caffeine.cache.Scheduler;
 
 @Component
 public class TenantConnectionProvider extends AbstractDataSourceBasedMultiTenantConnectionProviderImpl {
 
     private final Cache<String, DataSource> tenantDataSources = Caffeine.newBuilder()
             .expireAfterAccess(1, TimeUnit.HOURS)
+            .scheduler(Scheduler.systemScheduler()) // Memastikan Background Thread bekerja menghapus cache
             .removalListener((key, dataSource, cause) -> {
                 if (dataSource instanceof HikariDataSource) {
                     ((HikariDataSource) dataSource).close();
@@ -35,6 +37,15 @@ public class TenantConnectionProvider extends AbstractDataSourceBasedMultiTenant
     @Autowired
     @Lazy // Wajib pakai Lazy agar tidak terjadi Circular Dependency
     private TenantRepository tenantRepository;
+
+    /**
+     * Memaksa aplikasi untuk mereset koneksi database dari Tenant.
+     * Panggil method ini jika API Admin Anda mengganti password atau meng-suspend tenant.
+     */
+    public void clearTenantDataSource(String tenantId) {
+        tenantDataSources.invalidate(tenantId);
+        System.out.println("🧹 Cache koneksi database untuk Tenant [" + tenantId + "] telah dibersihkan.");
+    }
 
     @Override
     protected DataSource selectAnyDataSource() {
@@ -64,7 +75,7 @@ public class TenantConnectionProvider extends AbstractDataSourceBasedMultiTenant
         config.setPassword(tenant.getDbPassword());
         config.setDriverClassName("com.mysql.cj.jdbc.Driver");
 
-        config.setMaximumPoolSize(10);
+        config.setMaximumPoolSize(5); // Diturunkan dari 10 ke 5 untuk menghindari "Too many connections" error di MySQL jika ratusan tenant login aktif bersamaan
         config.setMinimumIdle(0);
         config.setConnectionTimeout(20000);
         config.setIdleTimeout(600000); // 10 Menit koneksi dibiarkan idle sebelum dihancurkan

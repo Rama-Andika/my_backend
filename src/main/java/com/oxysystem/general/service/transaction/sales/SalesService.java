@@ -28,5 +28,7 @@ public interface SalesService {
 
     Flux<SalesViewDTO> getSalesGrabSplitOrderReactive(String date, String userId);
 
+    List<SalesViewDTO> getSalesGrabSplitOrder(String date, String userId);
+
     Mono<Void> grabSplitOrderFixDiscountReactive(List<ListOrderResponseDTO.Order> orders, String product);
 }

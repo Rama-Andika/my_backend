@@ -4,6 +4,9 @@ import com.oxysystem.general.dto.grab.data.ListOrderResponseDTO;
 import com.oxysystem.general.enums.grab.StateStatus;
 import com.oxysystem.general.model.tenant.posmaster.StrukKasir;
 import com.oxysystem.general.model.tenant.transaction.sales.Sales;
+import com.oxysystem.general.config.tenant.TenantContext;
+import com.oxysystem.general.model.master.Tenant;
+import com.oxysystem.general.repository.master.TenantRepository;
 import com.oxysystem.general.service.grab.client.grabMart.GrabMartOAuthServiceImpl;
 import com.oxysystem.general.service.grab.client.grabMart.GrabMartOrderSyncServiceImpl;
 import com.oxysystem.general.service.grab.partner.grabMart.GrabMartOrderSyncPartnerServiceImpl;
@@ -43,15 +46,17 @@ public class UploadSalesMartScheduler {
     private final GrabMartOAuthServiceImpl oAuthService;
     private final StrukKasirService strukKasirService;
     private final StockService stockService;
+    private final TenantRepository tenantRepository;
     private final RateLimiter rateLimiter;
 
-    public UploadSalesMartScheduler(GrabMartOrderSyncServiceImpl orderSyncService, GrabMartOrderSyncPartnerServiceImpl orderSyncPartnerService, SalesService salesService, GrabMartOAuthServiceImpl oAuthService, StrukKasirService strukKasirService, StockService stockService, @Qualifier("uploadSalesGrabMartScheduler") Scheduler scheduler) {
+    public UploadSalesMartScheduler(GrabMartOrderSyncServiceImpl orderSyncService, GrabMartOrderSyncPartnerServiceImpl orderSyncPartnerService, SalesService salesService, GrabMartOAuthServiceImpl oAuthService, StrukKasirService strukKasirService, StockService stockService, TenantRepository tenantRepository, @Qualifier("uploadSalesGrabMartScheduler") Scheduler scheduler) {
         this.orderSyncService = orderSyncService;
         this.orderSyncPartnerService = orderSyncPartnerService;
         this.salesService = salesService;
         this.oAuthService = oAuthService;
         this.strukKasirService = strukKasirService;
         this.stockService = stockService;
+        this.tenantRepository = tenantRepository;
         this.rateLimiter = new RateLimiter(scheduler);
     }
 
@@ -60,14 +65,27 @@ public class UploadSalesMartScheduler {
         Mono<String> tokenMono = oAuthService.getGrabTokenReactive()
                 .doOnNext(token -> LOGGER.info("Grabmart token fetched length={}", token.length()));
 
-        Mono<List<String>> merchantIdsMono = Mono.fromCallable(() ->
-                        strukKasirService.findStrukKasirGrabMerchantIDNotNull()
-                                .stream()
-                                .map(StrukKasir::getGrabMerchantId)
-                                .filter(Objects::nonNull)
-                                .distinct()
-                                .collect(Collectors.toList())
-                )
+        Mono<List<String>> merchantIdsMono = Mono.fromCallable(() -> {
+                    List<Tenant> tenants = tenantRepository.findAll();
+                    List<String> allMerchantIds = new java.util.ArrayList<>();
+                    for (Tenant tenant : tenants) {
+                        try {
+                            TenantContext.setCurrentTenant(tenant.getTenantId());
+                            List<String> ids = strukKasirService.findStrukKasirGrabMerchantIDNotNull()
+                                    .stream()
+                                    .map(StrukKasir::getGrabMerchantId)
+                                    .filter(Objects::nonNull)
+                                    .distinct()
+                                    .collect(Collectors.toList());
+                            allMerchantIds.addAll(ids);
+                        } catch (Exception e) {
+                            LOGGER.error("Failed to fetch GrabMart merchants for sales upload for tenant {}: {}", tenant.getTenantId(), e.getMessage());
+                        } finally {
+                            TenantContext.clear();
+                        }
+                    }
+                    return allMerchantIds.stream().distinct().collect(Collectors.toList());
+                })
                 .subscribeOn(Schedulers.boundedElastic());
 
         Mono.zip(tokenMono, merchantIdsMono)

@@ -4,6 +4,9 @@ import com.oxysystem.general.dto.general.apiAppSync.view.ApiAppSyncViewDTO;
 import com.oxysystem.general.dto.grab.data.BatchUpdateMenuRequestDTO;
 import com.oxysystem.general.dto.grab.data.SubmitOrderRequestDTO;
 import com.oxysystem.general.enums.grab.Product;
+import com.oxysystem.general.config.tenant.TenantContext;
+import com.oxysystem.general.model.master.Tenant;
+import com.oxysystem.general.repository.master.TenantRepository;
 import com.oxysystem.general.model.tenant.general.ApiApp;
 import com.oxysystem.general.model.tenant.general.ApiAppSyncSetup;
 import com.oxysystem.general.model.tenant.general.Location;
@@ -41,6 +44,7 @@ public class ApiAppSyncGrabFoodScheduler {
     private final GrabFoodMenuSyncServiceImpl grabFoodMenuSyncService;
     private final ThreadPoolTaskExecutor grabMenuSyncExecutor;
     private final GrabFoodOAuthServiceImpl grabFoodOAuthService;
+    private final TenantRepository tenantRepository;
 
     // ===== Token cache (race-safe) =====
     private final Object tokenLock = new Object();
@@ -59,12 +63,15 @@ public class ApiAppSyncGrabFoodScheduler {
     public ApiAppSyncGrabFoodScheduler(ApiAppService apiAppService,
                                        ApiAppSyncService apiAppSyncService,
                                        LocationService locationService, GrabFoodMenuSyncServiceImpl grabFoodMenuSyncService,
-                                       @Qualifier("grabMenuSyncExecutor") ThreadPoolTaskExecutor grabMenuSyncExecutor, GrabFoodOAuthServiceImpl grabFoodOAuthService) {
+                                       @Qualifier("grabMenuSyncExecutor") ThreadPoolTaskExecutor grabMenuSyncExecutor,
+                                       TenantRepository tenantRepository,
+                                       GrabFoodOAuthServiceImpl grabFoodOAuthService) {
         this.apiAppService = apiAppService;
         this.apiAppSyncService = apiAppSyncService;
         this.locationService = locationService;
         this.grabFoodMenuSyncService = grabFoodMenuSyncService;
         this.grabMenuSyncExecutor = grabMenuSyncExecutor;
+        this.tenantRepository = tenantRepository;
         this.grabFoodOAuthService = grabFoodOAuthService;
     }
 
@@ -76,71 +83,92 @@ public class ApiAppSyncGrabFoodScheduler {
         }
 
         Mono.fromCallable(() -> {
-                    // 1) Ambil setup Grab
-                    Optional<ApiApp> apiAppOpt = apiAppService.findApiAppByName(Product.GRAB_FOOD.name());
-                    Optional<ApiAppSyncSetup> syncSetup = apiAppOpt.flatMap(apiApp ->
-                            apiApp.getApiAppSyncSetups().stream()
-                                    .filter(s -> s.getStatus() == 1 && "pos_item_master".equalsIgnoreCase(s.getTableName()))
-                                    .findFirst()
-                    );
-                    if (!syncSetup.isPresent()) return Collections.<String, Object>emptyMap();
+                    List<Tenant> tenants = tenantRepository.findAll();
+                    List<BatchUpdateMenuRequestDTO> allRequests = new ArrayList<>();
+                    Map<String, List<Long>> allMerchantToApiSyncIds = new HashMap<>();
 
-                    // 2) Ambil data yang belum tersinkron
-                    List<ApiAppSyncViewDTO> apiAppSyncViewDTOS =
-                            apiAppSyncService.findApiAppSyncGrabFoodNotSyncByTableName("pos_item_master");
-                    if (apiAppSyncViewDTOS == null || apiAppSyncViewDTOS.isEmpty()) {
-                        return Collections.<String, Object>emptyMap();
+                    for (Tenant tenant : tenants) {
+                        try {
+                            TenantContext.setCurrentTenant(tenant.getTenantId());
+                            // 1) Ambil setup Grab
+                            Optional<ApiApp> apiAppOpt = apiAppService.findApiAppByName(Product.GRAB_FOOD.name());
+                            Optional<ApiAppSyncSetup> syncSetup = apiAppOpt.flatMap(apiApp ->
+                                    apiApp.getApiAppSyncSetups().stream()
+                                            .filter(s -> s.getStatus() == 1 && "pos_item_master".equalsIgnoreCase(s.getTableName()))
+                                            .findFirst()
+                            );
+                            if (!syncSetup.isPresent()) continue;
+
+                            // 2) Ambil data yang belum tersinkron
+                            List<ApiAppSyncViewDTO> apiAppSyncViewDTOS =
+                                    apiAppSyncService.findApiAppSyncGrabFoodNotSyncByTableName("pos_item_master");
+                            if (apiAppSyncViewDTOS == null || apiAppSyncViewDTOS.isEmpty()) {
+                                continue;
+                            }
+
+                            // 3) Siapkan peta location
+                            Set<Long> locationIds = apiAppSyncViewDTOS.stream()
+                                    .map(ApiAppSyncViewDTO::getLocationId)
+                                    .filter(Objects::nonNull)
+                                    .collect(Collectors.toSet());
+
+                            List<Location> locations = locationService.findAllByIDs(new ArrayList<>(locationIds));
+
+                            Map<Long, Location> locationMap = locations.stream()
+                                    .collect(Collectors.toMap(Location::getLocationId, Function.identity()));
+
+                            // 4) Group berdasar grabMerchantId
+                            Map<String, List<ApiAppSyncViewDTO>> groupByGrabMerchantId = apiAppSyncViewDTOS.stream()
+                                    .filter(a -> a.getGrabMerchantId() != null && !a.getGrabMerchantId().isEmpty())
+                                    .collect(Collectors.groupingBy(ApiAppSyncViewDTO::getGrabMerchantId));
+
+                            // 5) Peta merchant -> daftar apiSyncId untuk update status nanti
+                            Map<String, List<Long>> merchantToApiSyncIds = apiAppSyncViewDTOS.stream()
+                                    .filter(a -> a.getGrabMerchantId() != null && !a.getGrabMerchantId().isEmpty())
+                                    .collect(Collectors.groupingBy(ApiAppSyncViewDTO::getGrabMerchantId,
+                                            Collectors.mapping(ApiAppSyncViewDTO::getApiSyncId, Collectors.toList())));
+
+                            // 6) Build request per merchant
+                            List<BatchUpdateMenuRequestDTO> requests = groupByGrabMerchantId.entrySet().stream()
+                                    .map(entry -> {
+                                        String grabMerchantId = entry.getKey();
+                                        List<ApiAppSyncViewDTO> list = entry.getValue();
+                                        if (list.isEmpty()) return null;
+
+                                        Long locationId = list.get(0).getLocationId();
+                                        Location location = locationMap.get(locationId);
+                                        if (location == null) return null;
+
+                                        List<SubmitOrderRequestDTO.Item> items = list.stream()
+                                                .map(apiApp -> {
+                                                    SubmitOrderRequestDTO.Item item = new SubmitOrderRequestDTO.Item();
+                                                    item.setId(String.valueOf(apiApp.getOwnerId()));
+                                                    return item;
+                                                })
+                                                .collect(Collectors.toList());
+
+                                        return grabFoodMenuSyncService.createBatchUpdate(items, grabMerchantId, location);
+                                    })
+                                    .filter(Objects::nonNull)
+                                    .collect(Collectors.toList());
+
+                            allRequests.addAll(requests);
+                            merchantToApiSyncIds.forEach((k, v) -> {
+                                allMerchantToApiSyncIds.merge(k, v, (list1, list2) -> {
+                                    list1.addAll(list2);
+                                    return list1;
+                                });
+                            });
+                        } catch (Exception e) {
+                            LOGGER.error("Error processing grab food api sync for tenant {}: {}", tenant.getTenantId(), e.getMessage());
+                        } finally {
+                            TenantContext.clear();
+                        }
                     }
 
-                    // 3) Siapkan peta location
-                    Set<Long> locationIds = apiAppSyncViewDTOS.stream()
-                            .map(ApiAppSyncViewDTO::getLocationId)
-                            .filter(Objects::nonNull)
-                            .collect(Collectors.toSet());
-
-                    List<Location> locations = locationService.findAllByIDs(new ArrayList<>(locationIds));
-
-                    Map<Long, Location> locationMap = locations.stream()
-                            .collect(Collectors.toMap(Location::getLocationId, Function.identity()));
-
-                    // 4) Group berdasar grabMerchantId
-                    Map<String, List<ApiAppSyncViewDTO>> groupByGrabMerchantId = apiAppSyncViewDTOS.stream()
-                            .filter(a -> a.getGrabMerchantId() != null && !a.getGrabMerchantId().isEmpty())
-                            .collect(Collectors.groupingBy(ApiAppSyncViewDTO::getGrabMerchantId));
-
-                    // 5) Peta merchant -> daftar apiSyncId untuk update status nanti
-                    Map<String, List<Long>> merchantToApiSyncIds = apiAppSyncViewDTOS.stream()
-                            .filter(a -> a.getGrabMerchantId() != null && !a.getGrabMerchantId().isEmpty())
-                            .collect(Collectors.groupingBy(ApiAppSyncViewDTO::getGrabMerchantId,
-                                    Collectors.mapping(ApiAppSyncViewDTO::getApiSyncId, Collectors.toList())));
-
-                    // 6) Build request per merchant
-                    List<BatchUpdateMenuRequestDTO> requests = groupByGrabMerchantId.entrySet().stream()
-                            .map(entry -> {
-                                String grabMerchantId = entry.getKey();
-                                List<ApiAppSyncViewDTO> list = entry.getValue();
-                                if (list.isEmpty()) return null;
-
-                                Long locationId = list.get(0).getLocationId();
-                                Location location = locationMap.get(locationId);
-                                if (location == null) return null;
-
-                                List<SubmitOrderRequestDTO.Item> items = list.stream()
-                                        .map(apiApp -> {
-                                            SubmitOrderRequestDTO.Item item = new SubmitOrderRequestDTO.Item();
-                                            item.setId(String.valueOf(apiApp.getOwnerId()));
-                                            return item;
-                                        })
-                                        .collect(Collectors.toList());
-
-                                return grabFoodMenuSyncService.createBatchUpdate(items, grabMerchantId, location);
-                            })
-                            .filter(Objects::nonNull)
-                            .collect(Collectors.toList());
-
                     Map<String, Object> result = new HashMap<>();
-                    result.put("requests", requests);
-                    result.put("merchantToApiSyncIds", merchantToApiSyncIds);
+                    result.put("requests", allRequests);
+                    result.put("merchantToApiSyncIds", allMerchantToApiSyncIds);
                     return result;
                 })
                 .subscribeOn(Schedulers.boundedElastic())

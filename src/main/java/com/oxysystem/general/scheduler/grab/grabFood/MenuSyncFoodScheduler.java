@@ -2,6 +2,9 @@ package com.oxysystem.general.scheduler.grab.grabFood;
 
 import com.oxysystem.general.dto.grab.data.UpdateMenuNotificationRequestDTO;
 import com.oxysystem.general.model.tenant.posmaster.StrukKasir;
+import com.oxysystem.general.config.tenant.TenantContext;
+import com.oxysystem.general.model.master.Tenant;
+import com.oxysystem.general.repository.master.TenantRepository;
 import com.oxysystem.general.service.grab.client.grabFood.GrabFoodMenuSyncServiceImpl;
 import com.oxysystem.general.service.grab.client.grabFood.GrabFoodOAuthServiceImpl;
 import com.oxysystem.general.service.posmaster.StrukKasirService;
@@ -34,15 +37,18 @@ public class MenuSyncFoodScheduler {
     private final GrabFoodMenuSyncServiceImpl grabMenuSyncService;
     private final GrabFoodOAuthServiceImpl grabOAuthService;
     private final StrukKasirService strukKasirService;
+    private final TenantRepository tenantRepository;
     private final RateLimiter rateLimiter;
 
     public MenuSyncFoodScheduler(GrabFoodMenuSyncServiceImpl grabMenuSyncService,
                                  GrabFoodOAuthServiceImpl grabOAuthService,
                                  StrukKasirService strukKasirService,
+                                 TenantRepository tenantRepository,
                                  @Qualifier("menuNotifyScheduler") Scheduler scheduler) {
         this.grabMenuSyncService = grabMenuSyncService;
         this.grabOAuthService = grabOAuthService;
         this.strukKasirService = strukKasirService;
+        this.tenantRepository = tenantRepository;
         this.rateLimiter = new RateLimiter(scheduler);
     }
 
@@ -51,14 +57,29 @@ public class MenuSyncFoodScheduler {
         Mono<String> tokenMono = Mono.fromCallable(grabOAuthService::getGrabToken)
                 .subscribeOn(Schedulers.boundedElastic());
 
-        Mono<List<String>> merchantIdsMono = Mono.fromCallable(() ->
-                        strukKasirService.findStrukKasirGrabFoodMerchantIDNotNull()
-                                .stream()
-                                .map(StrukKasir::getGrabFoodMerchantId)
-                                .filter(Objects::nonNull)
-                                .distinct()
-                                .collect(Collectors.toList())
-                )
+        Mono<List<String>> merchantIdsMono = Mono.fromCallable(() -> {
+                    List<Tenant> tenants = tenantRepository.findAll();
+                    List<String> allMerchantIds = new java.util.ArrayList<>();
+                    
+                    for (Tenant tenant : tenants) {
+                        try {
+                            TenantContext.setCurrentTenant(tenant.getTenantId());
+                            List<String> ids = strukKasirService.findStrukKasirGrabFoodMerchantIDNotNull()
+                                    .stream()
+                                    .map(StrukKasir::getGrabFoodMerchantId)
+                                    .filter(Objects::nonNull)
+                                    .distinct()
+                                    .collect(Collectors.toList());
+                                    
+                            allMerchantIds.addAll(ids);
+                        } catch (Exception e) {
+                            LOGGER.error("Gagal menarik data merchant GrabFood untuk tenant {}: {}", tenant.getTenantId(), e.getMessage());
+                        } finally {
+                            TenantContext.clear();
+                        }
+                    }
+                    return allMerchantIds.stream().distinct().collect(Collectors.toList());
+                })
                 .subscribeOn(Schedulers.boundedElastic());
 
         Mono.zip(tokenMono, merchantIdsMono)

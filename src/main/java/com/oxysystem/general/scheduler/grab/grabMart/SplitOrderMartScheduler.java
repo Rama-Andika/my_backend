@@ -4,6 +4,10 @@ import com.oxysystem.general.dto.grab.data.ListOrderResponseDTO;
 import com.oxysystem.general.dto.transaction.sales.view.SalesViewDTO;
 import com.oxysystem.general.enums.grab.Product;
 import com.oxysystem.general.model.tenant.system.SystemMain;
+import com.oxysystem.general.config.tenant.TenantContext;
+import com.oxysystem.general.model.master.Tenant;
+import com.oxysystem.general.repository.master.TenantRepository;
+import reactor.core.scheduler.Schedulers;
 import com.oxysystem.general.service.grab.client.grabMart.GrabMartOAuthServiceImpl;
 import com.oxysystem.general.service.grab.client.grabMart.GrabMartOrderSyncServiceImpl;
 import com.oxysystem.general.service.system.SystemMainService;
@@ -33,16 +37,19 @@ public class SplitOrderMartScheduler {
     private final SystemMainService systemMainService;
     private final GrabMartOAuthServiceImpl oAuthService;
     private final GrabMartOrderSyncServiceImpl orderSyncService;
+    private final TenantRepository tenantRepository;
     private final Scheduler scheduler;
     private final RateLimiter rateLimiter;
 
     public SplitOrderMartScheduler(SalesService salesService, SystemMainService systemMainService, @Qualifier("splitOrderGrabScheduler") Scheduler scheduler,
                                    GrabMartOAuthServiceImpl oAuthService, GrabMartOrderSyncServiceImpl orderSyncService,
+                                   TenantRepository tenantRepository,
                                    @Qualifier("splitOrderGrabMartRateLimiter") RateLimiter rateLimiter) {
         this.salesService = salesService;
         this.systemMainService = systemMainService;
         this.oAuthService = oAuthService;
         this.orderSyncService = orderSyncService;
+        this.tenantRepository = tenantRepository;
         this.scheduler = scheduler;
         this.rateLimiter = rateLimiter;
     }
@@ -55,17 +62,30 @@ public class SplitOrderMartScheduler {
 
         String date = String.valueOf(LocalDate.now().minusDays(1));
 
-        systemMainService.findSystemPropertyNameReactive("GRABMART_SALES_USER_ID")
-                .flatMap(optional -> {
-                    if(!optional.isPresent()) {
-                        log.error("Grab mart sales not found!");
-                        return Mono.empty();
+        Mono<Map<String, List<SalesViewDTO>>> splitOrderMapMono = Mono.fromCallable(() -> {
+            List<Tenant> tenants = tenantRepository.findAll();
+            List<SalesViewDTO> allSales = new java.util.ArrayList<>();
+            for (Tenant tenant : tenants) {
+                try {
+                    TenantContext.setCurrentTenant(tenant.getTenantId());
+                    java.util.Optional<SystemMain> opt = systemMainService.findSystemPropertyName("GRABMART_SALES_USER_ID");
+                    if (opt.isPresent()) {
+                        SystemMain systemMain = opt.get();
+                        List<SalesViewDTO> sales = salesService.getSalesGrabSplitOrder(date, systemMain.getValueprop());
+                        if (sales != null) {
+                            allSales.addAll(sales);
+                        }
                     }
+                } catch (Exception e) {
+                   log.error("Error fetching split orders GrabMart for tenant {}: {}", tenant.getTenantId(), e.getMessage());
+                } finally {
+                    TenantContext.clear();
+                }
+            }
+            return allSales.stream().collect(Collectors.groupingBy(SalesViewDTO::getGrabMerchantId));
+        }).subscribeOn(Schedulers.boundedElastic());
 
-                    SystemMain systemMain = optional.get();
-                    return salesService.getSalesGrabSplitOrderReactive(date, systemMain.getValueprop())
-                            .collect(Collectors.groupingBy(SalesViewDTO::getGrabMerchantId));
-                })
+        splitOrderMapMono
                 .zipWith(grabTokenMono)
                 .flatMapMany(tuple -> {
                     String token = tuple.getT2();

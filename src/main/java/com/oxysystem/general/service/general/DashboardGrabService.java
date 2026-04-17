@@ -5,6 +5,7 @@ import reactor.core.publisher.Mono;
 
 public interface DashboardGrabService {
     Mono<Void> saveAsync(int type, String product);
+    void save(int type, String product);
     ResponseEntity<?> getDashboardSummaryGrab(String product);
     ResponseEntity<?> getRecentSalesByCashMasterType(int type);
 }

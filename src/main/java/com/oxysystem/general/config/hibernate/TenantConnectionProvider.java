@@ -11,13 +11,22 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.TimeUnit;
+import com.github.benmanes.caffeine.cache.Cache;
+import com.github.benmanes.caffeine.cache.Caffeine;
 
 @Component
 public class TenantConnectionProvider extends AbstractDataSourceBasedMultiTenantConnectionProviderImpl {
 
-    private final Map<String, DataSource> tenantDataSources = new ConcurrentHashMap<>();
+    private final Cache<String, DataSource> tenantDataSources = Caffeine.newBuilder()
+            .expireAfterAccess(1, TimeUnit.HOURS)
+            .removalListener((key, dataSource, cause) -> {
+                if (dataSource instanceof HikariDataSource) {
+                    ((HikariDataSource) dataSource).close();
+                    System.out.println("🛑 HikariDataSource untuk Tenant [" + key + "] berhasil ditutup karena idle (hemat RAM).");
+                }
+            })
+            .build();
 
     @Autowired
     @Qualifier("masterDataSource")
@@ -37,7 +46,7 @@ public class TenantConnectionProvider extends AbstractDataSourceBasedMultiTenant
         if ("master".equals(tenantId)) {
             return masterDataSource;
         }
-        return tenantDataSources.computeIfAbsent(tenantId, this::createDataSourceForTenant);
+        return tenantDataSources.get(tenantId, this::createDataSourceForTenant);
     }
 
     private DataSource createDataSourceForTenant(String tenantId) {
@@ -55,12 +64,11 @@ public class TenantConnectionProvider extends AbstractDataSourceBasedMultiTenant
         config.setPassword(tenant.getDbPassword());
         config.setDriverClassName("com.mysql.cj.jdbc.Driver");
 
-        config.setMaximumPoolSize(5);
+        config.setMaximumPoolSize(10);
         config.setMinimumIdle(0);
-        config.setIdleTimeout(300000);
         config.setConnectionTimeout(20000);
-        config.setMaxLifetime(540000); // 9 Menit
-        config.setIdleTimeout(300000); // 5 Menit
+        config.setIdleTimeout(600000); // 10 Menit koneksi dibiarkan idle sebelum dihancurkan
+        config.setMaxLifetime(1800000); // Standard aman 30 Menit (cegah reset terus menerus)
         config.setKeepaliveTime(30000); // Ping setiap 30 detik
 
         return new HikariDataSource(config);

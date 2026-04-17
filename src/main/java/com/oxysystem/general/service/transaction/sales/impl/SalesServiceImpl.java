@@ -83,6 +83,11 @@ public class SalesServiceImpl implements SalesService {
     }
 
     @Override
+    public List<SalesViewDTO> getSalesGrabSplitOrder(String date, String userId) {
+        return salesRepository.getSalesGrabSplitOrder(date, userId);
+    }
+
+    @Override
     public Mono<Void> grabSplitOrderFixDiscountReactive(List<ListOrderResponseDTO.Order> orders, String product) {
         return Mono.fromCallable(() -> {
             Map<String, ListOrderResponseDTO.Order> orderMap = orders.stream()

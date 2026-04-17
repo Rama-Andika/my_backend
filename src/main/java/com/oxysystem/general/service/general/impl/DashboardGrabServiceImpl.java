@@ -71,6 +71,19 @@ public class DashboardGrabServiceImpl implements DashboardGrabService {
     }
 
     @Override
+    public void save(int type, String product) {
+        DashboardSummaryGrabDTO data = salesService.mappingToDashboardSummaryByCashMasterType(type);
+        DashboardSummaryGrab existing = dashboardSummaryGrabRepository.getDashboardSummaryGrabByProduct(product)
+                .orElse(new DashboardSummaryGrab());
+        existing.setSalesAmount(data.getSalesAmount());
+        existing.setSalesAmountToday(data.getSalesAmountToday());
+        existing.setTotalSales(data.getTotalSales());
+        existing.setTotalSalesToday(data.getTotalSalesToday());
+        existing.setProduct(product);
+        dashboardSummaryGrabRepository.save(existing);
+    }
+
+    @Override
     public ResponseEntity<?> getDashboardSummaryGrab(String product) {
         DashboardSummaryGrabDTO data = dashboardSummaryGrabRepository.getDashboardSummaryGrab(product);
         SuccessResponse<DashboardSummaryGrabDTO> response = new SuccessResponse<>("success", data);

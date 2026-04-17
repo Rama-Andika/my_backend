@@ -24,7 +24,7 @@ public class GrabMartOrderSyncPartnerServiceImpl implements GrabOrderSyncPartner
     private final GrabMartOrderSyncServiceImpl grabMartOrderSyncService;
 
     @Override
-    @Transactional(value = "db1TransactionManager", rollbackFor = {Throwable.class})
+    @Transactional( rollbackFor = {Throwable.class})
     public ResponseEntity<?> submitOrderForApi(SubmitOrderRequestDTO submitOrderRequestDTO) {
         grabOrderSyncOrderPartnerCommon.submitOrder(submitOrderRequestDTO, Product.GRAB_MART.name());
 
@@ -33,7 +33,7 @@ public class GrabMartOrderSyncPartnerServiceImpl implements GrabOrderSyncPartner
     }
 
     @Override
-    @Transactional(value = "db1TransactionManager", rollbackFor = {Throwable.class})
+    @Transactional( rollbackFor = {Throwable.class})
     public ResponseEntity<?> pushOrderStateForApi(PushOrderStateRequestDTO pushOrderStateRequestDTO) {
         grabOrderSyncOrderPartnerCommon.pushOrderState(pushOrderStateRequestDTO, null, Product.GRAB_MART.name());
 
@@ -41,13 +41,13 @@ public class GrabMartOrderSyncPartnerServiceImpl implements GrabOrderSyncPartner
     }
 
     @Override
-    @Transactional(value = "db1TransactionManager", rollbackFor = {Throwable.class})
+    @Transactional( rollbackFor = {Throwable.class})
     public ResponseEntity<?> manualUploadPerSalesForApi(String number, Long locationId) {
         return grabOrderSyncOrderPartnerCommon.manualUploadPerSalesForApi(grabMartOAuthService, grabMartOrderSyncService, number, locationId, Product.GRAB_MART.name());
     }
 
     @Override
-    @Transactional(value = "db1TransactionManager", rollbackFor = {Throwable.class})
+    @Transactional( rollbackFor = {Throwable.class})
     public void automaticUploadSales(ListOrderResponseDTO.Order order) {
            grabOrderSyncOrderPartnerCommon.automaticUploadSales(order, Product.GRAB_MART.name());
     }

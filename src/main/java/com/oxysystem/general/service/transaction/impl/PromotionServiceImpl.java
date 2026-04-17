@@ -1,7 +1,7 @@
 package com.oxysystem.general.service.transaction.impl;
 
 import com.oxysystem.general.dto.transaction.promotion.view.PromotionViewDto;
-import com.oxysystem.general.repository.db1.transaction.PromotionRepository;
+import com.oxysystem.general.repository.tenant.transaction.PromotionRepository;
 import com.oxysystem.general.response.PaginationResponse;
 import com.oxysystem.general.response.SuccessPaginationResponse;
 import com.oxysystem.general.service.transaction.PromotionService;

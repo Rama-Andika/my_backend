@@ -8,13 +8,13 @@ import com.oxysystem.general.dto.posmaster.grabMartItemMapping.view.GrabmartItem
 import com.oxysystem.general.dto.posmaster.grabMartItemMapping.view.GrabmartItemMappingViewDTO;
 import com.oxysystem.general.enums.grab.Product;
 import com.oxysystem.general.exception.ResourceNotFoundException;
-import com.oxysystem.general.model.db1.general.ApiApp;
-import com.oxysystem.general.model.db1.general.Location;
-import com.oxysystem.general.model.db1.posmaster.GrabmartItemCategory;
-import com.oxysystem.general.model.db1.posmaster.GrabmartItemGroup;
-import com.oxysystem.general.model.db1.posmaster.GrabmartItemMapping;
-import com.oxysystem.general.model.db1.posmaster.ItemMaster;
-import com.oxysystem.general.repository.db1.posmaster.GrabmartItemMappingRepository;
+import com.oxysystem.general.model.tenant.general.ApiApp;
+import com.oxysystem.general.model.tenant.general.Location;
+import com.oxysystem.general.model.tenant.posmaster.GrabmartItemCategory;
+import com.oxysystem.general.model.tenant.posmaster.GrabmartItemGroup;
+import com.oxysystem.general.model.tenant.posmaster.GrabmartItemMapping;
+import com.oxysystem.general.model.tenant.posmaster.ItemMaster;
+import com.oxysystem.general.repository.tenant.posmaster.GrabmartItemMappingRepository;
 import com.oxysystem.general.response.SuccessResponse;
 import com.oxysystem.general.service.general.ApiAppService;
 import com.oxysystem.general.service.general.ApiAppSyncService;
@@ -57,7 +57,7 @@ public class GrabmartItemMappingServiceImpl implements GrabmartItemMappingServic
     }
 
     @Override
-    @Transactional(value = "db1TransactionManager",rollbackFor = {Throwable.class})
+    @Transactional(rollbackFor = {Throwable.class})
     public ResponseEntity<?> saveGrabmartItem(GrabMartItemByItemMasterDTO grabItemByItemMasterDTO) {
         // Delete grab mart item mapping if data exists
         if(!grabmartItemMappingRepository.findGrabmartItemMappingByItemMasterId(Long.valueOf(grabItemByItemMasterDTO.getItemId())).isEmpty()){
@@ -171,7 +171,7 @@ public class GrabmartItemMappingServiceImpl implements GrabmartItemMappingServic
     }
 
     @Override
-    @Transactional(value = "db1TransactionManager", rollbackFor = {Throwable.class})
+    @Transactional( rollbackFor = {Throwable.class})
     public ResponseEntity<Object> uploadItemMasterGrabMart(List<UploadItemMasterGrabMartDTO> data, Long locationId) {
         Location location = locationService.findById(locationId).orElseThrow(() -> new ResourceNotFoundException("location not found!"));
         Set<String> barcodes = data.stream().map(UploadItemMasterGrabMartDTO::getBarcode).collect(Collectors.toSet());

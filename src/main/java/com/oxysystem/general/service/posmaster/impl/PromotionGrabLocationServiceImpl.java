@@ -1,7 +1,7 @@
 package com.oxysystem.general.service.posmaster.impl;
 
-import com.oxysystem.general.model.db1.posmaster.PromotionGrabLocation;
-import com.oxysystem.general.repository.db1.posmaster.PromotionGrabLocationRepository;
+import com.oxysystem.general.model.tenant.posmaster.PromotionGrabLocation;
+import com.oxysystem.general.repository.tenant.posmaster.PromotionGrabLocationRepository;
 import com.oxysystem.general.service.posmaster.PromotionGrabLocationService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;

@@ -1,6 +1,6 @@
 package com.oxysystem.general.dto.general.apiAppSync.data;
 
-import com.oxysystem.general.model.db1.general.Location;
+import com.oxysystem.general.model.tenant.general.Location;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;

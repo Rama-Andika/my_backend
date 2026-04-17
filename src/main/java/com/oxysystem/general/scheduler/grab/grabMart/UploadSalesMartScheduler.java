@@ -2,8 +2,8 @@ package com.oxysystem.general.scheduler.grab.grabMart;
 
 import com.oxysystem.general.dto.grab.data.ListOrderResponseDTO;
 import com.oxysystem.general.enums.grab.StateStatus;
-import com.oxysystem.general.model.db1.posmaster.StrukKasir;
-import com.oxysystem.general.model.db1.transaction.sales.Sales;
+import com.oxysystem.general.model.tenant.posmaster.StrukKasir;
+import com.oxysystem.general.model.tenant.transaction.sales.Sales;
 import com.oxysystem.general.service.grab.client.grabMart.GrabMartOAuthServiceImpl;
 import com.oxysystem.general.service.grab.client.grabMart.GrabMartOrderSyncServiceImpl;
 import com.oxysystem.general.service.grab.partner.grabMart.GrabMartOrderSyncPartnerServiceImpl;

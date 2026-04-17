@@ -4,7 +4,7 @@ import com.oxysystem.general.dto.general.dashboard.view.DashboardSummaryGrabDTO;
 import com.oxysystem.general.dto.general.dashboard.view.RecentSalesGrabDTO;
 import com.oxysystem.general.dto.grab.data.ListOrderResponseDTO;
 import com.oxysystem.general.dto.transaction.sales.view.SalesViewDTO;
-import com.oxysystem.general.model.db1.transaction.sales.Sales;
+import com.oxysystem.general.model.tenant.transaction.sales.Sales;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 

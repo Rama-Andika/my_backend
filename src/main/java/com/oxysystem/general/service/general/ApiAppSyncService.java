@@ -2,8 +2,8 @@ package com.oxysystem.general.service.general;
 
 import com.oxysystem.general.dto.general.apiAppSync.data.ApiAppSyncDTO;
 import com.oxysystem.general.dto.general.apiAppSync.view.ApiAppSyncViewDTO;
-import com.oxysystem.general.model.db1.general.ApiApp;
-import com.oxysystem.general.model.db1.general.ApiAppSync;
+import com.oxysystem.general.model.tenant.general.ApiApp;
+import com.oxysystem.general.model.tenant.general.ApiAppSync;
 
 import java.util.List;
 

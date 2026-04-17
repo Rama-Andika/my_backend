@@ -2,10 +2,9 @@ package com.oxysystem.general.service.general.impl;
 
 import com.oxysystem.general.dto.general.ApiAppSyncSetup.data.ApiAppSyncSetupDTO;
 import com.oxysystem.general.exception.ResourceNotFoundException;
-import com.oxysystem.general.model.db1.general.ApiApp;
-import com.oxysystem.general.model.db1.general.ApiAppSync;
-import com.oxysystem.general.model.db1.general.ApiAppSyncSetup;
-import com.oxysystem.general.repository.db1.general.ApiAppSyncSetupRepository;
+import com.oxysystem.general.model.tenant.general.ApiApp;
+import com.oxysystem.general.model.tenant.general.ApiAppSyncSetup;
+import com.oxysystem.general.repository.tenant.general.ApiAppSyncSetupRepository;
 import com.oxysystem.general.response.SuccessResponse;
 import com.oxysystem.general.service.general.ApiAppService;
 import com.oxysystem.general.service.general.ApiAppSyncSetupService;

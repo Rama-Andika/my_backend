@@ -1,7 +1,7 @@
 package com.oxysystem.general.service.posmaster;
 
 import com.oxysystem.general.dto.posmaster.grabMartGroup.data.GrabMartItemGroupDTO;
-import com.oxysystem.general.model.db1.posmaster.GrabmartItemGroup;
+import com.oxysystem.general.model.tenant.posmaster.GrabmartItemGroup;
 import org.springframework.http.ResponseEntity;
 
 import java.io.IOException;

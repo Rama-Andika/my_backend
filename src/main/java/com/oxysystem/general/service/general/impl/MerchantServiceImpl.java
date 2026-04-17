@@ -1,8 +1,8 @@
 package com.oxysystem.general.service.general.impl;
 
 import com.oxysystem.general.dto.general.merchant.view.MerchantViewDTO;
-import com.oxysystem.general.model.db1.general.Merchant;
-import com.oxysystem.general.repository.db1.general.MerchantRepository;
+import com.oxysystem.general.model.tenant.general.Merchant;
+import com.oxysystem.general.repository.tenant.general.MerchantRepository;
 import com.oxysystem.general.response.SuccessResponse;
 import com.oxysystem.general.service.general.MerchantService;
 import org.springframework.http.ResponseEntity;

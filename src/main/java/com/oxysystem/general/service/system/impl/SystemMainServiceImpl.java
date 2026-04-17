@@ -1,8 +1,8 @@
 package com.oxysystem.general.service.system.impl;
 
 import com.oxysystem.general.exception.ResourceNotFoundException;
-import com.oxysystem.general.model.db1.system.SystemMain;
-import com.oxysystem.general.repository.db1.system.SystemMainRepository;
+import com.oxysystem.general.model.tenant.system.SystemMain;
+import com.oxysystem.general.repository.tenant.system.SystemMainRepository;
 import com.oxysystem.general.response.SuccessResponse;
 import com.oxysystem.general.service.system.SystemMainService;
 import org.springframework.http.ResponseEntity;

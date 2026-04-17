@@ -3,8 +3,8 @@ package com.oxysystem.general.service.transaction.impl;
 import com.oxysystem.general.dto.transaction.salesTakingDetail.view.SalesTakingDetailViewDTO;
 import com.oxysystem.general.exception.ResourceNotFoundException;
 import com.oxysystem.general.mapper.transaction.SalesTakingDetailMapper;
-import com.oxysystem.general.model.db1.transaction.SalesTakingDetail;
-import com.oxysystem.general.repository.db1.transaction.SalesTakingDetailRepository;
+import com.oxysystem.general.model.tenant.transaction.SalesTakingDetail;
+import com.oxysystem.general.repository.tenant.transaction.SalesTakingDetailRepository;
 import com.oxysystem.general.response.SuccessResponse;
 import com.oxysystem.general.service.transaction.SalesTakingDetailService;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +23,7 @@ public class SalesTakingDetailServiceImpl implements SalesTakingDetailService {
     }
 
     @Override
-    @Transactional(value = "db1TransactionManager", rollbackFor = {Throwable.class})
+    @Transactional( rollbackFor = {Throwable.class})
     public ResponseEntity<?> deleteSalesTakingDetailById(Long salesTakingDetailId) {
         SalesTakingDetail salesTakingDetail = salesTakingDetailRepository.findById(salesTakingDetailId).orElseThrow(() -> new ResourceNotFoundException("Detail not found"));
         salesTakingDetailRepository.delete(salesTakingDetail);
@@ -32,7 +32,7 @@ public class SalesTakingDetailServiceImpl implements SalesTakingDetailService {
     }
 
     @Override
-    @Transactional(value = "db1TransactionManager", rollbackFor = {Throwable.class})
+    @Transactional( rollbackFor = {Throwable.class})
     public ResponseEntity<?> deleteSalesTakingDetailByIds(Set<Long> salesTakingDetailIds) {
         List<SalesTakingDetail> salesTakingDetails = salesTakingDetailRepository.findAllById(salesTakingDetailIds);
         salesTakingDetailRepository.deleteAll(salesTakingDetails);

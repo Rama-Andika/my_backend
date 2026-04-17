@@ -2,7 +2,7 @@ package com.oxysystem.general.service.transaction.stock;
 
 import com.oxysystem.general.dto.transaction.stock.view.StockViewDTO;
 import com.oxysystem.general.enums.DocumentStatus;
-import com.oxysystem.general.model.db1.transaction.stock.Stock;
+import com.oxysystem.general.model.tenant.transaction.stock.Stock;
 
 import java.time.LocalDateTime;
 import java.util.List;

@@ -1,8 +1,8 @@
 package com.oxysystem.general.mapper.transaction;
 
 import com.oxysystem.general.dto.transaction.salesTakingDetail.view.SalesTakingDetailViewDTO;
-import com.oxysystem.general.model.db1.posmaster.ItemMaster;
-import com.oxysystem.general.model.db1.transaction.SalesTakingDetail;
+import com.oxysystem.general.model.tenant.posmaster.ItemMaster;
+import com.oxysystem.general.model.tenant.transaction.SalesTakingDetail;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 

@@ -1,7 +1,7 @@
 package com.oxysystem.general.service.general;
 
 import com.oxysystem.general.dto.general.apiApp.data.ApiAppDTO;
-import com.oxysystem.general.model.db1.general.ApiApp;
+import com.oxysystem.general.model.tenant.general.ApiApp;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;

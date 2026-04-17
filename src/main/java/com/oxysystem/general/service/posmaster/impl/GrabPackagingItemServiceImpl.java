@@ -3,10 +3,10 @@ package com.oxysystem.general.service.posmaster.impl;
 import com.oxysystem.general.dto.posmaster.grabPackaging.data.GrabPackagingItemDTO;
 import com.oxysystem.general.enums.grab.Product;
 import com.oxysystem.general.exception.ResourceNotFoundException;
-import com.oxysystem.general.model.db1.general.Location;
-import com.oxysystem.general.model.db1.posmaster.GrabPackagingItem;
-import com.oxysystem.general.model.db1.posmaster.ItemMaster;
-import com.oxysystem.general.repository.db1.posmaster.GrabPackagingItemRepository;
+import com.oxysystem.general.model.tenant.general.Location;
+import com.oxysystem.general.model.tenant.posmaster.GrabPackagingItem;
+import com.oxysystem.general.model.tenant.posmaster.ItemMaster;
+import com.oxysystem.general.repository.tenant.posmaster.GrabPackagingItemRepository;
 import com.oxysystem.general.response.SuccessResponse;
 import com.oxysystem.general.service.general.LocationService;
 import com.oxysystem.general.service.posmaster.GrabPackagingItemService;
@@ -31,7 +31,7 @@ public class GrabPackagingItemServiceImpl implements GrabPackagingItemService {
     }
 
     @Override
-    @Transactional(value = "db1TransactionManager", rollbackFor = {Throwable.class})
+    @Transactional( rollbackFor = {Throwable.class})
     public ResponseEntity<Object> save(GrabPackagingItemDTO body) {
         GrabPackagingItem grabPackagingItem = new GrabPackagingItem();
 
@@ -47,7 +47,7 @@ public class GrabPackagingItemServiceImpl implements GrabPackagingItemService {
     }
 
     @Override
-    @Transactional(value = "db1TransactionManager", rollbackFor = {Throwable.class})
+    @Transactional( rollbackFor = {Throwable.class})
     public ResponseEntity<Object> update(GrabPackagingItemDTO body, Long id) {
         GrabPackagingItem grabPackagingItem = grabPackagingItemRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Packaging item not found"));
 

@@ -6,9 +6,9 @@ import com.oxysystem.general.dto.posmaster.grabMartGroup.view.GrabMartItemGroupV
 import com.oxysystem.general.dto.posmaster.grabMartGroup.view.GrabmartItemGroupForSelectDTO;
 import com.oxysystem.general.exception.GrabException;
 import com.oxysystem.general.exception.ResourceNotFoundException;
-import com.oxysystem.general.model.db1.posmaster.GrabmartItemCategory;
-import com.oxysystem.general.model.db1.posmaster.GrabmartItemGroup;
-import com.oxysystem.general.repository.db1.posmaster.GrabmartItemGroupRepository;
+import com.oxysystem.general.model.tenant.posmaster.GrabmartItemCategory;
+import com.oxysystem.general.model.tenant.posmaster.GrabmartItemGroup;
+import com.oxysystem.general.repository.tenant.posmaster.GrabmartItemGroupRepository;
 import com.oxysystem.general.response.SuccessResponse;
 import com.oxysystem.general.response.grab.GrabFailedResponse;
 import com.oxysystem.general.service.posmaster.GrabmartItemCategoryService;
@@ -68,7 +68,7 @@ public class GrabmartItemGroupServiceImpl implements GrabmartItemGroupService {
     }
 
     @Override
-    @Transactional(value = "db1TransactionManager", rollbackFor = {Throwable.class})
+    @Transactional( rollbackFor = {Throwable.class})
     public ResponseEntity<?> syncCategories(String token, String countryCode) {
         if(countryCode == null || countryCode.isEmpty()) throw new ResourceNotFoundException("country code cannot be empty!");
 

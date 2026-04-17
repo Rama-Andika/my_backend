@@ -1,10 +1,10 @@
 package com.oxysystem.general.service.transaction.sales.impl;
 
 import com.oxysystem.general.exception.ResourceNotFoundException;
-import com.oxysystem.general.model.db1.general.Location;
-import com.oxysystem.general.model.db1.posmaster.ItemMaster;
-import com.oxysystem.general.model.db1.transaction.sales.SalesGrabDetail;
-import com.oxysystem.general.repository.db1.transaction.sales.SalesGrabDetailRepository;
+import com.oxysystem.general.model.tenant.general.Location;
+import com.oxysystem.general.model.tenant.posmaster.ItemMaster;
+import com.oxysystem.general.model.tenant.transaction.sales.SalesGrabDetail;
+import com.oxysystem.general.repository.tenant.transaction.sales.SalesGrabDetailRepository;
 import com.oxysystem.general.response.SuccessResponse;
 import com.oxysystem.general.service.general.LocationService;
 import com.oxysystem.general.service.posmaster.ItemMasterService;
@@ -12,7 +12,6 @@ import com.oxysystem.general.service.transaction.sales.SalesGrabDetailService;
 import com.oxysystem.general.service.transaction.stock.StockService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
@@ -55,7 +54,7 @@ public class SalesGrabDetailServiceImpl implements SalesGrabDetailService {
     }
 
     @Override
-    @Transactional(value = "db1TransactionManager")
+    @Transactional
     public void deleteSalesGrabDetailBySalesGrabNumber(String number) {
         salesGrabDetailRepository.deleteSalesGrabDetailBySalesGrabNumber(number);
     }

@@ -10,17 +10,17 @@ import com.oxysystem.general.enums.SalesType;
 import com.oxysystem.general.exception.ResourceConflictException;
 import com.oxysystem.general.exception.ResourceNotFoundException;
 import com.oxysystem.general.mapper.transaction.SalesMapper;
-import com.oxysystem.general.model.db1.BaseEntity;
-import com.oxysystem.general.model.db1.admin.User;
-import com.oxysystem.general.model.db1.general.Customer;
-import com.oxysystem.general.model.db1.general.Location;
-import com.oxysystem.general.model.db1.general.PlaygroundRegistration;
-import com.oxysystem.general.model.db1.posmaster.ItemMaster;
-import com.oxysystem.general.model.db1.posmaster.Unit;
-import com.oxysystem.general.model.db1.system.SystemMain;
-import com.oxysystem.general.model.db1.transaction.SalesTaking;
-import com.oxysystem.general.model.db1.transaction.SalesTakingDetail;
-import com.oxysystem.general.repository.db1.transaction.SalesTakingRepository;
+import com.oxysystem.general.model.tenant.BaseEntity;
+import com.oxysystem.general.model.tenant.admin.User;
+import com.oxysystem.general.model.tenant.general.Customer;
+import com.oxysystem.general.model.tenant.general.Location;
+import com.oxysystem.general.model.tenant.general.PlaygroundRegistration;
+import com.oxysystem.general.model.tenant.posmaster.ItemMaster;
+import com.oxysystem.general.model.tenant.posmaster.Unit;
+import com.oxysystem.general.model.tenant.system.SystemMain;
+import com.oxysystem.general.model.tenant.transaction.SalesTaking;
+import com.oxysystem.general.model.tenant.transaction.SalesTakingDetail;
+import com.oxysystem.general.repository.tenant.transaction.SalesTakingRepository;
 import com.oxysystem.general.response.PaginationResponse;
 import com.oxysystem.general.response.SuccessPaginationResponse;
 import com.oxysystem.general.response.SuccessResponse;
@@ -29,7 +29,6 @@ import com.oxysystem.general.service.general.LocationService;
 import com.oxysystem.general.service.posmaster.ItemMasterService;
 import com.oxysystem.general.service.system.SystemMainService;
 import com.oxysystem.general.service.transaction.SalesTakingService;
-import com.oxysystem.general.service.transaction.sales.SalesService;
 import com.oxysystem.general.util.DateUtils;
 import com.oxysystem.general.util.ResponseUtils;
 import com.oxysystem.general.util.StringUtils;
@@ -64,7 +63,7 @@ public class SalesTakingServiceImpl implements SalesTakingService {
     }
 
     @Override
-    @Transactional(value = "db1TransactionManager", rollbackFor = {Throwable.class})
+    @Transactional( rollbackFor = {Throwable.class})
     public SalesTaking saveForPlayground(PlaygroundRegistration playgroundRegistration, Map<Long, ItemMaster> itemMasterMap, List<ChildrenDTO> childrenDTOS, User user) {
         Customer customer = customerService.findCustomerPublic().orElse(null);
         SystemMain systemSalesLocationId = systemMainService.findSystemPropertyName("SALES_LOCATION_ID_FOR_PLAYGROUND").orElse(null);
@@ -137,7 +136,7 @@ public class SalesTakingServiceImpl implements SalesTakingService {
     }
 
     @Override
-    @Transactional(value = "db1TransactionManager", rollbackFor = {Throwable.class})
+    @Transactional( rollbackFor = {Throwable.class})
     public ResponseEntity<?> save(SalesTakingDTO body) {
         SalesTaking salesTaking = new SalesTaking();
         LocalDateTime currentDate = LocalDateTime.now();
@@ -199,7 +198,7 @@ public class SalesTakingServiceImpl implements SalesTakingService {
     }
 
     @Override
-    @Transactional(value = "db1TransactionManager", rollbackFor = {Throwable.class})
+    @Transactional( rollbackFor = {Throwable.class})
     public ResponseEntity<?> update(Long id, SalesTakingDTO body) {
         SalesTaking salesTaking = salesTakingRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Sales not found"));
         if(!salesTaking.getDocStatus().equalsIgnoreCase(DocumentStatus.DRAFT.name())) throw new ResourceNotFoundException("Failed updating sales");
@@ -250,7 +249,7 @@ public class SalesTakingServiceImpl implements SalesTakingService {
     }
 
     @Override
-    @Transactional(value = "db1TransactionManager", rollbackFor = {Throwable.class})
+    @Transactional( rollbackFor = {Throwable.class})
     public ResponseEntity<?> saveSalesReturn(Long id, SalesTakingDTO body) {
         //Original sales
         SalesTaking salesTaking = salesTakingRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Sales not found"));
@@ -329,7 +328,7 @@ public class SalesTakingServiceImpl implements SalesTakingService {
     }
 
     @Override
-    @Transactional(value = "db1TransactionManager", rollbackFor = {Throwable.class})
+    @Transactional( rollbackFor = {Throwable.class})
     public ResponseEntity<?> updateSalesReturn(Long id, SalesTakingDTO body) {
         SalesTaking salesTakingReturn = salesTakingRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Sales not found"));
         //Sales Detail Return

@@ -1,0 +1,12253 @@
+-- MariaDB dump 10.19  Distrib 10.4.32-MariaDB, for Win64 (AMD64)
+--
+-- Host: localhost    Database: oxy_akidsmaginepg
+-- ------------------------------------------------------
+-- Server version	10.4.32-MariaDB
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `acc_link`
+--
+
+DROP TABLE IF EXISTS `acc_link`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `acc_link` (
+  `acc_link_id` bigint(20) NOT NULL DEFAULT 0,
+  `coa_id` bigint(20) DEFAULT NULL,
+  `department_id` bigint(20) DEFAULT NULL,
+  `type` varchar(64) DEFAULT NULL,
+  `coa_name` varchar(220) DEFAULT NULL,
+  `coa_code` varchar(20) DEFAULT NULL,
+  `department_name` varchar(64) DEFAULT NULL,
+  `user_id` bigint(20) DEFAULT NULL,
+  `location_id` bigint(20) unsigned NOT NULL DEFAULT 0,
+  `company_id` bigint(20) unsigned NOT NULL DEFAULT 0,
+  PRIMARY KEY (`acc_link_id`),
+  UNIQUE KEY `XPKacc_link` (`acc_link_id`),
+  KEY `type` (`type`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `activity_period`
+--
+
+DROP TABLE IF EXISTS `activity_period`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `activity_period` (
+  `activity_period_id` bigint(20) NOT NULL DEFAULT 0,
+  `start_date` date DEFAULT NULL,
+  `end_date` date DEFAULT NULL,
+  `status` varchar(20) DEFAULT NULL,
+  `name` varchar(60) DEFAULT NULL,
+  PRIMARY KEY (`activity_period_id`),
+  UNIQUE KEY `XPKactivity_period` (`activity_period_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `advance_reverse`
+--
+
+DROP TABLE IF EXISTS `advance_reverse`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `advance_reverse` (
+  `advance_reverse_id` bigint(20) NOT NULL DEFAULT 0,
+  `coa_id` bigint(20) DEFAULT 0,
+  `ref_main_id` bigint(20) DEFAULT 0,
+  `journal_number` varchar(25) DEFAULT NULL,
+  `journal_counter` int(11) DEFAULT 0,
+  `journal_prefix` varchar(20) DEFAULT NULL,
+  `date` date DEFAULT NULL,
+  `trans_date` date DEFAULT NULL,
+  `operator_id` bigint(20) DEFAULT 0,
+  `amount` decimal(20,2) DEFAULT 0.00,
+  `payment_method_id` bigint(20) DEFAULT 0,
+  `periode_id` bigint(20) DEFAULT 0,
+  `segment1_id` bigint(20) DEFAULT 0,
+  `segment2_id` bigint(20) DEFAULT 0,
+  `memo` text DEFAULT NULL,
+  `vendor_id` bigint(20) DEFAULT 0,
+  `posted_status` int(3) DEFAULT 0,
+  `posted_by_id` bigint(20) DEFAULT NULL,
+  `posted_date` date DEFAULT NULL,
+  `type` int(5) DEFAULT 0,
+  PRIMARY KEY (`advance_reverse_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `advance_reverse_detail`
+--
+
+DROP TABLE IF EXISTS `advance_reverse_detail`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `advance_reverse_detail` (
+  `advance_reverse_detail_id` bigint(20) NOT NULL DEFAULT 0,
+  `advance_reverse_id` bigint(20) NOT NULL DEFAULT 0,
+  `date` date DEFAULT NULL,
+  `type` int(4) DEFAULT 0,
+  `ref_id` bigint(20) DEFAULT 0,
+  `vendor_id` bigint(20) DEFAULT 0,
+  `amount_terpakai` decimal(22,2) DEFAULT 0.00,
+  `amount` decimal(22,2) DEFAULT 0.00,
+  `coa_id` bigint(20) DEFAULT 0,
+  `segment1_id` bigint(20) DEFAULT 0,
+  `memo` varchar(255) DEFAULT NULL,
+  `bankpo_payment_id` bigint(20) DEFAULT 0,
+  PRIMARY KEY (`advance_reverse_detail_id`),
+  KEY `advance_reserve_id` (`advance_reverse_id`),
+  KEY `type` (`type`),
+  KEY `date` (`date`),
+  KEY `vendor_id` (`vendor_id`),
+  KEY `segment1_id` (`segment1_id`),
+  KEY `bankpo_payment_id` (`bankpo_payment_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `akrual_proses`
+--
+
+DROP TABLE IF EXISTS `akrual_proses`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `akrual_proses` (
+  `akrual_proses_id` bigint(20) NOT NULL DEFAULT 0,
+  `reg_date` date DEFAULT NULL,
+  `jumlah` decimal(22,2) DEFAULT 0.00,
+  `credit_coa_id` bigint(20) DEFAULT NULL,
+  `debet_coa_id` bigint(20) DEFAULT NULL,
+  `periode_id` bigint(20) DEFAULT NULL,
+  `user_id` bigint(20) DEFAULT NULL,
+  `akrual_setup_id` bigint(20) DEFAULT NULL,
+  `dep_id` bigint(20) DEFAULT 0,
+  `segment1_id` bigint(20) DEFAULT 0,
+  `segment2_id` bigint(20) DEFAULT 0,
+  `segment3_id` bigint(20) DEFAULT 0,
+  `segment4_id` bigint(20) DEFAULT 0,
+  `segment5_id` bigint(20) DEFAULT 0,
+  `segment6_id` bigint(20) DEFAULT 0,
+  `segment7_id` bigint(20) DEFAULT 0,
+  `segment8_id` bigint(20) DEFAULT 0,
+  `segment9_id` bigint(20) DEFAULT 0,
+  `segment10_id` bigint(20) DEFAULT 0,
+  `segment11_id` bigint(20) DEFAULT 0,
+  `segment12_id` bigint(20) DEFAULT 0,
+  `segment13_id` bigint(20) DEFAULT 0,
+  `segment14_id` bigint(20) DEFAULT 0,
+  `segment15_id` bigint(20) DEFAULT 0,
+  PRIMARY KEY (`akrual_proses_id`),
+  UNIQUE KEY `uniq1` (`periode_id`,`akrual_setup_id`),
+  KEY `joinSetup` (`akrual_setup_id`),
+  KEY `periode_id` (`periode_id`),
+  KEY `akrual_setup_id` (`akrual_setup_id`),
+  KEY `reg_date` (`reg_date`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `akrual_setup`
+--
+
+DROP TABLE IF EXISTS `akrual_setup`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `akrual_setup` (
+  `akrual_setup_id` bigint(20) NOT NULL DEFAULT 0,
+  `nama` varchar(220) DEFAULT NULL,
+  `anggaran` decimal(20,2) DEFAULT NULL,
+  `pembagi` int(11) DEFAULT NULL,
+  `credit_coa_id` bigint(20) DEFAULT NULL,
+  `debet_coa_id` bigint(20) DEFAULT NULL,
+  `reg_date` date DEFAULT NULL,
+  `last_update` date DEFAULT NULL,
+  `user_id` bigint(20) DEFAULT NULL,
+  `status` int(11) DEFAULT NULL,
+  `dep_id` bigint(20) DEFAULT 0,
+  `segment1_id` bigint(20) DEFAULT 0,
+  `segment2_id` bigint(20) DEFAULT 0,
+  `segment3_id` bigint(20) DEFAULT 0,
+  `segment4_id` bigint(20) DEFAULT 0,
+  `segment5_id` bigint(20) DEFAULT 0,
+  `segment6_id` bigint(20) DEFAULT 0,
+  `segment7_id` bigint(20) DEFAULT 0,
+  `segment8_id` bigint(20) DEFAULT 0,
+  `segment9_id` bigint(20) DEFAULT 0,
+  `segment10_id` bigint(20) DEFAULT 0,
+  `segment11_id` bigint(20) DEFAULT 0,
+  `segment12_id` bigint(20) DEFAULT 0,
+  `segment13_id` bigint(20) DEFAULT 0,
+  `segment14_id` bigint(20) DEFAULT 0,
+  `segment15_id` bigint(20) DEFAULT 0,
+  PRIMARY KEY (`akrual_setup_id`),
+  KEY `status` (`status`),
+  KEY `segment1_id` (`segment1_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `android_logs`
+--
+
+DROP TABLE IF EXISTS `android_logs`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `android_logs` (
+  `logs_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `table_name` varchar(25) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `reff_id` bigint(20) DEFAULT NULL,
+  `old_id` bigint(20) DEFAULT NULL,
+  `sts_loc1` int(2) DEFAULT 0,
+  `sts_loc2` int(2) DEFAULT 0,
+  `sts_loc3` int(2) DEFAULT 0,
+  `sts_loc4` int(2) DEFAULT 0,
+  `sts_loc5` int(2) DEFAULT 0,
+  `sts_loc6` int(2) DEFAULT 0,
+  `sts_loc7` int(2) DEFAULT 0,
+  `sts_loc8` int(2) DEFAULT 0,
+  `sts_loc9` int(2) DEFAULT 0,
+  `sts_loc10` int(2) DEFAULT 0,
+  `sts_loc11` int(2) DEFAULT 0,
+  `sts_loc12` int(2) DEFAULT 0,
+  `sts_loc13` int(2) DEFAULT 0,
+  `sts_loc14` int(2) DEFAULT 0,
+  `sts_loc15` int(2) DEFAULT 0,
+  `sts_loc16` int(2) DEFAULT 0,
+  `sts_loc17` int(2) DEFAULT 0,
+  `sts_loc18` int(2) DEFAULT 0,
+  `sts_loc19` int(2) DEFAULT 0,
+  `sts_loc20` int(2) DEFAULT 0,
+  `sts_loc21` int(2) DEFAULT 0,
+  `sts_loc22` int(2) DEFAULT 0,
+  `sts_loc23` int(2) DEFAULT 0,
+  `sts_loc24` int(2) DEFAULT 0,
+  `sts_loc25` int(2) DEFAULT 0,
+  `sts_loc26` int(2) DEFAULT 0,
+  `sts_loc27` int(2) DEFAULT 0,
+  `sts_loc28` int(2) DEFAULT 0,
+  `sts_loc29` int(2) DEFAULT 0,
+  `sts_loc30` int(2) DEFAULT 0,
+  `action_handle` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT '0',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`logs_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=swe7 COLLATE=swe7_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `ap`
+--
+
+DROP TABLE IF EXISTS `ap`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ap` (
+  `arap_id` bigint(20) NOT NULL DEFAULT 0,
+  `date` date DEFAULT NULL,
+  `due_date` date DEFAULT NULL,
+  `vendor_id` bigint(20) DEFAULT NULL,
+  `vandor_name` varchar(64) DEFAULT NULL,
+  `vendor_address` varchar(120) DEFAULT NULL,
+  `invoice_number` varchar(20) DEFAULT NULL,
+  `number_counter` int(11) DEFAULT NULL,
+  `note` varchar(120) DEFAULT NULL,
+  `amount` decimal(10,2) DEFAULT NULL,
+  `ppn` decimal(10,2) DEFAULT NULL,
+  `status` varchar(20) DEFAULT NULL,
+  `po_number` varchar(20) DEFAULT NULL,
+  `currency` varchar(20) DEFAULT NULL,
+  `periode_id` bigint(20) DEFAULT NULL,
+  `exchange_rate` decimal(10,2) DEFAULT NULL,
+  `voucher_number` varchar(20) DEFAULT NULL,
+  `voucher_date` date DEFAULT NULL,
+  `voucher_counter` int(11) DEFAULT NULL,
+  `user_id` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`arap_id`),
+  UNIQUE KEY `XPKap` (`arap_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `ap_ar_card`
+--
+
+DROP TABLE IF EXISTS `ap_ar_card`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ap_ar_card` (
+  `ap_ar_card_id` bigint(20) NOT NULL DEFAULT 0,
+  `module_type` int(2) DEFAULT 0 COMMENT '0:AP, 1:AR',
+  `transaction_type` int(2) DEFAULT 0,
+  `in_out` int(1) DEFAULT NULL COMMENT 'in:1, out:-1',
+  `owner_id` bigint(20) DEFAULT 0,
+  `coa_id` bigint(20) DEFAULT 0,
+  `transaction_date` datetime DEFAULT NULL,
+  `due_date` date DEFAULT NULL,
+  `transaction_id` bigint(20) DEFAULT 0 COMMENT 'transaction_id',
+  `transaction_number` varchar(120) DEFAULT '',
+  `invoice_number` varchar(120) DEFAULT '',
+  `do_number` varchar(120) DEFAULT '',
+  `po_number` varchar(120) DEFAULT '',
+  `amount` decimal(22,2) DEFAULT 0.00,
+  `foreign_currency_id` bigint(20) DEFAULT 0,
+  `foreign_amount` decimal(22,2) DEFAULT 0.00,
+  `payment_status` int(1) DEFAULT 0,
+  `location_id` bigint(20) DEFAULT 0,
+  `gl_id` bigint(20) DEFAULT 0,
+  `note` text DEFAULT NULL,
+  `user_id` bigint(20) DEFAULT 0,
+  `create_date` datetime DEFAULT NULL,
+  PRIMARY KEY (`ap_ar_card_id`),
+  KEY `owner_id` (`owner_id`),
+  KEY `trans_type` (`transaction_type`),
+  KEY `coa_id` (`coa_id`),
+  KEY `date` (`transaction_date`),
+  KEY `due_date` (`due_date`),
+  KEY `gl_id` (`gl_id`),
+  KEY `trans_number` (`transaction_number`),
+  KEY `reference_id` (`transaction_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `ap_ar_card_detail`
+--
+
+DROP TABLE IF EXISTS `ap_ar_card_detail`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ap_ar_card_detail` (
+  `ap_ar_card_detail_id` bigint(20) NOT NULL DEFAULT 0,
+  `ap_ar_card_id` bigint(20) DEFAULT 0,
+  `amount` decimal(22,2) DEFAULT 0.00,
+  `foreign_currency_id` bigint(20) DEFAULT 0,
+  `foreign_amount` decimal(22,2) DEFAULT 0.00,
+  `invoice_id` bigint(20) DEFAULT 0 COMMENT 'detail invoice_id',
+  `invoice_number` varchar(20) DEFAULT '' COMMENT 'detail invoice_number',
+  `coa_id` bigint(20) DEFAULT 0,
+  `user_id` bigint(20) DEFAULT 0,
+  `create_date` datetime DEFAULT NULL,
+  PRIMARY KEY (`ap_ar_card_detail_id`),
+  KEY `ap_arcard_id` (`ap_ar_card_id`),
+  KEY `invoice_number` (`invoice_number`),
+  KEY `invoice_id` (`invoice_id`),
+  KEY `coa_id` (`coa_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `ap_ar_transaction`
+--
+
+DROP TABLE IF EXISTS `ap_ar_transaction`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ap_ar_transaction` (
+  `ap_ar_transaction_id` bigint(20) NOT NULL DEFAULT 0,
+  `module_type` int(1) DEFAULT 0,
+  `transaction_type` int(1) DEFAULT 0,
+  `owner_id` bigint(20) DEFAULT 0 COMMENT 'customer / vendor',
+  `coa_id` bigint(20) DEFAULT 0,
+  `journal_number` varchar(30) DEFAULT '',
+  `journal_counter` int(11) DEFAULT NULL,
+  `journal_prefix` varchar(20) DEFAULT '',
+  `date` datetime DEFAULT NULL,
+  `trans_date` date DEFAULT NULL,
+  `periode_id` bigint(20) DEFAULT 0,
+  `due_date` date DEFAULT NULL,
+  `memo` text DEFAULT NULL,
+  `user_id` bigint(20) DEFAULT 0,
+  `amount` decimal(25,2) DEFAULT 0.00,
+  `foreign_currency_id` bigint(20) DEFAULT 0,
+  `foreign_amount` decimal(25,2) DEFAULT 0.00,
+  `booked_rate` decimal(25,2) DEFAULT 0.00,
+  `ref_number` varchar(45) DEFAULT '',
+  `invoice_number` varchar(45) DEFAULT '',
+  `do_number` varchar(45) DEFAULT '',
+  `posted_status` int(1) DEFAULT 0,
+  `posted_date` datetime DEFAULT NULL,
+  `posted_by_id` bigint(20) DEFAULT 0,
+  `segment1_id` bigint(20) DEFAULT 0,
+  `segment2_id` bigint(20) DEFAULT 0,
+  `ref_id` bigint(20) DEFAULT 0,
+  PRIMARY KEY (`ap_ar_transaction_id`),
+  KEY `module_type` (`module_type`),
+  KEY `transaction_type` (`transaction_type`),
+  KEY `owner_id` (`owner_id`),
+  KEY `coa_id` (`coa_id`),
+  KEY `journal_number` (`journal_number`),
+  KEY `trans_date` (`trans_date`),
+  KEY `periode_id` (`periode_id`),
+  KEY `due_date` (`due_date`),
+  KEY `invoice_number` (`invoice_number`),
+  KEY `do_number` (`do_number`),
+  KEY `posted_status` (`posted_status`),
+  KEY `segment1_id` (`segment1_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `ap_ar_transaction_detail`
+--
+
+DROP TABLE IF EXISTS `ap_ar_transaction_detail`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ap_ar_transaction_detail` (
+  `ap_ar_transaction_detail_id` bigint(20) NOT NULL DEFAULT 0,
+  `ap_ar_transaction_id` bigint(20) DEFAULT 0,
+  `coa_id` bigint(20) DEFAULT 0,
+  `amount` decimal(25,2) DEFAULT 0.00,
+  `memo` varchar(220) DEFAULT '',
+  `foreign_currency_id` bigint(20) DEFAULT 0,
+  `foreign_amount` decimal(25,2) DEFAULT 0.00,
+  `booked_rate` decimal(25,2) DEFAULT 0.00,
+  `segment1_id` bigint(20) DEFAULT 0,
+  `segment2_id` bigint(20) DEFAULT 0,
+  PRIMARY KEY (`ap_ar_transaction_detail_id`),
+  KEY `ar_ap_id` (`ap_ar_transaction_id`),
+  KEY `coa_id` (`coa_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `ap_card`
+--
+
+DROP TABLE IF EXISTS `ap_card`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ap_card` (
+  `ap_card_id` bigint(20) NOT NULL,
+  `transaction_type` int(2) DEFAULT NULL,
+  `in_out` int(2) DEFAULT NULL,
+  `vendor_id` bigint(20) DEFAULT NULL,
+  `coa_id` bigint(20) DEFAULT NULL,
+  `transaction_date` datetime DEFAULT NULL,
+  `amount` decimal(22,2) DEFAULT NULL,
+  `reference_id` bigint(20) DEFAULT NULL,
+  `transaction_number` varchar(120) DEFAULT NULL,
+  `gl_id` bigint(20) DEFAULT NULL,
+  `due_date` date DEFAULT NULL,
+  `note` varchar(255) DEFAULT '',
+  `user_id` bigint(20) DEFAULT NULL,
+  `create_date` datetime DEFAULT NULL,
+  PRIMARY KEY (`ap_card_id`),
+  KEY `unique` (`transaction_type`,`in_out`,`coa_id`,`reference_id`),
+  KEY `transactype` (`transaction_type`),
+  KEY `date` (`transaction_date`),
+  KEY `coa` (`coa_id`),
+  KEY `vendor` (`vendor_id`),
+  KEY `number` (`transaction_number`),
+  KEY `refId` (`reference_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `ap_card_adjusment`
+--
+
+DROP TABLE IF EXISTS `ap_card_adjusment`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ap_card_adjusment` (
+  `ap_card_adjusment_id` bigint(20) NOT NULL,
+  `ap_card_id` bigint(20) DEFAULT NULL,
+  `transaction_type` int(2) DEFAULT NULL,
+  `in_out` int(2) DEFAULT NULL,
+  `vendor_id` bigint(20) DEFAULT NULL,
+  `coa_id` bigint(20) DEFAULT NULL,
+  `transaction_date` datetime DEFAULT NULL,
+  `amount` decimal(22,2) DEFAULT NULL,
+  `reference_id` bigint(20) DEFAULT NULL,
+  `transaction_number` varchar(120) DEFAULT NULL,
+  `gl_id` bigint(20) DEFAULT NULL,
+  `due_date` date DEFAULT NULL,
+  `note` varchar(255) DEFAULT '',
+  `user_id` bigint(20) DEFAULT NULL,
+  `create_date` datetime DEFAULT NULL,
+  PRIMARY KEY (`ap_card_adjusment_id`),
+  KEY `transtype` (`transaction_type`),
+  KEY `vendor` (`vendor_id`),
+  KEY `coa` (`coa_id`),
+  KEY `date` (`transaction_date`),
+  KEY `refId` (`reference_id`),
+  KEY `number` (`transaction_number`),
+  KEY `gl` (`gl_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `ap_card_payment`
+--
+
+DROP TABLE IF EXISTS `ap_card_payment`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ap_card_payment` (
+  `ap_card_payment_id` bigint(20) NOT NULL,
+  `transaction_type` int(2) DEFAULT NULL,
+  `transaction_date` datetime DEFAULT NULL,
+  `in_out` int(2) DEFAULT 1,
+  `amount` decimal(22,2) DEFAULT NULL,
+  `coa_id` bigint(20) DEFAULT NULL,
+  `vendor_id` bigint(20) DEFAULT NULL,
+  `ap_card_id` bigint(20) DEFAULT NULL,
+  `transaction_number` varchar(120) DEFAULT NULL,
+  `payment_reference_id` bigint(20) DEFAULT NULL,
+  `gl_id` bigint(20) DEFAULT NULL,
+  `note` varchar(255) DEFAULT '',
+  `user_id` bigint(20) DEFAULT NULL,
+  `create_date` datetime DEFAULT NULL,
+  PRIMARY KEY (`ap_card_payment_id`),
+  KEY `number` (`transaction_number`),
+  KEY `type` (`transaction_type`),
+  KEY `date` (`transaction_date`),
+  KEY `vendor` (`vendor_id`),
+  KEY `apcardid` (`ap_card_id`),
+  KEY `refId` (`payment_reference_id`),
+  KEY `gl_id` (`gl_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `ap_payment`
+--
+
+DROP TABLE IF EXISTS `ap_payment`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ap_payment` (
+  `arap_payment_id` bigint(20) NOT NULL DEFAULT 0,
+  `arap_id` bigint(20) DEFAULT NULL,
+  `periode_id` bigint(20) DEFAULT NULL,
+  `date` date DEFAULT NULL,
+  `paid_by` varchar(64) DEFAULT NULL,
+  `rec_by` varchar(64) DEFAULT NULL,
+  `pay_method` varchar(64) DEFAULT NULL,
+  `amount` decimal(10,2) DEFAULT NULL,
+  `note` varchar(120) DEFAULT NULL,
+  `currency` varchar(20) DEFAULT NULL,
+  `exchange_rate` decimal(10,2) DEFAULT NULL,
+  `voucher_number` varchar(20) DEFAULT NULL,
+  `voucher_date` date DEFAULT NULL,
+  `voucher_counter` int(11) DEFAULT NULL,
+  `status` varchar(20) DEFAULT NULL,
+  `user_id` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`arap_payment_id`),
+  UNIQUE KEY `XPKap_payment` (`arap_payment_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `api_app`
+--
+
+DROP TABLE IF EXISTS `api_app`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `api_app` (
+  `api_app_id` bigint(20) NOT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `status` int(11) DEFAULT NULL,
+  PRIMARY KEY (`api_app_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `api_app_sync`
+--
+
+DROP TABLE IF EXISTS `api_app_sync`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `api_app_sync` (
+  `api_sync_id` bigint(20) NOT NULL,
+  `date` datetime(6) DEFAULT NULL,
+  `table_name` varchar(255) DEFAULT NULL,
+  `action` varchar(255) DEFAULT NULL,
+  `owner_id` bigint(20) DEFAULT NULL,
+  `location_id` bigint(20) DEFAULT NULL,
+  `app_id` bigint(20) DEFAULT NULL,
+  `count` int(11) DEFAULT NULL,
+  `status` int(11) DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`api_sync_id`),
+  KEY `FKqcibnoe5oigh4h8tbx3l41w84` (`app_id`),
+  KEY `idx_tablename_status` (`table_name`,`status`),
+  KEY `FKd9eq85sqmnycraw68h8d27p3h` (`location_id`),
+  CONSTRAINT `FKd9eq85sqmnycraw68h8d27p3h` FOREIGN KEY (`location_id`) REFERENCES `pos_location` (`location_id`),
+  CONSTRAINT `FKqcibnoe5oigh4h8tbx3l41w84` FOREIGN KEY (`app_id`) REFERENCES `api_app` (`api_app_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `api_app_sync_setup`
+--
+
+DROP TABLE IF EXISTS `api_app_sync_setup`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `api_app_sync_setup` (
+  `api_sync_setup_id` bigint(20) NOT NULL,
+  `app_id` bigint(20) DEFAULT NULL,
+  `table_name` varchar(255) DEFAULT NULL,
+  `status` int(11) DEFAULT NULL,
+  PRIMARY KEY (`api_sync_setup_id`),
+  KEY `FKsroxm0bwlbysfsj75c96q4iks` (`app_id`),
+  CONSTRAINT `FKsroxm0bwlbysfsj75c96q4iks` FOREIGN KEY (`app_id`) REFERENCES `api_app` (`api_app_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `api_logs`
+--
+
+DROP TABLE IF EXISTS `api_logs`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `api_logs` (
+  `api_log_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `date` timestamp NULL DEFAULT current_timestamp(),
+  `req_name` varchar(255) NOT NULL,
+  `req_header` varchar(255) NOT NULL,
+  `req_body` text NOT NULL,
+  `res_body` text DEFAULT NULL,
+  `TIMESTAMP` datetime DEFAULT NULL,
+  PRIMARY KEY (`api_log_id`),
+  KEY `req_name` (`req_name`),
+  KEY `req_header` (`req_header`),
+  KEY `re_date` (`date`)
+) ENGINE=InnoDB AUTO_INCREMENT=17755447379454643 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `apnontrade_release_history`
+--
+
+DROP TABLE IF EXISTS `apnontrade_release_history`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `apnontrade_release_history` (
+  `apnontrade_release_history_id` bigint(20) NOT NULL DEFAULT 0,
+  `user_id` bigint(20) DEFAULT 0,
+  `journal_number` varchar(20) DEFAULT '0',
+  `date` datetime DEFAULT NULL,
+  `ref_id` bigint(20) DEFAULT 0,
+  `type` int(11) DEFAULT 0,
+  PRIMARY KEY (`apnontrade_release_history_id`),
+  KEY `type` (`type`),
+  KEY `ref_id` (`ref_id`),
+  KEY `number` (`journal_number`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `approval`
+--
+
+DROP TABLE IF EXISTS `approval`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `approval` (
+  `approval_id` bigint(20) NOT NULL DEFAULT 0,
+  `type` int(11) DEFAULT NULL,
+  `urutan` int(11) DEFAULT NULL,
+  `keterangan` varchar(60) DEFAULT NULL,
+  `employee_id` bigint(20) DEFAULT NULL,
+  `jumlah_dari` decimal(25,2) DEFAULT 0.00,
+  `jumlah_sampai` decimal(25,2) DEFAULT 0.00,
+  `urutan_approval` int(11) DEFAULT 0,
+  `keterangan_footer` varchar(60) DEFAULT NULL,
+  PRIMARY KEY (`approval_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `approval_doc`
+--
+
+DROP TABLE IF EXISTS `approval_doc`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `approval_doc` (
+  `approval_doc_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `approval_id` bigint(20) DEFAULT 0,
+  `doc_id` bigint(20) DEFAULT 0,
+  `status` int(11) DEFAULT 0,
+  `notes` varchar(145) DEFAULT NULL,
+  `approve_date` datetime DEFAULT NULL,
+  `employee_id` bigint(20) DEFAULT 0,
+  `doc_type` int(11) DEFAULT 0,
+  `sequence` int(11) DEFAULT 0,
+  `period_id` bigint(20) DEFAULT 0,
+  `signed` int(2) DEFAULT 0,
+  PRIMARY KEY (`approval_doc_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `ar`
+--
+
+DROP TABLE IF EXISTS `ar`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ar` (
+  `arap_id` bigint(20) NOT NULL DEFAULT 0,
+  `date` date DEFAULT NULL,
+  `due_date` date DEFAULT NULL,
+  `vendor_id` bigint(20) DEFAULT NULL,
+  `vandor_name` varchar(64) DEFAULT NULL,
+  `vendor_address` varchar(120) DEFAULT NULL,
+  `invoice_number` varchar(20) DEFAULT NULL,
+  `number_counter` int(11) DEFAULT NULL,
+  `note` varchar(120) DEFAULT NULL,
+  `amount` decimal(10,2) DEFAULT NULL,
+  `ppn` decimal(10,2) DEFAULT NULL,
+  `status` varchar(20) DEFAULT NULL,
+  `po_number` varchar(20) DEFAULT NULL,
+  `currency` varchar(20) DEFAULT NULL,
+  `periode_id` bigint(20) DEFAULT NULL,
+  `exchange_rate` decimal(10,2) DEFAULT NULL,
+  `voucher_number` varchar(20) DEFAULT NULL,
+  `voucher_date` date DEFAULT NULL,
+  `voucher_counter` int(11) DEFAULT NULL,
+  `user_id` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`arap_id`),
+  UNIQUE KEY `XPKar` (`arap_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `ar_akrual_proses`
+--
+
+DROP TABLE IF EXISTS `ar_akrual_proses`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ar_akrual_proses` (
+  `ar_akrual_proses_id` bigint(20) NOT NULL DEFAULT 0,
+  `reg_date` date DEFAULT NULL,
+  `jumlah` decimal(22,2) DEFAULT 0.00,
+  `credit_coa_id` bigint(20) DEFAULT NULL,
+  `debet_coa_id` bigint(20) DEFAULT NULL,
+  `periode_id` bigint(20) DEFAULT NULL,
+  `user_id` bigint(20) DEFAULT NULL,
+  `ar_akrual_setup_id` bigint(20) DEFAULT NULL,
+  `dep_id` bigint(20) DEFAULT 0,
+  `segment1_id` bigint(20) DEFAULT 0,
+  `segment2_id` bigint(20) DEFAULT 0,
+  `segment3_id` bigint(20) DEFAULT 0,
+  `segment4_id` bigint(20) DEFAULT 0,
+  `segment5_id` bigint(20) DEFAULT 0,
+  `segment6_id` bigint(20) DEFAULT 0,
+  `segment7_id` bigint(20) DEFAULT 0,
+  `segment8_id` bigint(20) DEFAULT 0,
+  `segment9_id` bigint(20) DEFAULT 0,
+  `segment10_id` bigint(20) DEFAULT 0,
+  `segment11_id` bigint(20) DEFAULT 0,
+  `segment12_id` bigint(20) DEFAULT 0,
+  `segment13_id` bigint(20) DEFAULT 0,
+  `segment14_id` bigint(20) DEFAULT 0,
+  `segment15_id` bigint(20) DEFAULT 0,
+  `customer_id` bigint(20) DEFAULT 0,
+  `type` int(2) DEFAULT 0,
+  PRIMARY KEY (`ar_akrual_proses_id`),
+  UNIQUE KEY `uniq1` (`periode_id`,`ar_akrual_setup_id`),
+  KEY `joinSetup` (`ar_akrual_setup_id`),
+  KEY `periode_id` (`periode_id`),
+  KEY `ar_akrual_setup_id` (`ar_akrual_setup_id`),
+  KEY `reg_date` (`reg_date`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `ar_akrual_setup`
+--
+
+DROP TABLE IF EXISTS `ar_akrual_setup`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ar_akrual_setup` (
+  `ar_akrual_setup_id` bigint(20) NOT NULL DEFAULT 0,
+  `nama` varchar(220) DEFAULT NULL,
+  `anggaran` decimal(20,2) DEFAULT NULL,
+  `pembagi` int(11) DEFAULT NULL,
+  `credit_coa_id` bigint(20) DEFAULT NULL,
+  `debet_coa_id` bigint(20) DEFAULT NULL,
+  `reg_date` date DEFAULT NULL,
+  `last_update` date DEFAULT NULL,
+  `user_id` bigint(20) DEFAULT NULL,
+  `status` int(11) DEFAULT NULL,
+  `dep_id` bigint(20) DEFAULT 0,
+  `segment1_id` bigint(20) DEFAULT 0,
+  `segment2_id` bigint(20) DEFAULT 0,
+  `segment3_id` bigint(20) DEFAULT 0,
+  `segment4_id` bigint(20) DEFAULT 0,
+  `segment5_id` bigint(20) DEFAULT 0,
+  `segment6_id` bigint(20) DEFAULT 0,
+  `segment7_id` bigint(20) DEFAULT 0,
+  `segment8_id` bigint(20) DEFAULT 0,
+  `segment9_id` bigint(20) DEFAULT 0,
+  `segment10_id` bigint(20) DEFAULT 0,
+  `segment11_id` bigint(20) DEFAULT 0,
+  `segment12_id` bigint(20) DEFAULT 0,
+  `segment13_id` bigint(20) DEFAULT 0,
+  `segment14_id` bigint(20) DEFAULT 0,
+  `segment15_id` bigint(20) DEFAULT 0,
+  `customer_id` bigint(20) DEFAULT 0,
+  `type` int(2) DEFAULT 0,
+  PRIMARY KEY (`ar_akrual_setup_id`),
+  KEY `status` (`status`),
+  KEY `segment1_id` (`segment1_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `ar_card`
+--
+
+DROP TABLE IF EXISTS `ar_card`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ar_card` (
+  `ar_card_id` bigint(20) NOT NULL,
+  `transaction_type` int(2) DEFAULT NULL,
+  `transaction_date` date DEFAULT NULL,
+  `customer_id` bigint(20) DEFAULT NULL,
+  `coa_id` bigint(20) DEFAULT NULL,
+  `amount` decimal(22,2) DEFAULT NULL,
+  `in_out` int(2) DEFAULT NULL,
+  `reference_id` bigint(20) DEFAULT NULL,
+  `transaction_number` varchar(120) DEFAULT NULL,
+  `gl_id` bigint(20) DEFAULT NULL,
+  `due_date` date DEFAULT NULL,
+  `user_id` bigint(20) DEFAULT NULL,
+  `create_date` datetime DEFAULT NULL,
+  `note` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`ar_card_id`),
+  UNIQUE KEY `unique` (`transaction_type`,`coa_id`,`in_out`,`reference_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `ar_card_adjusment`
+--
+
+DROP TABLE IF EXISTS `ar_card_adjusment`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ar_card_adjusment` (
+  `ar_card_adjusment_id` bigint(20) NOT NULL,
+  `ar_card_id` bigint(20) DEFAULT NULL,
+  `transaction_type` int(2) DEFAULT NULL,
+  `in_out` int(2) DEFAULT NULL,
+  `customer_id` bigint(20) DEFAULT NULL,
+  `coa_id` bigint(20) DEFAULT NULL,
+  `transaction_date` date DEFAULT NULL,
+  `amount` decimal(22,2) DEFAULT NULL,
+  `reference_id` bigint(20) DEFAULT NULL,
+  `transaction_number` varchar(120) DEFAULT NULL,
+  `gl_id` bigint(20) DEFAULT NULL,
+  `due_date` date DEFAULT NULL,
+  `user_id` bigint(20) DEFAULT NULL,
+  `create_date` datetime DEFAULT NULL,
+  PRIMARY KEY (`ar_card_adjusment_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `ar_card_payment`
+--
+
+DROP TABLE IF EXISTS `ar_card_payment`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ar_card_payment` (
+  `ar_card_payment_id` bigint(20) NOT NULL,
+  `in_out` int(2) DEFAULT NULL,
+  `transaction_type` int(2) DEFAULT NULL,
+  `transaction_date` date DEFAULT NULL,
+  `amount` decimal(22,2) DEFAULT NULL,
+  `coa_id` bigint(20) DEFAULT NULL,
+  `customer_id` bigint(20) DEFAULT NULL,
+  `ar_card_id` bigint(20) DEFAULT NULL,
+  `transaction_number` varchar(120) DEFAULT NULL,
+  `payment_reference_id` bigint(20) DEFAULT NULL,
+  `gl_id` bigint(20) DEFAULT NULL,
+  `user_id` bigint(20) DEFAULT NULL,
+  `create_date` datetime DEFAULT NULL,
+  `note` varchar(250) DEFAULT NULL,
+  PRIMARY KEY (`ar_card_payment_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `ar_invoice`
+--
+
+DROP TABLE IF EXISTS `ar_invoice`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ar_invoice` (
+  `ar_invoice_id` bigint(20) NOT NULL DEFAULT 0,
+  `currency_id` bigint(20) DEFAULT NULL,
+  `invoice_number` varchar(20) DEFAULT NULL,
+  `term_of_payment_id` bigint(20) DEFAULT NULL,
+  `date` date DEFAULT NULL,
+  `trans_date` date DEFAULT NULL,
+  `journal_number` varchar(20) DEFAULT NULL,
+  `journal_prefix` varchar(20) DEFAULT NULL,
+  `journal_counter` int(11) DEFAULT NULL,
+  `due_date` date DEFAULT NULL,
+  `vat` int(11) DEFAULT NULL,
+  `memo` varchar(220) DEFAULT NULL,
+  `discount_percent` decimal(10,2) DEFAULT NULL,
+  `discount` decimal(10,2) DEFAULT NULL,
+  `vat_percent` decimal(10,2) DEFAULT NULL,
+  `vat_amount` decimal(10,2) DEFAULT NULL,
+  `total` decimal(25,2) DEFAULT NULL,
+  `status` int(11) DEFAULT NULL,
+  `operator_id` bigint(20) DEFAULT NULL,
+  `customer_id` bigint(20) DEFAULT NULL,
+  `company_id` bigint(20) DEFAULT NULL,
+  `project_id` bigint(20) DEFAULT NULL,
+  `project_term_id` bigint(20) DEFAULT NULL,
+  `bank_account_id` bigint(20) unsigned NOT NULL DEFAULT 0,
+  `last_payment_date` date DEFAULT NULL,
+  `last_payment_amount` double DEFAULT NULL,
+  `sales_source` int(11) DEFAULT NULL,
+  `type_ar` int(11) DEFAULT 0,
+  `coa_ar_id` bigint(20) DEFAULT 0,
+  `create_id` bigint(20) DEFAULT 0,
+  `approval1_id` bigint(20) DEFAULT 0,
+  `approval1_date` date DEFAULT NULL,
+  `posted_status` int(11) DEFAULT 0,
+  `posted_id` bigint(20) DEFAULT 0,
+  `posted_date` date DEFAULT NULL,
+  `periode_id` bigint(20) DEFAULT 0,
+  `create_date` date DEFAULT NULL,
+  `location_id` bigint(20) DEFAULT 0,
+  `doc_status` int(11) DEFAULT 0,
+  `ref_id` bigint(20) DEFAULT 0,
+  PRIMARY KEY (`ar_invoice_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `ar_invoice_detail`
+--
+
+DROP TABLE IF EXISTS `ar_invoice_detail`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ar_invoice_detail` (
+  `ar_invoice_id` bigint(20) NOT NULL DEFAULT 0,
+  `ar_invoice_detail_id` bigint(20) NOT NULL DEFAULT 0,
+  `item_name` text DEFAULT NULL,
+  `coa_id` bigint(20) DEFAULT NULL,
+  `qty` int(11) DEFAULT NULL,
+  `price` decimal(25,2) DEFAULT NULL,
+  `discount` decimal(25,2) DEFAULT NULL,
+  `total_amount` decimal(25,2) DEFAULT NULL,
+  `department_id` bigint(20) DEFAULT NULL,
+  `company_id` bigint(20) DEFAULT NULL,
+  `memo` text DEFAULT NULL,
+  PRIMARY KEY (`ar_invoice_detail_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `ar_payment`
+--
+
+DROP TABLE IF EXISTS `ar_payment`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ar_payment` (
+  `ar_payment_id` bigint(20) NOT NULL DEFAULT 0,
+  `ar_payment_main_id` bigint(20) DEFAULT 0,
+  `ar_invoice_id` bigint(20) DEFAULT 0,
+  `currency_id` bigint(20) DEFAULT 0,
+  `exchange_rate` decimal(25,2) DEFAULT 0.00,
+  `amount` decimal(20,2) DEFAULT 0.00,
+  `customer_id` bigint(20) DEFAULT 0,
+  `date` date DEFAULT NULL,
+  `notes` text DEFAULT NULL,
+  `ar_currency_amount` decimal(25,2) DEFAULT 0.00,
+  `company_id` bigint(20) DEFAULT 0,
+  `journal_number` varchar(20) DEFAULT NULL,
+  `journal_number_prefix` varchar(20) DEFAULT NULL,
+  `counter` int(11) DEFAULT 0,
+  `project_id` bigint(20) DEFAULT 0,
+  `project_term_id` bigint(20) DEFAULT 0,
+  `ar_account_id` bigint(20) NOT NULL DEFAULT 0,
+  `receipt_account_id` bigint(20) NOT NULL DEFAULT 0,
+  `bank_transfer_number` varchar(100) NOT NULL DEFAULT '',
+  `transaction_date` date DEFAULT NULL,
+  `operator_id` bigint(20) DEFAULT 0,
+  `ref_id` bigint(20) DEFAULT 0,
+  `credit_payment_id` bigint(20) DEFAULT 0,
+  PRIMARY KEY (`ar_payment_id`),
+  KEY `ref_id` (`ref_id`),
+  KEY `number` (`journal_number`),
+  KEY `project_id` (`project_id`),
+  KEY `transaction_date` (`transaction_date`),
+  KEY `credit_payment_id` (`credit_payment_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `ar_payment_main`
+--
+
+DROP TABLE IF EXISTS `ar_payment_main`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ar_payment_main` (
+  `ar_payment_main_id` bigint(20) NOT NULL DEFAULT 0,
+  `coa_id` bigint(20) DEFAULT NULL,
+  `journal_number` varchar(20) DEFAULT NULL,
+  `journal_counter` int(11) DEFAULT NULL,
+  `journal_prefix` varchar(20) DEFAULT NULL,
+  `date` datetime DEFAULT NULL,
+  `trans_date` date DEFAULT NULL,
+  `memo` text DEFAULT NULL,
+  `operator_id` bigint(20) DEFAULT NULL,
+  `amount` decimal(20,2) DEFAULT NULL,
+  `ref_number` varchar(20) DEFAULT NULL,
+  `customer_id` bigint(20) DEFAULT NULL,
+  `currency_id` bigint(20) DEFAULT NULL,
+  `payment_method_id` bigint(20) DEFAULT 0,
+  `status` varchar(45) DEFAULT '',
+  `posted_status` int(11) DEFAULT 0,
+  `posted_by_id` bigint(20) DEFAULT 0,
+  `posted_date` datetime DEFAULT NULL,
+  `effective_date` datetime DEFAULT NULL,
+  `type` int(11) DEFAULT 0,
+  `period_id` bigint(20) DEFAULT 0,
+  `booked_rate` decimal(20,2) DEFAULT NULL,
+  `round_amount` decimal(20,2) DEFAULT NULL,
+  `segment1_id` bigint(20) DEFAULT 0,
+  `segment2_id` bigint(20) DEFAULT 0,
+  `segment3_id` bigint(20) DEFAULT 0,
+  `segment4_id` bigint(20) DEFAULT 0,
+  `segment5_id` bigint(20) DEFAULT 0,
+  `segment6_id` bigint(20) DEFAULT 0,
+  `segment7_id` bigint(20) DEFAULT 0,
+  `segment8_id` bigint(20) DEFAULT 0,
+  `segment9_id` bigint(20) DEFAULT 0,
+  `segment10_id` bigint(20) DEFAULT 0,
+  `segment11_id` bigint(20) DEFAULT 0,
+  `segment12_id` bigint(20) DEFAULT 0,
+  `segment13_id` bigint(20) DEFAULT 0,
+  `segment14_id` bigint(20) DEFAULT 0,
+  `segment15_id` bigint(20) DEFAULT 0,
+  `payment_type` int(4) DEFAULT 0,
+  `bank_id` bigint(20) DEFAULT 0,
+  `merchant_id` bigint(20) DEFAULT 0,
+  `due_date` date DEFAULT NULL,
+  `cash_cashier_id` bigint(20) DEFAULT 0,
+  PRIMARY KEY (`ar_payment_main_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `arap_memo`
+--
+
+DROP TABLE IF EXISTS `arap_memo`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `arap_memo` (
+  `arap_memo_id` bigint(20) NOT NULL DEFAULT 0,
+  `date` date DEFAULT NULL,
+  `posted_date` date DEFAULT NULL,
+  `user_id` bigint(20) DEFAULT 0,
+  `posted_by_id` bigint(20) DEFAULT 0,
+  `memo` text DEFAULT NULL,
+  `amount` decimal(25,2) DEFAULT 0.00,
+  `status` int(11) DEFAULT 0,
+  `posted_status` int(11) DEFAULT 0,
+  `payment_status` int(11) DEFAULT 0,
+  `type` int(11) DEFAULT 0,
+  `ref_id` bigint(20) DEFAULT 0,
+  `coa_id` bigint(20) DEFAULT 0,
+  `vendor_id` bigint(20) DEFAULT 0,
+  `counter` int(11) DEFAULT 0,
+  `prefix_number` varchar(60) DEFAULT NULL,
+  `number` varchar(60) DEFAULT NULL,
+  `periode_id` bigint(20) DEFAULT 0,
+  `approval1` bigint(20) DEFAULT NULL,
+  `approval2` bigint(20) DEFAULT NULL,
+  `date_app1` date DEFAULT NULL,
+  `date_app2` date DEFAULT NULL,
+  `currency_id` bigint(20) DEFAULT 0,
+  `location_id` bigint(20) DEFAULT 0,
+  `coa_ap_id` bigint(20) DEFAULT 0,
+  PRIMARY KEY (`arap_memo_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `arap_payment`
+--
+
+DROP TABLE IF EXISTS `arap_payment`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `arap_payment` (
+  `arap_payment_id` bigint(20) NOT NULL DEFAULT 0,
+  `ap_id` bigint(20) DEFAULT NULL,
+  `periode_id` bigint(20) DEFAULT NULL,
+  `date` date DEFAULT NULL,
+  `paid_by` varchar(64) DEFAULT NULL,
+  `rec_by` varchar(64) DEFAULT NULL,
+  `pay_method` varchar(64) DEFAULT NULL,
+  `amount` decimal(25,2) DEFAULT NULL,
+  `currency` varchar(20) DEFAULT NULL,
+  `exchange_rate` decimal(10,2) DEFAULT NULL,
+  `voucher_number` varchar(20) DEFAULT NULL,
+  `voucher_date` date DEFAULT NULL,
+  `voucher_counter` int(11) DEFAULT NULL,
+  `status` varchar(20) DEFAULT NULL,
+  `user_id` bigint(20) DEFAULT NULL,
+  `ar_id` bigint(20) DEFAULT NULL,
+  `memo` text DEFAULT NULL,
+  PRIMARY KEY (`arap_payment_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `ass_receive`
+--
+
+DROP TABLE IF EXISTS `ass_receive`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ass_receive` (
+  `receive_id` bigint(20) NOT NULL,
+  `approval_1` bigint(20) DEFAULT NULL,
+  `approval_2` bigint(20) DEFAULT NULL,
+  `approval_3` bigint(20) DEFAULT NULL,
+  `STATUS` varchar(20) DEFAULT NULL,
+  `note` text DEFAULT NULL,
+  `include_tax` int(11) DEFAULT NULL,
+  `total_tax` decimal(25,2) DEFAULT NULL,
+  `total_amount` decimal(25,2) DEFAULT NULL,
+  `tax_percent` decimal(10,2) DEFAULT NULL,
+  `discount_percent` decimal(10,2) DEFAULT NULL,
+  `discount_total` decimal(25,2) DEFAULT NULL,
+  `payment_type` varchar(20) DEFAULT NULL,
+  `location_id` bigint(20) DEFAULT NULL,
+  `user_id` bigint(20) DEFAULT NULL,
+  `number` varchar(20) DEFAULT NULL,
+  `counter` int(11) DEFAULT NULL,
+  `vendor_id` bigint(20) DEFAULT NULL,
+  `DATE` timestamp NULL DEFAULT NULL,
+  `currency_id` bigint(20) DEFAULT NULL,
+  `prefix_number` varchar(20) DEFAULT NULL,
+  `closed_reason` varchar(220) DEFAULT NULL,
+  `approval_1_date` timestamp NULL DEFAULT NULL,
+  `approval_2_date` timestamp NULL DEFAULT NULL,
+  `approval_3_date` timestamp NULL DEFAULT NULL,
+  `purchase_id` bigint(20) DEFAULT NULL,
+  `due_date` date DEFAULT NULL,
+  `payment_amount` decimal(10,2) DEFAULT NULL,
+  `invoice_number` varchar(45) DEFAULT NULL,
+  `do_number` varchar(45) DEFAULT NULL,
+  `payment_status` int(11) DEFAULT NULL,
+  `unit_usaha_id` bigint(20) DEFAULT NULL,
+  `coa_id` bigint(20) DEFAULT NULL,
+  `type_ap` int(11) DEFAULT NULL,
+  `TYPE` int(11) DEFAULT NULL,
+  `period_id` text DEFAULT NULL,
+  `payment_status_posted` int(11) DEFAULT NULL,
+  `no_pajak` varchar(60) DEFAULT NULL,
+  `include_pph` int(11) DEFAULT NULL,
+  `pph_percent` decimal(10,2) DEFAULT NULL,
+  `pph_amount` decimal(25,2) DEFAULT NULL,
+  `pph_type` int(11) DEFAULT NULL,
+  `ppn_coa_id` bigint(20) DEFAULT NULL,
+  `coa_pph_id` bigint(20) DEFAULT NULL,
+  `pph_coa_id` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `ass_receive_item`
+--
+
+DROP TABLE IF EXISTS `ass_receive_item`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ass_receive_item` (
+  `receive_item_id` bigint(20) NOT NULL,
+  `item_master_id` bigint(20) DEFAULT NULL,
+  `qty` decimal(10,2) DEFAULT NULL,
+  `total_amount` decimal(25,2) DEFAULT NULL,
+  `amount` decimal(25,2) DEFAULT NULL,
+  `discount_amount` decimal(25,2) DEFAULT NULL,
+  `delivery_date` timestamp NULL DEFAULT NULL,
+  `uom_id` bigint(20) DEFAULT NULL,
+  `receive_id` bigint(20) DEFAULT NULL,
+  `purchase_item_id` bigint(20) DEFAULT NULL,
+  `expired_date` date DEFAULT NULL,
+  `status` varchar(45) DEFAULT NULL,
+  `ap_coa_id` bigint(20) DEFAULT NULL,
+  `is_bonus` bigint(20) DEFAULT NULL,
+  `memo` varchar(120) DEFAULT NULL,
+  `type` int(11) DEFAULT NULL,
+  `name` varchar(300) DEFAULT NULL,
+  `group_id_komersial` bigint(20) DEFAULT NULL,
+  `category_id_komersial` bigint(20) DEFAULT NULL,
+  `umur_ekonomis` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `ass_vendor`
+--
+
+DROP TABLE IF EXISTS `ass_vendor`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ass_vendor` (
+  `name` varchar(500) DEFAULT NULL,
+  `ass_vendor_id` bigint(20) NOT NULL,
+  `code` varchar(20) DEFAULT NULL,
+  `address` varchar(120) DEFAULT NULL,
+  `city` varchar(60) DEFAULT NULL,
+  `state` varchar(60) DEFAULT NULL,
+  `phone` varchar(20) DEFAULT NULL,
+  `hp` varchar(20) DEFAULT NULL,
+  `fax` varchar(20) DEFAULT NULL,
+  `due_date` int(11) DEFAULT NULL,
+  `cperson` varchar(64) DEFAULT NULL,
+  `country_name` varchar(64) DEFAULT NULL,
+  `country_id` bigint(20) DEFAULT NULL,
+  `vendor_type` varchar(64) DEFAULT NULL,
+  `company_id` bigint(20) DEFAULT NULL,
+  `type` int(11) DEFAULT NULL,
+  `telp` varchar(45) DEFAULT NULL,
+  `jtempo` int(11) DEFAULT NULL,
+  `account_code` varchar(45) DEFAULT NULL,
+  `npwp` varchar(45) DEFAULT NULL,
+  `email` varchar(45) DEFAULT NULL,
+  `wpage` varchar(45) DEFAULT NULL,
+  `disc` decimal(10,2) DEFAULT NULL,
+  `hawal` decimal(10,2) DEFAULT NULL,
+  `prev_liability` decimal(10,2) DEFAULT NULL,
+  `direct_receive` int(11) NOT NULL,
+  `is_konsinyasi` int(11) NOT NULL,
+  `is_pkp` int(11) NOT NULL,
+  `include_ppn` int(11) NOT NULL,
+  `komisi_percent` decimal(10,2) DEFAULT NULL,
+  `percent_margin` decimal(10,2) DEFAULT NULL,
+  `percent_promosi` decimal(10,2) DEFAULT NULL,
+  `percent_barcode` decimal(10,2) DEFAULT NULL,
+  `system` int(11) DEFAULT NULL,
+  `komisi_margin` decimal(10,2) DEFAULT NULL,
+  `komisi_promosi` decimal(10,2) DEFAULT NULL,
+  `komisi_barcode` decimal(10,2) DEFAULT NULL,
+  `is_komisi` int(11) DEFAULT NULL,
+  `odr_senin` int(11) NOT NULL,
+  `odr_selasa` int(11) NOT NULL,
+  `odr_rabu` int(11) NOT NULL,
+  `odr_kamis` int(11) NOT NULL,
+  `odr_jumat` int(11) NOT NULL,
+  `odr_sabtu` int(11) NOT NULL,
+  `odr_minggu` int(11) NOT NULL,
+  `pending_one_po` int(11) NOT NULL,
+  `type_loc_incoming` varchar(30) DEFAULT NULL,
+  `no_rek` varchar(120) DEFAULT NULL,
+  `bank_id` bigint(20) DEFAULT NULL,
+  `payment_type` int(11) DEFAULT NULL,
+  `pic` varchar(240) DEFAULT NULL,
+  `liabilities_type` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `balance_gl`
+--
+
+DROP TABLE IF EXISTS `balance_gl`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `balance_gl` (
+  `balance_gl_id` bigint(20) NOT NULL DEFAULT 0,
+  `period_id` bigint(20) DEFAULT 0,
+  `amount` decimal(22,2) DEFAULT 0.00,
+  `coa_id` bigint(20) DEFAULT 0,
+  `coa_level_1_id` bigint(20) DEFAULT 0,
+  `coa_level_2_id` bigint(20) DEFAULT 0,
+  `coa_level_3_id` bigint(20) DEFAULT 0,
+  `coa_level_4_id` bigint(20) DEFAULT 0,
+  `coa_level_5_id` bigint(20) DEFAULT 0,
+  `coa_level_6_id` bigint(20) DEFAULT 0,
+  `coa_level_7_id` bigint(20) DEFAULT 0,
+  `segment_1_id` bigint(20) DEFAULT 0,
+  `segment_2_id` bigint(20) DEFAULT 0,
+  `segment_3_id` bigint(20) DEFAULT 0,
+  `segment_4_id` bigint(20) DEFAULT 0,
+  `segment_5_id` bigint(20) DEFAULT 0,
+  `balance_type` int(11) DEFAULT 0,
+  `user_id` bigint(20) DEFAULT 0,
+  PRIMARY KEY (`balance_gl_id`),
+  KEY `period_id` (`period_id`),
+  KEY `coa_id` (`coa_id`),
+  KEY `coa_level_1_id` (`coa_level_1_id`),
+  KEY `coa_level_2_id` (`coa_level_2_id`),
+  KEY `coa_level_3_id` (`coa_level_3_id`),
+  KEY `coa_level_4_id` (`coa_level_4_id`),
+  KEY `coa_level_5_id` (`coa_level_5_id`),
+  KEY `coa_level_6_id` (`coa_level_6_id`),
+  KEY `coa_level_7_id` (`coa_level_7_id`),
+  KEY `user_id` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `balance_kartu_hutang`
+--
+
+DROP TABLE IF EXISTS `balance_kartu_hutang`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `balance_kartu_hutang` (
+  `balance_kartu_hutang_id` bigint(20) NOT NULL,
+  `create_date` datetime DEFAULT NULL,
+  `balance_date` datetime DEFAULT NULL,
+  `periode_id` bigint(20) DEFAULT 0,
+  `vendor_id` bigint(20) DEFAULT 0,
+  `balance` decimal(22,2) DEFAULT 0.00,
+  `type` int(5) DEFAULT 0,
+  PRIMARY KEY (`balance_kartu_hutang_id`),
+  KEY `type` (`type`),
+  KEY `vendor` (`vendor_id`),
+  KEY `periode` (`periode_id`),
+  KEY `date` (`balance_date`),
+  KEY `typedatevendor` (`balance_date`,`vendor_id`,`type`),
+  KEY `typedate` (`balance_date`,`type`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `balance_neraca`
+--
+
+DROP TABLE IF EXISTS `balance_neraca`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `balance_neraca` (
+  `balance_neraca_id` bigint(20) NOT NULL DEFAULT 0,
+  `period_id` bigint(20) DEFAULT 0,
+  `amount` decimal(22,2) DEFAULT 0.00,
+  `coa_id` bigint(20) DEFAULT 0,
+  `coa_level_1_id` bigint(20) DEFAULT 0,
+  `coa_level_2_id` bigint(20) DEFAULT 0,
+  `coa_level_3_id` bigint(20) DEFAULT 0,
+  `coa_level_4_id` bigint(20) DEFAULT 0,
+  `coa_level_5_id` bigint(20) DEFAULT 0,
+  `coa_level_6_id` bigint(20) DEFAULT 0,
+  `coa_level_7_id` bigint(20) DEFAULT 0,
+  `segment_1_id` bigint(20) DEFAULT 0,
+  `segment_2_id` bigint(20) DEFAULT 0,
+  `segment_3_id` bigint(20) DEFAULT 0,
+  `segment_4_id` bigint(20) DEFAULT 0,
+  `segment_5_id` bigint(20) DEFAULT 0,
+  `balance_type` int(11) DEFAULT 0,
+  `user_id` bigint(20) DEFAULT 0,
+  PRIMARY KEY (`balance_neraca_id`),
+  KEY `period_id` (`period_id`),
+  KEY `coa_id` (`coa_id`),
+  KEY `coa_level_1_id` (`coa_level_1_id`),
+  KEY `coa_level_2_id` (`coa_level_2_id`),
+  KEY `coa_level_3_id` (`coa_level_3_id`),
+  KEY `coa_level_4_id` (`coa_level_4_id`),
+  KEY `coa_level_5_id` (`coa_level_5_id`),
+  KEY `coa_level_6_id` (`coa_level_6_id`),
+  KEY `coa_level_7_id` (`coa_level_7_id`),
+  KEY `user_id` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `bank`
+--
+
+DROP TABLE IF EXISTS `bank`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `bank` (
+  `bank_id` bigint(20) NOT NULL DEFAULT 0,
+  `name` varchar(120) DEFAULT NULL,
+  `adress` varchar(120) DEFAULT NULL,
+  `default_bunga` decimal(10,2) DEFAULT NULL,
+  `coa_ar_id` bigint(20) DEFAULT 0,
+  `coa_ap_id` bigint(20) DEFAULT 0,
+  `coa_debit_card_id` bigint(20) DEFAULT 0,
+  `atas_nama` varchar(100) DEFAULT NULL,
+  `type` int(3) DEFAULT NULL,
+  `use_master_giro` int(1) DEFAULT 0,
+  PRIMARY KEY (`bank_id`),
+  KEY `NAME` (`name`),
+  KEY `coa_ar_id` (`coa_ar_id`),
+  KEY `coa_debit_card_id` (`coa_debit_card_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `insert_bank` AFTER INSERT ON `bank` FOR EACH ROW BEGIN
+	INSERT INTO `android_logs` (
+	logs_id,table_name,reff_id,old_id,sts_loc1,sts_loc2,sts_loc3,sts_loc4,sts_loc5,sts_loc6,sts_loc7,sts_loc8,sts_loc9,sts_loc10,
+	sts_loc11,sts_loc12,sts_loc13,sts_loc14,sts_loc15,sts_loc16,sts_loc17,sts_loc18,sts_loc19,sts_loc20,
+	sts_loc21,sts_loc22,sts_loc23,sts_loc24,sts_loc25,sts_loc26,sts_loc27,sts_loc28,sts_loc29,sts_loc30,
+	action_handle) VALUE (
+	  UUID(),
+	  "bank",
+	  new.bank_id,
+	  0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  "insert"
+	  );
+    END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `update_bank` AFTER UPDATE ON `bank` FOR EACH ROW BEGIN
+	INSERT INTO `android_logs` (
+	logs_id,table_name,reff_id,old_id,sts_loc1,sts_loc2,sts_loc3,sts_loc4,sts_loc5,sts_loc6,sts_loc7,sts_loc8,sts_loc9,sts_loc10,
+	sts_loc11,sts_loc12,sts_loc13,sts_loc14,sts_loc15,sts_loc16,sts_loc17,sts_loc18,sts_loc19,sts_loc20,
+	sts_loc21,sts_loc22,sts_loc23,sts_loc24,sts_loc25,sts_loc26,sts_loc27,sts_loc28,sts_loc29,sts_loc30,
+	action_handle) VALUE (
+	  UUID(),
+	  "bank",
+	  new.bank_id,
+	  old.bank_id,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  "update"
+	);
+    END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `delete_bank` BEFORE DELETE ON `bank` FOR EACH ROW BEGIN
+	INSERT INTO `android_logs` (
+	logs_id,table_name,reff_id,old_id,sts_loc1,sts_loc2,sts_loc3,sts_loc4,sts_loc5,sts_loc6,sts_loc7,sts_loc8,sts_loc9,sts_loc10,
+	sts_loc11,sts_loc12,sts_loc13,sts_loc14,sts_loc15,sts_loc16,sts_loc17,sts_loc18,sts_loc19,sts_loc20,
+	sts_loc21,sts_loc22,sts_loc23,sts_loc24,sts_loc25,sts_loc26,sts_loc27,sts_loc28,sts_loc29,sts_loc30,
+	action_handle) VALUE (
+	  UUID(),
+	  "bank",
+	  old.bank_id,
+	  0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  "delete"
+	);
+    END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+
+--
+-- Table structure for table `bank_account`
+--
+
+DROP TABLE IF EXISTS `bank_account`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `bank_account` (
+  `bank_account_id` bigint(20) NOT NULL DEFAULT 0,
+  `name` varchar(120) DEFAULT NULL,
+  `type` int(11) DEFAULT NULL,
+  `acc_number` varchar(120) DEFAULT NULL,
+  `bank_name` varchar(120) DEFAULT NULL,
+  `status` int(11) DEFAULT NULL,
+  `account_code` varchar(20) DEFAULT NULL,
+  `coa_id` bigint(20) DEFAULT NULL,
+  `company_id` bigint(20) unsigned NOT NULL DEFAULT 0,
+  `currency_id` bigint(20) unsigned NOT NULL DEFAULT 0,
+  PRIMARY KEY (`bank_account_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `bank_ar_payment`
+--
+
+DROP TABLE IF EXISTS `bank_ar_payment`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `bank_ar_payment` (
+  `bank_ar_payment_id` bigint(20) NOT NULL DEFAULT 0,
+  `type` int(4) DEFAULT 0,
+  `create_date` date DEFAULT NULL,
+  `journal_number` varchar(120) DEFAULT NULL,
+  `journal_prefix` varchar(120) DEFAULT NULL,
+  `journal_counter` int(10) DEFAULT 0,
+  `currency_id` bigint(20) DEFAULT 0,
+  `create_id` bigint(20) DEFAULT 0,
+  `due_date` date DEFAULT NULL,
+  `amount` decimal(22,2) DEFAULT 0.00,
+  `coa_id` bigint(20) DEFAULT 0,
+  `coa_payment_id` bigint(20) DEFAULT 0,
+  `payment_date` date DEFAULT NULL,
+  `referensi_id` bigint(20) DEFAULT 0,
+  `status` int(4) DEFAULT 0,
+  `segment1_id` bigint(20) DEFAULT 0,
+  `segment2_id` bigint(20) DEFAULT 0,
+  `segment3_id` bigint(20) DEFAULT 0,
+  `segment4_id` bigint(20) DEFAULT 0,
+  `segment5_id` bigint(20) DEFAULT 0,
+  `segment6_id` bigint(20) DEFAULT 0,
+  `segment7_id` bigint(20) DEFAULT 0,
+  `segment8_id` bigint(20) DEFAULT 0,
+  `segment9_id` bigint(20) DEFAULT 0,
+  `segment10_id` bigint(20) DEFAULT 0,
+  `segment11_id` bigint(20) DEFAULT 0,
+  `segment12_id` bigint(20) DEFAULT 0,
+  `segment13_id` bigint(20) DEFAULT 0,
+  `segment14_id` bigint(20) DEFAULT 0,
+  `segment15_id` bigint(20) DEFAULT 0,
+  `transaction_date` date DEFAULT NULL,
+  `customer_id` bigint(20) DEFAULT 0,
+  `number` varchar(240) DEFAULT NULL,
+  `bank_id` bigint(20) DEFAULT 0,
+  `system_doc_number_id` bigint(20) DEFAULT 0,
+  PRIMARY KEY (`bank_ar_payment_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `bank_deposit`
+--
+
+DROP TABLE IF EXISTS `bank_deposit`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `bank_deposit` (
+  `bank_deposit_id` bigint(20) NOT NULL DEFAULT 0,
+  `memo` text DEFAULT NULL,
+  `date` date DEFAULT NULL,
+  `trans_date` date DEFAULT NULL,
+  `operator_id` bigint(20) DEFAULT NULL,
+  `operator_name` varchar(20) DEFAULT NULL,
+  `journal_number` varchar(30) DEFAULT NULL,
+  `journal_prefix` varchar(20) DEFAULT NULL,
+  `journal_counter` int(11) DEFAULT NULL,
+  `coa_id` bigint(20) DEFAULT NULL,
+  `amount` decimal(25,2) DEFAULT NULL,
+  `currency_id` bigint(20) DEFAULT NULL,
+  `customer_id` bigint(20) DEFAULT NULL,
+  `segment1_id` bigint(20) DEFAULT 0,
+  `segment2_id` bigint(20) DEFAULT 0,
+  `segment3_id` bigint(20) DEFAULT 0,
+  `segment4_id` bigint(20) DEFAULT 0,
+  `segment5_id` bigint(20) DEFAULT 0,
+  `segment6_id` bigint(20) DEFAULT 0,
+  `segment7_id` bigint(20) DEFAULT 0,
+  `segment8_id` bigint(20) DEFAULT 0,
+  `segment9_id` bigint(20) DEFAULT 0,
+  `segment10_id` bigint(20) DEFAULT 0,
+  `segment11_id` bigint(20) DEFAULT 0,
+  `segment12_id` bigint(20) DEFAULT 0,
+  `segment13_id` bigint(20) DEFAULT 0,
+  `segment14_id` bigint(20) DEFAULT 0,
+  `segment15_id` bigint(20) DEFAULT 0,
+  `posted_status` int(11) DEFAULT 0,
+  `posted_by_id` bigint(20) DEFAULT NULL,
+  `posted_date` datetime DEFAULT NULL,
+  `effective_date` datetime DEFAULT NULL,
+  `periode_id` bigint(20) DEFAULT 0,
+  `receive_from` varchar(65) DEFAULT NULL,
+  PRIMARY KEY (`bank_deposit_id`),
+  UNIQUE KEY `XPKbank_deposit` (`bank_deposit_id`),
+  UNIQUE KEY `Index_3` (`journal_number`),
+  KEY `trans_date` (`trans_date`),
+  KEY `coa_id` (`coa_id`),
+  KEY `jurnal_number` (`journal_number`),
+  KEY `customer_id` (`customer_id`),
+  KEY `segment1_id` (`segment1_id`),
+  KEY `posted_status` (`posted_by_id`),
+  KEY `periode_id` (`periode_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `bank_deposit_detail`
+--
+
+DROP TABLE IF EXISTS `bank_deposit_detail`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `bank_deposit_detail` (
+  `bank_deposit_detail_id` bigint(20) NOT NULL DEFAULT 0,
+  `bank_deposit_id` bigint(20) DEFAULT NULL,
+  `coa_id` bigint(20) DEFAULT NULL,
+  `foreign_currency_id` bigint(20) DEFAULT NULL,
+  `foreign_amount` decimal(25,2) DEFAULT NULL,
+  `booked_rate` decimal(25,2) NOT NULL DEFAULT 0.00,
+  `memo` varchar(220) DEFAULT NULL,
+  `amount` decimal(25,2) DEFAULT NULL,
+  `segment1_id` bigint(20) DEFAULT 0,
+  `segment2_id` bigint(20) DEFAULT 0,
+  `segment3_id` bigint(20) DEFAULT 0,
+  `segment4_id` bigint(20) DEFAULT 0,
+  `segment5_id` bigint(20) DEFAULT 0,
+  `segment6_id` bigint(20) DEFAULT 0,
+  `segment7_id` bigint(20) DEFAULT 0,
+  `segment8_id` bigint(20) DEFAULT 0,
+  `segment9_id` bigint(20) DEFAULT 0,
+  `segment10_id` bigint(20) DEFAULT 0,
+  `segment11_id` bigint(20) DEFAULT 0,
+  `segment12_id` bigint(20) DEFAULT 0,
+  `segment13_id` bigint(20) DEFAULT 0,
+  `segment14_id` bigint(20) DEFAULT 0,
+  `segment15_id` bigint(20) DEFAULT 0,
+  `department_id` bigint(20) DEFAULT 0,
+  `foreign_credit_amount` decimal(25,2) DEFAULT NULL,
+  `credit_amount` decimal(25,2) DEFAULT NULL,
+  PRIMARY KEY (`bank_deposit_detail_id`),
+  UNIQUE KEY `XPKbank_deposit_detail` (`bank_deposit_detail_id`),
+  KEY `bank_deposit_id` (`bank_deposit_id`),
+  KEY `segment1_id` (`segment1_id`),
+  KEY `segment2_id` (`segment2_id`),
+  KEY `segment3_id` (`segment3_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `bank_payment`
+--
+
+DROP TABLE IF EXISTS `bank_payment`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `bank_payment` (
+  `bank_payment_id` bigint(20) NOT NULL DEFAULT 0,
+  `type` int(4) DEFAULT 0,
+  `payment_method_id` bigint(20) DEFAULT 0,
+  `create_date` date DEFAULT NULL,
+  `journal_number` varchar(120) DEFAULT NULL,
+  `journal_prefix` varchar(120) DEFAULT NULL,
+  `journal_counter` int(10) DEFAULT 0,
+  `currency_id` bigint(20) DEFAULT 0,
+  `create_id` bigint(20) DEFAULT 0,
+  `due_date` date DEFAULT NULL,
+  `amount` decimal(22,2) DEFAULT 0.00,
+  `coa_id` bigint(20) DEFAULT 0,
+  `coa_payment_id` bigint(20) DEFAULT 0,
+  `payment_date` date DEFAULT NULL,
+  `referensi_id` bigint(20) DEFAULT 0,
+  `status` int(4) DEFAULT 0,
+  `segment1_id` bigint(20) DEFAULT 0,
+  `segment2_id` bigint(20) DEFAULT 0,
+  `segment3_id` bigint(20) DEFAULT 0,
+  `segment4_id` bigint(20) DEFAULT 0,
+  `segment5_id` bigint(20) DEFAULT 0,
+  `segment6_id` bigint(20) DEFAULT 0,
+  `segment7_id` bigint(20) DEFAULT 0,
+  `segment8_id` bigint(20) DEFAULT 0,
+  `segment9_id` bigint(20) DEFAULT 0,
+  `segment10_id` bigint(20) DEFAULT 0,
+  `segment11_id` bigint(20) DEFAULT 0,
+  `segment12_id` bigint(20) DEFAULT 0,
+  `segment13_id` bigint(20) DEFAULT 0,
+  `segment14_id` bigint(20) DEFAULT 0,
+  `segment15_id` bigint(20) DEFAULT 0,
+  `transaction_date` date DEFAULT NULL,
+  `vendor_id` bigint(20) DEFAULT 0,
+  `number` varchar(240) DEFAULT NULL,
+  `bank_id` bigint(20) DEFAULT 0,
+  `system_doc_number_id` bigint(20) DEFAULT 0,
+  `persen_expense` decimal(22,2) DEFAULT 0.00,
+  `persen_discount` decimal(22,2) DEFAULT 0.00,
+  `merchant_id` bigint(20) DEFAULT 0,
+  `piutang` decimal(22,2) DEFAULT 0.00,
+  `expense` decimal(22,2) DEFAULT 0.00,
+  PRIMARY KEY (`bank_payment_id`),
+  KEY `type` (`type`),
+  KEY `due_date` (`due_date`),
+  KEY `status` (`status`),
+  KEY `jurnalNumber` (`journal_number`),
+  KEY `coaId` (`coa_id`),
+  KEY `coaPaymentId` (`coa_payment_id`),
+  KEY `paymentDate` (`payment_date`),
+  KEY `refId` (`referensi_id`),
+  KEY `segment1Id` (`segment1_id`),
+  KEY `transDate` (`transaction_date`),
+  KEY `vendorId` (`vendor_id`),
+  KEY `bankId` (`bank_id`),
+  KEY `paymentMethodID` (`payment_method_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `bank_payment_history`
+--
+
+DROP TABLE IF EXISTS `bank_payment_history`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `bank_payment_history` (
+  `bank_payment_history_id` bigint(20) NOT NULL,
+  `bank_payment_id` bigint(20) DEFAULT 0,
+  `date` datetime DEFAULT NULL,
+  `type` int(11) DEFAULT 0,
+  `gl_id` bigint(20) DEFAULT 0,
+  `journal_number` varchar(120) DEFAULT NULL,
+  PRIMARY KEY (`bank_payment_history_id`),
+  UNIQUE KEY `bank_payment_id` (`bank_payment_id`),
+  KEY `type` (`type`),
+  KEY `gl_id` (`gl_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `bank_vendor`
+--
+
+DROP TABLE IF EXISTS `bank_vendor`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `bank_vendor` (
+  `bank_vendor_id` bigint(20) NOT NULL DEFAULT 0,
+  `vendor_id` bigint(20) NOT NULL DEFAULT 0,
+  `name` varchar(50) DEFAULT NULL,
+  `account_number` varchar(50) DEFAULT NULL,
+  `atas_nama` varchar(50) DEFAULT NULL,
+  `bank_id` bigint(20) DEFAULT 0,
+  `memo` text DEFAULT NULL,
+  `reg_date` datetime DEFAULT NULL,
+  `operator_id` bigint(20) DEFAULT 0,
+  PRIMARY KEY (`bank_vendor_id`),
+  KEY `vendorID` (`vendor_id`),
+  KEY `name` (`name`),
+  KEY `bankid` (`bank_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `banknonpo_payment`
+--
+
+DROP TABLE IF EXISTS `banknonpo_payment`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `banknonpo_payment` (
+  `banknonpo_payment_id` bigint(20) NOT NULL DEFAULT 0,
+  `coa_id` bigint(20) DEFAULT NULL,
+  `journal_number` varchar(30) DEFAULT NULL,
+  `journal_counter` int(11) DEFAULT NULL,
+  `journal_prefix` varchar(20) DEFAULT NULL,
+  `date` date DEFAULT NULL,
+  `trans_date` date DEFAULT NULL,
+  `memo` text DEFAULT NULL,
+  `operator_id` bigint(20) DEFAULT NULL,
+  `operator_name` varchar(64) DEFAULT NULL,
+  `amount` decimal(25,2) DEFAULT NULL,
+  `ref_number` varchar(20) DEFAULT NULL,
+  `payment_method_id` bigint(20) unsigned DEFAULT 0,
+  `vendor_id` bigint(20) unsigned DEFAULT 0,
+  `invoice_number` varchar(45) DEFAULT NULL,
+  `activity_status` varchar(45) DEFAULT '',
+  `type` int(10) unsigned NOT NULL DEFAULT 0,
+  `customer_id` bigint(20) DEFAULT NULL,
+  `segment1_id` bigint(20) DEFAULT 0,
+  `segment2_id` bigint(20) DEFAULT 0,
+  `segment3_id` bigint(20) DEFAULT 0,
+  `segment4_id` bigint(20) DEFAULT 0,
+  `segment5_id` bigint(20) DEFAULT 0,
+  `segment6_id` bigint(20) DEFAULT 0,
+  `segment7_id` bigint(20) DEFAULT 0,
+  `segment8_id` bigint(20) DEFAULT 0,
+  `segment9_id` bigint(20) DEFAULT 0,
+  `segment10_id` bigint(20) DEFAULT 0,
+  `segment11_id` bigint(20) DEFAULT 0,
+  `segment12_id` bigint(20) DEFAULT 0,
+  `segment13_id` bigint(20) DEFAULT 0,
+  `segment14_id` bigint(20) DEFAULT 0,
+  `segment15_id` bigint(20) DEFAULT 0,
+  `posted_status` int(11) DEFAULT NULL,
+  `posted_date` datetime DEFAULT NULL,
+  `posted_by_id` bigint(20) DEFAULT NULL,
+  `effective_date` datetime DEFAULT NULL,
+  `periode_id` bigint(20) DEFAULT NULL,
+  `payment_to` varchar(40) DEFAULT NULL,
+  `due_date` date DEFAULT NULL,
+  PRIMARY KEY (`banknonpo_payment_id`),
+  UNIQUE KEY `XPKbanknonpo_payment` (`banknonpo_payment_id`),
+  UNIQUE KEY `Index_3` (`journal_number`),
+  KEY `trans_date` (`trans_date`),
+  KEY `payment_method_id` (`payment_method_id`),
+  KEY `vendor_id` (`vendor_id`),
+  KEY `type` (`type`),
+  KEY `customer_id` (`customer_id`),
+  KEY `segment1_id` (`segment1_id`),
+  KEY `segment2_id` (`segment2_id`),
+  KEY `posted_status` (`posted_status`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `banknonpo_payment_detail`
+--
+
+DROP TABLE IF EXISTS `banknonpo_payment_detail`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `banknonpo_payment_detail` (
+  `banknonpo_payment_id` bigint(20) DEFAULT NULL,
+  `banknonpo_payment_detail_id` bigint(20) NOT NULL DEFAULT 0,
+  `coa_id` bigint(20) DEFAULT NULL,
+  `amount` decimal(25,2) DEFAULT NULL,
+  `memo` varchar(220) DEFAULT NULL,
+  `foreign_currency_id` bigint(20) unsigned DEFAULT 0,
+  `foreign_amount` decimal(25,2) DEFAULT 0.00,
+  `booked_rate` decimal(10,2) DEFAULT 0.00,
+  `department_id` bigint(20) unsigned NOT NULL DEFAULT 0,
+  `segment1_id` bigint(20) DEFAULT 0,
+  `segment2_id` bigint(20) DEFAULT 0,
+  `segment3_id` bigint(20) DEFAULT 0,
+  `segment4_id` bigint(20) DEFAULT 0,
+  `segment5_id` bigint(20) DEFAULT 0,
+  `segment6_id` bigint(20) DEFAULT 0,
+  `segment7_id` bigint(20) DEFAULT 0,
+  `segment8_id` bigint(20) DEFAULT 0,
+  `segment9_id` bigint(20) DEFAULT 0,
+  `segment10_id` bigint(20) DEFAULT 0,
+  `segment11_id` bigint(20) DEFAULT 0,
+  `segment12_id` bigint(20) DEFAULT 0,
+  `segment13_id` bigint(20) DEFAULT 0,
+  `segment14_id` bigint(20) DEFAULT 0,
+  `segment15_id` bigint(20) DEFAULT 0,
+  `module_id` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`banknonpo_payment_detail_id`),
+  UNIQUE KEY `XPKbanknonpo_payment_detail` (`banknonpo_payment_detail_id`),
+  KEY `bankpo_payment_id` (`banknonpo_payment_id`),
+  KEY `segment1_id` (`segment1_id`),
+  KEY `coa_id` (`coa_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `bankpo_group`
+--
+
+DROP TABLE IF EXISTS `bankpo_group`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `bankpo_group` (
+  `bankpo_group_id` bigint(20) NOT NULL DEFAULT 0,
+  `coa_id` bigint(20) DEFAULT 0,
+  `journal_number` varchar(20) DEFAULT NULL,
+  `journal_counter` int(11) DEFAULT 0,
+  `journal_prefix` varchar(20) DEFAULT NULL,
+  `date` date DEFAULT NULL,
+  `trans_date` date DEFAULT NULL,
+  `operator_id` bigint(20) DEFAULT 0,
+  `amount` decimal(20,2) DEFAULT 0.00,
+  `payment_method_id` bigint(20) DEFAULT 0,
+  `periode_id` bigint(20) DEFAULT 0,
+  `segment1_id` bigint(20) DEFAULT 0,
+  `segment2_id` bigint(20) DEFAULT 0,
+  `uniq_key_id` bigint(20) DEFAULT 0,
+  `memo` text DEFAULT NULL,
+  PRIMARY KEY (`bankpo_group_id`),
+  UNIQUE KEY `uniq_key_id` (`uniq_key_id`),
+  UNIQUE KEY `jurnal_number` (`journal_number`),
+  KEY `trans_date` (`trans_date`),
+  KEY `periode_id` (`periode_id`),
+  KEY `segment1_id` (`segment1_id`),
+  KEY `segment2_id` (`segment2_id`),
+  KEY `jur_number` (`journal_number`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `bankpo_group_detail`
+--
+
+DROP TABLE IF EXISTS `bankpo_group_detail`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `bankpo_group_detail` (
+  `bankpo_group_detail_id` bigint(20) NOT NULL DEFAULT 0,
+  `bankpo_group_id` bigint(20) NOT NULL DEFAULT 0,
+  `bankpo_payment_id` bigint(20) DEFAULT 0,
+  `date` date DEFAULT NULL,
+  `type` int(4) DEFAULT 0,
+  `ref_id` bigint(20) DEFAULT 0,
+  `vendor_id` bigint(20) DEFAULT 0,
+  `amount` decimal(22,2) DEFAULT 0.00,
+  `coa_id` bigint(20) DEFAULT 0,
+  `segment1_id` bigint(20) DEFAULT 0,
+  `segment2_id` bigint(20) DEFAULT 0,
+  `memo` text DEFAULT NULL,
+  PRIMARY KEY (`bankpo_group_detail_id`),
+  UNIQUE KEY `bankpo_group_id` (`bankpo_group_id`,`bankpo_payment_id`),
+  KEY `bankpo_group` (`bankpo_group_id`),
+  KEY `vendor_id` (`vendor_id`),
+  KEY `type` (`type`),
+  KEY `ref_id` (`ref_id`),
+  KEY `segment1_id` (`segment1_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `bankpo_history`
+--
+
+DROP TABLE IF EXISTS `bankpo_history`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `bankpo_history` (
+  `bankpo_history_id` bigint(20) NOT NULL DEFAULT 0,
+  `user_id` bigint(20) DEFAULT 0,
+  `journal_number` varchar(20) DEFAULT '0',
+  `date` datetime DEFAULT NULL,
+  `ref_id` bigint(20) DEFAULT 0,
+  `type` int(11) DEFAULT 0,
+  PRIMARY KEY (`bankpo_history_id`),
+  KEY `type` (`type`),
+  KEY `ref_id` (`ref_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `bankpo_payment`
+--
+
+DROP TABLE IF EXISTS `bankpo_payment`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `bankpo_payment` (
+  `bankpo_payment_id` bigint(20) NOT NULL DEFAULT 0,
+  `coa_id` bigint(20) DEFAULT NULL,
+  `journal_number` varchar(30) DEFAULT NULL,
+  `journal_counter` int(11) DEFAULT NULL,
+  `journal_prefix` varchar(20) DEFAULT NULL,
+  `date` date DEFAULT NULL,
+  `trans_date` date DEFAULT NULL,
+  `memo` text DEFAULT NULL,
+  `operator_id` bigint(20) DEFAULT NULL,
+  `operator_name` varchar(64) DEFAULT NULL,
+  `amount` decimal(20,2) DEFAULT NULL,
+  `ref_number` varchar(20) DEFAULT NULL,
+  `vendor_id` bigint(20) DEFAULT NULL,
+  `currency_id` bigint(20) DEFAULT NULL,
+  `payment_method` varchar(120) DEFAULT NULL,
+  `payment_method_id` bigint(20) DEFAULT 0,
+  `status` varchar(45) DEFAULT '',
+  `posted_status` int(11) DEFAULT 0,
+  `posted_by_id` bigint(20) DEFAULT 0,
+  `posted_date` datetime DEFAULT NULL,
+  `effective_date` datetime DEFAULT NULL,
+  `type` int(11) DEFAULT 0,
+  `customer_id` bigint(20) DEFAULT NULL,
+  `segment1_id` bigint(20) DEFAULT 0,
+  `segment2_id` bigint(20) DEFAULT 0,
+  `segment3_id` bigint(20) DEFAULT 0,
+  `segment4_id` bigint(20) DEFAULT 0,
+  `segment5_id` bigint(20) DEFAULT 0,
+  `segment6_id` bigint(20) DEFAULT 0,
+  `segment7_id` bigint(20) DEFAULT 0,
+  `segment8_id` bigint(20) DEFAULT 0,
+  `segment9_id` bigint(20) DEFAULT 0,
+  `segment10_id` bigint(20) DEFAULT 0,
+  `segment11_id` bigint(20) DEFAULT 0,
+  `segment12_id` bigint(20) DEFAULT 0,
+  `segment13_id` bigint(20) DEFAULT 0,
+  `segment14_id` bigint(20) DEFAULT 0,
+  `segment15_id` bigint(20) DEFAULT 0,
+  `posted_statis` int(11) DEFAULT 0,
+  `periode_id` bigint(20) DEFAULT 0,
+  `ref_id` bigint(20) DEFAULT 0,
+  `due_date` date DEFAULT NULL,
+  `uniq_id` bigint(20) DEFAULT 0,
+  PRIMARY KEY (`bankpo_payment_id`),
+  UNIQUE KEY `XPKbankpo_payment` (`bankpo_payment_id`),
+  UNIQUE KEY `Index_3` (`journal_number`),
+  KEY `payment_method_id` (`payment_method_id`),
+  KEY `refId` (`ref_id`),
+  KEY `periode_id` (`periode_id`),
+  KEY `type` (`type`),
+  KEY `posted_status` (`posted_status`),
+  KEY `trans_date` (`trans_date`),
+  KEY `coa_id` (`coa_id`),
+  KEY `vendor_id` (`vendor_id`),
+  KEY `customer_id` (`customer_id`),
+  KEY `segment1_id` (`segment1_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `bankpo_payment_detail`
+--
+
+DROP TABLE IF EXISTS `bankpo_payment_detail`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `bankpo_payment_detail` (
+  `bankpo_payment_id` bigint(20) DEFAULT NULL,
+  `bankpo_payment_detail_id` bigint(20) NOT NULL DEFAULT 0,
+  `coa_id` bigint(20) DEFAULT NULL,
+  `memo` varchar(220) DEFAULT NULL,
+  `invoice_id` bigint(20) DEFAULT NULL,
+  `currency_id` bigint(20) unsigned NOT NULL DEFAULT 0,
+  `booked_rate` decimal(25,2) DEFAULT NULL,
+  `payment_by_inv_currency_amount` decimal(25,2) DEFAULT NULL,
+  `payment_amount` decimal(25,2) DEFAULT NULL,
+  `segment1_id` bigint(20) DEFAULT 0,
+  `segment2_id` bigint(20) DEFAULT 0,
+  `segment3_id` bigint(20) DEFAULT 0,
+  `segment4_id` bigint(20) DEFAULT 0,
+  `segment5_id` bigint(20) DEFAULT 0,
+  `segment6_id` bigint(20) DEFAULT 0,
+  `segment7_id` bigint(20) DEFAULT 0,
+  `segment8_id` bigint(20) DEFAULT 0,
+  `segment9_id` bigint(20) DEFAULT 0,
+  `segment10_id` bigint(20) DEFAULT 0,
+  `segment11_id` bigint(20) DEFAULT 0,
+  `segment12_id` bigint(20) DEFAULT 0,
+  `segment13_id` bigint(20) DEFAULT 0,
+  `segment14_id` bigint(20) DEFAULT 0,
+  `segment15_id` bigint(20) DEFAULT 0,
+  `module_id` bigint(20) DEFAULT NULL,
+  `deduction` decimal(25,2) DEFAULT NULL,
+  `arap_memo_id` bigint(20) DEFAULT 0,
+  `vendor_id` bigint(20) DEFAULT NULL,
+  `tax_number` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`bankpo_payment_detail_id`),
+  UNIQUE KEY `XPKbankpo_payment_detail` (`bankpo_payment_detail_id`),
+  UNIQUE KEY `uniq_invoice` (`bankpo_payment_id`,`invoice_id`),
+  KEY `invoiceId` (`invoice_id`),
+  KEY `vendor_id` (`vendor_id`),
+  KEY `segment1_id` (`segment1_id`),
+  KEY `bankpo_payment_id` (`bankpo_payment_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `bg_master`
+--
+
+DROP TABLE IF EXISTS `bg_master`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `bg_master` (
+  `master_bg_id` bigint(20) NOT NULL DEFAULT 0,
+  `create_date` datetime DEFAULT NULL,
+  `user_id` bigint(20) DEFAULT 0,
+  `number` varchar(120) DEFAULT NULL,
+  `type` tinyint(4) DEFAULT 0,
+  `coa_id` bigint(20) DEFAULT 0,
+  `ref_type` int(4) DEFAULT 0,
+  `ref_id` bigint(20) DEFAULT 0,
+  `amount` decimal(22,2) DEFAULT 0.00,
+  `due_date` datetime DEFAULT NULL,
+  `bank_id` bigint(20) DEFAULT 0,
+  `payment_method_id` bigint(20) DEFAULT 0,
+  PRIMARY KEY (`master_bg_id`),
+  UNIQUE KEY `number` (`number`,`coa_id`,`type`),
+  KEY `number_key` (`number`),
+  KEY `type` (`type`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `budget_request`
+--
+
+DROP TABLE IF EXISTS `budget_request`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `budget_request` (
+  `budget_request_id` bigint(20) NOT NULL,
+  `journal_number` varchar(60) DEFAULT NULL,
+  `journal_prefix` varchar(20) DEFAULT '0',
+  `journal_counter` int(25) DEFAULT NULL,
+  `date` date DEFAULT NULL,
+  `trans_date` date DEFAULT NULL,
+  `periode_id` bigint(20) DEFAULT 0,
+  `memo` text DEFAULT NULL,
+  `user_id` bigint(20) DEFAULT 0,
+  `approval1_id` bigint(20) DEFAULT 0,
+  `approval1_date` datetime DEFAULT NULL,
+  `approval2_id` bigint(20) DEFAULT 0,
+  `approval2_date` datetime DEFAULT NULL,
+  `approval3_id` bigint(20) DEFAULT 0,
+  `approval3_date` datetime DEFAULT NULL,
+  `posted_status` int(11) DEFAULT NULL,
+  `posted_by_id` bigint(20) DEFAULT 0,
+  `posted_date` datetime DEFAULT NULL,
+  `department_id` bigint(20) DEFAULT 0,
+  `coa_id` bigint(20) DEFAULT 0,
+  `segment1_id` bigint(20) DEFAULT 0,
+  `segment2_id` bigint(20) DEFAULT 0,
+  `segment3_id` bigint(20) DEFAULT 0,
+  `segment4_id` bigint(20) DEFAULT 0,
+  `segment5_id` bigint(20) DEFAULT 0,
+  `segment6_id` bigint(20) DEFAULT 0,
+  `segment7_id` bigint(20) DEFAULT 0,
+  `segment8_id` bigint(20) DEFAULT 0,
+  `segment9_id` bigint(20) DEFAULT 0,
+  `segment10_id` bigint(20) DEFAULT 0,
+  `segment11_id` bigint(20) DEFAULT 0,
+  `segment12_id` bigint(20) DEFAULT 0,
+  `segment13_id` bigint(20) DEFAULT 0,
+  `segment14_id` bigint(20) DEFAULT 0,
+  `segment15_id` bigint(20) DEFAULT 0,
+  `uniq_key_id` bigint(20) DEFAULT 0,
+  `status` tinyint(4) DEFAULT 0,
+  `ref_id` bigint(20) DEFAULT 0,
+  `payment_type` tinyint(4) DEFAULT 0,
+  PRIMARY KEY (`budget_request_id`),
+  UNIQUE KEY `unix_jur_number` (`journal_number`),
+  KEY `jurnal_number` (`journal_number`),
+  KEY `trans_date` (`trans_date`),
+  KEY `periode_id` (`periode_id`),
+  KEY `app_1_date` (`approval1_date`),
+  KEY `app_2_date` (`approval2_date`),
+  KEY `posted_status` (`posted_status`),
+  KEY `coa_id` (`coa_id`),
+  KEY `segment1_id` (`segment1_id`),
+  KEY `ref_id` (`ref_id`),
+  KEY `payment_type` (`payment_type`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `budget_request_detail`
+--
+
+DROP TABLE IF EXISTS `budget_request_detail`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `budget_request_detail` (
+  `budget_request_detail_id` bigint(20) NOT NULL DEFAULT 0,
+  `budget_request_id` bigint(20) DEFAULT 0,
+  `date` datetime DEFAULT NULL,
+  `coa_id` bigint(20) DEFAULT 0,
+  `memo` text DEFAULT NULL,
+  `request` decimal(22,2) DEFAULT 0.00,
+  `segment1_id` bigint(20) DEFAULT 0,
+  `segment2_id` bigint(20) DEFAULT 0,
+  `segment3_id` bigint(20) DEFAULT 0,
+  `segment4_id` bigint(20) DEFAULT 0,
+  `segment5_id` bigint(20) DEFAULT 0,
+  `segment6_id` bigint(20) DEFAULT 0,
+  `segment7_id` bigint(20) DEFAULT 0,
+  `segment8_id` bigint(20) DEFAULT 0,
+  `segment9_id` bigint(20) DEFAULT 0,
+  `segment10_id` bigint(20) DEFAULT 0,
+  `segment11_id` bigint(20) DEFAULT 0,
+  `segment12_id` bigint(20) DEFAULT 0,
+  `segment13_id` bigint(20) DEFAULT 0,
+  `segment14_id` bigint(20) DEFAULT 0,
+  `segment15_id` bigint(20) DEFAULT 0,
+  `uniq_key_id` bigint(20) DEFAULT 0,
+  PRIMARY KEY (`budget_request_detail_id`),
+  KEY `budget_request_id` (`budget_request_id`),
+  KEY `coa_id` (`coa_id`),
+  KEY `segment1_id` (`segment1_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `cash_credit_card`
+--
+
+DROP TABLE IF EXISTS `cash_credit_card`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `cash_credit_card` (
+  `CC_ID` bigint(20) NOT NULL DEFAULT 0,
+  `CASH_PAYMENT_ID` bigint(20) NOT NULL DEFAULT 0,
+  `CC_NAME` varchar(20) DEFAULT NULL,
+  `CC_NUMBER` varchar(50) DEFAULT NULL,
+  `EXPIRED_DATE` date DEFAULT NULL,
+  `HOLDER_NAME` varchar(50) DEFAULT NULL,
+  `DEBIT_BANK_NAME` varchar(50) DEFAULT NULL,
+  `DEBIT_CARD_NAME` varchar(50) DEFAULT NULL,
+  `CHEQUE_ACCOUNT_NAME` varchar(50) DEFAULT NULL,
+  `CHEQUE_DUE_DATE` date DEFAULT NULL,
+  `CURRENCY_ID` bigint(20) NOT NULL DEFAULT 0,
+  `RATE` double(10,2) NOT NULL DEFAULT 0.00,
+  `AMOUNT` double NOT NULL DEFAULT 0,
+  `CHEQUE_BANK` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`CC_ID`),
+  UNIQUE KEY `XPKCASH_CREDIT_CARD` (`CC_ID`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `cash_flow_group`
+--
+
+DROP TABLE IF EXISTS `cash_flow_group`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `cash_flow_group` (
+  `cash_flow_group_id` bigint(25) NOT NULL,
+  `NAME` varchar(120) DEFAULT '',
+  `description` varchar(255) DEFAULT '',
+  `sequence` int(10) DEFAULT 0,
+  PRIMARY KEY (`cash_flow_group_id`),
+  UNIQUE KEY `NAME` (`NAME`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `cash_flow_setup`
+--
+
+DROP TABLE IF EXISTS `cash_flow_setup`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `cash_flow_setup` (
+  `cash_flow_setup_id` bigint(25) NOT NULL,
+  `cash_flow_group_id` bigint(25) DEFAULT 0,
+  `sequence_sub_group` int(10) DEFAULT 0,
+  `sub_group` varchar(120) DEFAULT '',
+  `coa_id` bigint(25) DEFAULT 0,
+  `value_displayed` int(10) DEFAULT 0,
+  PRIMARY KEY (`cash_flow_setup_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `cash_receive`
+--
+
+DROP TABLE IF EXISTS `cash_receive`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `cash_receive` (
+  `cash_receive_id` bigint(20) NOT NULL DEFAULT 0,
+  `coa_id` bigint(20) DEFAULT NULL,
+  `journal_number` varchar(30) DEFAULT NULL,
+  `journal_counter` int(11) DEFAULT NULL,
+  `journal_prefix` varchar(20) DEFAULT NULL,
+  `date` date DEFAULT NULL,
+  `trans_date` date DEFAULT NULL,
+  `memo` text DEFAULT NULL,
+  `operator_id` bigint(20) DEFAULT NULL,
+  `operator_name` varchar(64) DEFAULT NULL,
+  `amount` decimal(25,2) DEFAULT NULL,
+  `receive_from_id` bigint(20) DEFAULT NULL,
+  `receive_from_name` varchar(64) DEFAULT NULL,
+  `customer_id` bigint(20) DEFAULT NULL,
+  `type` int(11) DEFAULT NULL,
+  `in_out` int(11) DEFAULT 0,
+  `posted_status` int(11) DEFAULT 0,
+  `posted_by_id` bigint(20) DEFAULT 0,
+  `posted_date` datetime DEFAULT NULL,
+  `effective_date` datetime DEFAULT NULL,
+  `segment1_id` bigint(20) DEFAULT NULL,
+  `segment2_id` bigint(20) DEFAULT NULL,
+  `segment3_id` bigint(20) DEFAULT NULL,
+  `segment4_id` bigint(20) DEFAULT NULL,
+  `segment5_id` bigint(20) DEFAULT NULL,
+  `segment6_id` bigint(20) DEFAULT NULL,
+  `segment7_id` bigint(20) DEFAULT NULL,
+  `segment8_id` bigint(20) DEFAULT NULL,
+  `segment9_id` bigint(20) DEFAULT NULL,
+  `segment10_id` bigint(20) DEFAULT NULL,
+  `segment11_id` bigint(20) DEFAULT NULL,
+  `segment12_id` bigint(20) DEFAULT NULL,
+  `segment13_id` bigint(20) DEFAULT NULL,
+  `segment14_id` bigint(20) DEFAULT NULL,
+  `segment15_id` bigint(20) DEFAULT NULL,
+  `referensi_id` bigint(20) DEFAULT NULL,
+  `ref_pembayaran_id` bigint(20) DEFAULT 0,
+  `periode_id` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`cash_receive_id`),
+  UNIQUE KEY `XPKcash_receive` (`cash_receive_id`),
+  UNIQUE KEY `Index_3` (`journal_number`),
+  KEY `coa_id` (`coa_id`),
+  KEY `jurnal_number` (`journal_number`),
+  KEY `trans_date` (`trans_date`),
+  KEY `customer_id` (`customer_id`),
+  KEY `type` (`type`),
+  KEY `posted_status` (`posted_status`),
+  KEY `segment1_id` (`segment1_id`),
+  KEY `referensi_id` (`referensi_id`),
+  KEY `ref_pembayaran_id` (`ref_pembayaran_id`),
+  KEY `periode_id` (`periode_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `cash_receive_detail`
+--
+
+DROP TABLE IF EXISTS `cash_receive_detail`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `cash_receive_detail` (
+  `cash_receive_id` bigint(20) DEFAULT NULL,
+  `cash_receive_detail_id` bigint(20) NOT NULL DEFAULT 0,
+  `coa_id` bigint(20) DEFAULT NULL,
+  `foreign_currency_id` bigint(20) DEFAULT NULL,
+  `foreign_amount` decimal(25,2) DEFAULT NULL,
+  `booked_rate` decimal(10,2) DEFAULT NULL,
+  `amount` decimal(25,2) DEFAULT NULL,
+  `memo` varchar(220) DEFAULT NULL,
+  `in_out` int(11) DEFAULT 0,
+  `customer_id` bigint(20) DEFAULT 0,
+  `bymhd_coa_id` bigint(20) DEFAULT 0,
+  `segment15_id` bigint(20) DEFAULT 0,
+  `foreign_credit_amount` decimal(25,2) DEFAULT NULL,
+  `credit_amount` decimal(25,2) DEFAULT NULL,
+  `segment1_id` bigint(20) DEFAULT 0,
+  `segment2_id` bigint(20) DEFAULT 0,
+  `segment3_id` bigint(20) DEFAULT 0,
+  `segment4_id` bigint(20) DEFAULT 0,
+  `segment5_id` bigint(20) DEFAULT 0,
+  `segment6_id` bigint(20) DEFAULT 0,
+  `segment7_id` bigint(20) DEFAULT 0,
+  `segment8_id` bigint(20) DEFAULT 0,
+  `segment9_id` bigint(20) DEFAULT 0,
+  `segment10_id` bigint(20) DEFAULT 0,
+  `segment11_id` bigint(20) DEFAULT 0,
+  `segment12_id` bigint(20) DEFAULT 0,
+  `segment13_id` bigint(20) DEFAULT 0,
+  `segment14_id` bigint(20) DEFAULT 0,
+  `department_id` bigint(20) DEFAULT 0,
+  PRIMARY KEY (`cash_receive_detail_id`),
+  UNIQUE KEY `XPKcash_receive_detail` (`cash_receive_detail_id`),
+  KEY `cash_receive_id` (`cash_receive_id`),
+  KEY `coa_id` (`coa_id`),
+  KEY `customer_id` (`customer_id`),
+  KEY `segment1_id` (`segment1_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `casharchive`
+--
+
+DROP TABLE IF EXISTS `casharchive`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `casharchive` (
+  `archive_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `search_for` varchar(45) DEFAULT NULL,
+  `start_date` datetime DEFAULT NULL,
+  `end_date` datetime DEFAULT NULL,
+  `ignore_input_date` int(11) DEFAULT NULL,
+  `transaction_date` datetime DEFAULT NULL,
+  `ignore_transaction_date` int(11) DEFAULT NULL,
+  `journal_number` varchar(45) DEFAULT NULL,
+  `blank_journal_number` int(11) DEFAULT NULL,
+  `periode_id` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`archive_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `coa`
+--
+
+DROP TABLE IF EXISTS `coa`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `coa` (
+  `coa_id` bigint(20) NOT NULL DEFAULT 0,
+  `acc_ref_id` bigint(20) DEFAULT NULL,
+  `department_id` bigint(20) DEFAULT NULL,
+  `section_id` bigint(20) DEFAULT NULL,
+  `account_group` varchar(220) DEFAULT '',
+  `sub_account_group` varchar(220) DEFAULT '',
+  `type` varchar(220) DEFAULT '',
+  `account_level` varchar(220) DEFAULT '',
+  `code` varchar(64) DEFAULT NULL,
+  `name` varchar(220) DEFAULT NULL,
+  `level` int(11) DEFAULT NULL,
+  `saldo_normal` varchar(20) DEFAULT NULL,
+  `status` varchar(20) DEFAULT NULL,
+  `department_name` varchar(164) DEFAULT NULL,
+  `section_name` varchar(164) DEFAULT NULL,
+  `user_id` bigint(20) DEFAULT NULL,
+  `opening_balance` decimal(20,2) DEFAULT NULL,
+  `reg_date` date DEFAULT NULL,
+  `location_id` bigint(20) DEFAULT 0,
+  `departmental_coa` int(10) unsigned DEFAULT 0,
+  `coa_category_id` bigint(20) unsigned DEFAULT 0,
+  `coa_group_alias_id` bigint(20) unsigned DEFAULT 0,
+  `is_need_extra` int(10) unsigned DEFAULT NULL,
+  `debet_prefix_code` varchar(45) DEFAULT NULL,
+  `credit_prefix_code` varchar(45) DEFAULT NULL,
+  `company_id` bigint(20) unsigned DEFAULT NULL,
+  `account_class` int(11) DEFAULT 0,
+  `is_reversal` int(11) DEFAULT 0,
+  `auto_reverse` int(11) DEFAULT NULL,
+  `segment1_id` bigint(20) DEFAULT 0,
+  `segment2_id` bigint(20) DEFAULT 0,
+  `segment3_id` bigint(20) DEFAULT 0,
+  `segment4_id` bigint(20) DEFAULT 0,
+  `segment5_id` bigint(20) DEFAULT 0,
+  `segment6_id` bigint(20) DEFAULT 0,
+  `segment7_id` bigint(20) DEFAULT 0,
+  `segment8_id` bigint(20) DEFAULT 0,
+  `segment9_id` bigint(20) DEFAULT 0,
+  `segment10_id` bigint(20) DEFAULT 0,
+  `segment11_id` bigint(20) DEFAULT 0,
+  `segment12_id` bigint(20) DEFAULT 0,
+  `segment13_id` bigint(20) DEFAULT 0,
+  `segment14_id` bigint(20) DEFAULT 0,
+  `segment15_id` bigint(20) DEFAULT 0,
+  PRIMARY KEY (`coa_id`),
+  UNIQUE KEY `XPKcoa` (`coa_id`),
+  UNIQUE KEY `Index_3` (`code`),
+  KEY `code` (`code`),
+  KEY `acc_ref_id` (`acc_ref_id`),
+  KEY `account_group` (`account_group`),
+  KEY `level` (`level`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `coa_activity`
+--
+
+DROP TABLE IF EXISTS `coa_activity`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `coa_activity` (
+  `coa_activity_id` bigint(20) NOT NULL DEFAULT 0,
+  `coa_id` bigint(20) DEFAULT NULL,
+  `module_id` bigint(20) DEFAULT NULL,
+  `department_id` bigint(20) unsigned NOT NULL DEFAULT 0,
+  `section_id` bigint(20) unsigned NOT NULL DEFAULT 0,
+  PRIMARY KEY (`coa_activity_id`),
+  UNIQUE KEY `XPKcoa_activity` (`coa_activity_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `coa_activity_budget`
+--
+
+DROP TABLE IF EXISTS `coa_activity_budget`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `coa_activity_budget` (
+  `type` varchar(20) DEFAULT NULL,
+  `coa_activity_budget_id` bigint(20) NOT NULL DEFAULT 0,
+  `coa_id` bigint(20) DEFAULT NULL,
+  `admin_percent` decimal(10,2) DEFAULT NULL,
+  `logistic_percent` decimal(10,2) DEFAULT NULL,
+  `memo` text DEFAULT NULL,
+  `activity_period_id` bigint(20) unsigned DEFAULT 0,
+  `coa_expense_category_id` bigint(20) unsigned DEFAULT 0,
+  `coa_nature_expense_category_id` bigint(20) unsigned DEFAULT 0,
+  PRIMARY KEY (`coa_activity_budget_id`),
+  UNIQUE KEY `XPKcoa_activity_budget` (`coa_activity_budget_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `coa_activity_budget_detail`
+--
+
+DROP TABLE IF EXISTS `coa_activity_budget_detail`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `coa_activity_budget_detail` (
+  `coa_activity_budget_id` bigint(20) DEFAULT NULL,
+  `coa_activity_budget_detail_id` bigint(20) NOT NULL DEFAULT 0,
+  `percent` decimal(10,2) DEFAULT NULL,
+  `module_id` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`coa_activity_budget_detail_id`),
+  UNIQUE KEY `XPKcoa_activitity_budget_detai` (`coa_activity_budget_detail_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `coa_budget`
+--
+
+DROP TABLE IF EXISTS `coa_budget`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `coa_budget` (
+  `coa_id` bigint(20) DEFAULT 0,
+  `periode_id` bigint(20) DEFAULT 0,
+  `division_id` bigint(20) DEFAULT 0,
+  `department_id` bigint(20) DEFAULT 0,
+  `direktorat_id` bigint(20) DEFAULT 0,
+  `coa_budget_id` bigint(20) NOT NULL DEFAULT 0,
+  `amount` decimal(20,2) DEFAULT 0.00,
+  `bgt_month` int(11) DEFAULT 0,
+  `bgt_year` int(11) DEFAULT 1900,
+  `coa_code` varchar(45) DEFAULT NULL,
+  `section_id` bigint(20) DEFAULT 0,
+  `job_id` bigint(20) DEFAULT 0,
+  `coa_level_1_id` bigint(20) DEFAULT 0,
+  `coa_level_2_id` bigint(20) DEFAULT 0,
+  `coa_level_3_id` bigint(20) DEFAULT 0,
+  `coa_level_4_id` bigint(20) DEFAULT 0,
+  `coa_level_5_id` bigint(20) DEFAULT 0,
+  `coa_level_6_id` bigint(20) DEFAULT 0,
+  `coa_level_7_id` bigint(20) DEFAULT 0,
+  `sub_section_id` bigint(20) DEFAULT 0,
+  `segment1_id` bigint(20) DEFAULT 0,
+  `segment2_id` bigint(20) DEFAULT 0,
+  `segment3_id` bigint(20) DEFAULT 0,
+  `segment4_id` bigint(20) DEFAULT 0,
+  `segment5_id` bigint(20) DEFAULT 0,
+  `budget_type` int(2) DEFAULT 0,
+  PRIMARY KEY (`coa_budget_id`),
+  UNIQUE KEY `XPKcoa_budget` (`coa_budget_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `coa_opening_balance`
+--
+
+DROP TABLE IF EXISTS `coa_opening_balance`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `coa_opening_balance` (
+  `coa_opening_balance_id` bigint(20) NOT NULL DEFAULT 0,
+  `coa_id` bigint(20) DEFAULT NULL,
+  `periode_id` bigint(20) DEFAULT NULL,
+  `opening_balance` decimal(25,2) DEFAULT NULL,
+  PRIMARY KEY (`coa_opening_balance_id`),
+  KEY `coa_id` (`coa_id`),
+  KEY `periode_id` (`periode_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `coa_opening_balance_location`
+--
+
+DROP TABLE IF EXISTS `coa_opening_balance_location`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `coa_opening_balance_location` (
+  `coa_opening_balance_location_id` bigint(20) NOT NULL DEFAULT 0,
+  `coa_id` bigint(20) DEFAULT 0,
+  `periode_id` bigint(20) DEFAULT 0,
+  `opening_balance` decimal(20,2) DEFAULT 0.00,
+  `segment1_id` bigint(20) DEFAULT 0,
+  `coa_level1_id` bigint(20) DEFAULT 0,
+  `coa_level2_id` bigint(20) DEFAULT 0,
+  `coa_level3_id` bigint(20) DEFAULT 0,
+  `coa_level4_id` bigint(20) DEFAULT 0,
+  `coa_level5_id` bigint(20) DEFAULT 0,
+  `coa_level6_id` bigint(20) DEFAULT 0,
+  `coa_level7_id` bigint(20) DEFAULT 0,
+  PRIMARY KEY (`coa_opening_balance_location_id`),
+  KEY `coa_id` (`coa_id`),
+  KEY `periode_id` (`periode_id`),
+  KEY `segment1_id` (`segment1_id`),
+  KEY `coa_level1` (`coa_level1_id`),
+  KEY `coa_level2` (`coa_level2_id`),
+  KEY `coa_level3` (`coa_level3_id`),
+  KEY `coa_level4` (`coa_level4_id`),
+  KEY `coa_level5` (`coa_level5_id`),
+  KEY `coa_level6` (`coa_level6_id`),
+  KEY `coa_level7` (`coa_level7_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `cogs`
+--
+
+DROP TABLE IF EXISTS `cogs`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `cogs` (
+  `cogs_id` bigint(20) NOT NULL DEFAULT 0,
+  `item_master_id` bigint(20) DEFAULT 0,
+  `transaction_type` int(3) DEFAULT 0,
+  `ref_id` bigint(20) DEFAULT 0,
+  `transaction_number` varchar(50) DEFAULT '',
+  `old_cogs` decimal(22,2) DEFAULT 0.00,
+  `old_stock` decimal(22,3) DEFAULT 0.000,
+  `qty` decimal(22,2) DEFAULT 0.00,
+  `amount` decimal(22,2) DEFAULT 0.00,
+  `new_stock` decimal(22,3) DEFAULT 0.000,
+  `new_cogs` decimal(22,2) DEFAULT 0.00,
+  `note` text DEFAULT NULL,
+  `last_update` datetime DEFAULT NULL,
+  `user_id` bigint(20) DEFAULT 0,
+  `journal_number` varchar(20) DEFAULT NULL,
+  `journal_counter` int(4) DEFAULT 0,
+  `journal_prefix` varchar(20) DEFAULT NULL,
+  `posted_status` int(2) DEFAULT 0,
+  `posted_by_id` bigint(20) DEFAULT 0,
+  `posted_date` datetime DEFAULT NULL,
+  PRIMARY KEY (`cogs_id`),
+  KEY `trans_type` (`transaction_type`),
+  KEY `last_update` (`last_update`),
+  KEY `item_master` (`item_master_id`),
+  KEY `posted_status` (`posted_status`),
+  KEY `refId` (`ref_id`),
+  CONSTRAINT `FK9h593577kq5x4bd74q99hxkfg` FOREIGN KEY (`item_master_id`) REFERENCES `pos_item_master` (`item_master_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `company`
+--
+
+DROP TABLE IF EXISTS `company`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `company` (
+  `company_id` bigint(20) NOT NULL DEFAULT 0,
+  `name` varchar(120) DEFAULT NULL,
+  `serial_number` varchar(20) DEFAULT NULL,
+  `address` varchar(120) DEFAULT NULL,
+  `fiscal_year` int(11) DEFAULT NULL,
+  `end_fiscal_month` int(11) DEFAULT NULL,
+  `entry_start_month` int(11) DEFAULT NULL,
+  `number_of_period` int(11) DEFAULT NULL,
+  `cash_receive_code` char(2) DEFAULT '',
+  `pettycash_payment_code` char(2) DEFAULT '',
+  `pettycash_replace_code` char(2) DEFAULT '',
+  `bank_deposit_code` char(2) DEFAULT '',
+  `bank_payment_po_code` char(2) DEFAULT '',
+  `bank_payment_nonpo_code` char(2) DEFAULT '',
+  `purchase_order_code` char(2) DEFAULT '',
+  `general_ledger_code` char(2) DEFAULT '',
+  `max_pettycash_replenis` decimal(25,2) DEFAULT NULL,
+  `max_pettycash_transaction` decimal(25,2) DEFAULT NULL,
+  `booking_currency_code` varchar(20) DEFAULT NULL,
+  `booking_currency_id` bigint(20) DEFAULT NULL,
+  `system_location` bigint(20) DEFAULT NULL,
+  `activation_code` varchar(20) DEFAULT NULL,
+  `system_location_code` char(1) DEFAULT NULL,
+  `contact` varchar(64) DEFAULT NULL,
+  `address2` varchar(145) DEFAULT NULL,
+  `invoice_code` char(2) DEFAULT NULL,
+  `government_vat` decimal(10,2) DEFAULT NULL,
+  `department_level` int(10) unsigned DEFAULT 0,
+  `last_update` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `project_code` varchar(100) DEFAULT NULL,
+  `payment_code` varchar(100) DEFAULT NULL,
+  `install_budget_code` varchar(100) NOT NULL DEFAULT '',
+  `install_travel_code` varchar(100) NOT NULL DEFAULT '',
+  `install_settlement_code` varchar(100) NOT NULL DEFAULT '',
+  `customer_request_code` varchar(45) NOT NULL DEFAULT '',
+  `proposal_code` varchar(45) NOT NULL DEFAULT '',
+  `intro_letter_code` varchar(45) NOT NULL DEFAULT '',
+  `category_level` int(10) unsigned NOT NULL DEFAULT 0,
+  `email` varchar(145) NOT NULL DEFAULT '',
+  `website` varchar(145) NOT NULL DEFAULT '',
+  `phone` varchar(145) NOT NULL DEFAULT '',
+  `fax` varchar(145) NOT NULL DEFAULT '',
+  `shop_order_code` varchar(45) DEFAULT NULL,
+  `finish_good_code` varchar(45) DEFAULT NULL,
+  `delivery_order_code` varchar(45) DEFAULT NULL,
+  `purchase_request_code` varchar(45) DEFAULT NULL,
+  `return_goods_code` varchar(45) DEFAULT NULL,
+  `transfer_goods_code` varchar(45) DEFAULT NULL,
+  `opname_code` varchar(45) DEFAULT NULL,
+  `adjustment_code` varchar(45) DEFAULT NULL,
+  `costing_goods_code` varchar(45) DEFAULT NULL,
+  `integrated_hotel_system` int(10) unsigned DEFAULT NULL,
+  `integrated_finance_system` int(10) unsigned DEFAULT NULL,
+  `default_sales_margin` decimal(10,2) DEFAULT NULL,
+  `akrual_code` varchar(45) DEFAULT NULL,
+  `pinjaman_koperasi_code` varchar(45) DEFAULT NULL,
+  `pinjaman_bank_code` varchar(45) DEFAULT NULL,
+  `bayar_angsuran_code` varchar(45) DEFAULT NULL,
+  `bayar_angsuran_bank_code` varchar(45) DEFAULT NULL,
+  `pinjaman_koperasi_bank_code` varchar(45) DEFAULT NULL,
+  `bayar_angsuran_kop_bank_code` varchar(45) DEFAULT NULL,
+  `use_bkp` int(11) DEFAULT 0,
+  `tax_amount` decimal(10,2) DEFAULT 0.00,
+  `business_name` varchar(60) DEFAULT NULL,
+  `tax_number` varchar(60) DEFAULT NULL,
+  `multi_currency` int(11) DEFAULT 0,
+  `multi_bank` int(11) DEFAULT 0,
+  `business_type` int(11) DEFAULT 0,
+  `inventory_method` int(3) DEFAULT 0,
+  PRIMARY KEY (`company_id`),
+  UNIQUE KEY `XPKcompany` (`company_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci ROW_FORMAT=DYNAMIC;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `country`
+--
+
+DROP TABLE IF EXISTS `country`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `country` (
+  `country_id` bigint(20) NOT NULL DEFAULT 0,
+  `name` varchar(128) DEFAULT NULL,
+  `nationality` varchar(128) DEFAULT NULL,
+  `continent` varchar(100) NOT NULL DEFAULT '0',
+  `hub` varchar(20) DEFAULT NULL,
+  `description` varchar(20) DEFAULT NULL,
+  `company_id` bigint(20) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`country_id`),
+  UNIQUE KEY `XPKcountry` (`country_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `credit_card`
+--
+
+DROP TABLE IF EXISTS `credit_card`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `credit_card` (
+  `CC_ID` bigint(20) NOT NULL DEFAULT 0,
+  `CC_NAME` varchar(20) DEFAULT NULL,
+  `CC_NUMBER` varchar(50) DEFAULT NULL,
+  `EXPIRED_DATE` date DEFAULT NULL,
+  `HOLDER_NAME` varchar(50) DEFAULT NULL,
+  `DEBIT_BANK_NAME` varchar(50) DEFAULT NULL,
+  `DEBIT_CARD_NAME` varchar(50) DEFAULT NULL,
+  `CHEQUE_ACCOUNT_NAME` varchar(50) DEFAULT NULL,
+  `CHEQUE_DUE_DATE` date DEFAULT NULL,
+  `CURRENCY_ID` bigint(20) NOT NULL DEFAULT 0,
+  `RATE` double(10,2) NOT NULL DEFAULT 0.00,
+  `AMOUNT` double NOT NULL DEFAULT 0,
+  `CHEQUE_BANK` varchar(50) DEFAULT NULL,
+  `PAYMENT_ID` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`CC_ID`),
+  UNIQUE KEY `XPKCASH_CREDIT_CARD` (`CC_ID`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `currency`
+--
+
+DROP TABLE IF EXISTS `currency`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `currency` (
+  `currency_id` bigint(20) NOT NULL DEFAULT 0,
+  `currency_code` varchar(20) DEFAULT NULL,
+  `description` varchar(120) DEFAULT NULL,
+  `company_id` bigint(20) DEFAULT 0,
+  `rate` double DEFAULT 0,
+  `coa_id` bigint(20) DEFAULT 0,
+  PRIMARY KEY (`currency_id`),
+  UNIQUE KEY `XPKcurrency` (`currency_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci ROW_FORMAT=DYNAMIC;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `customer`
+--
+
+DROP TABLE IF EXISTS `customer`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `customer` (
+  `customer_id` bigint(20) NOT NULL DEFAULT 0,
+  `name` varchar(250) DEFAULT NULL,
+  `address` varchar(200) DEFAULT NULL,
+  `city` varchar(64) DEFAULT '',
+  `country_name` varchar(64) DEFAULT '',
+  `state` varchar(64) DEFAULT '',
+  `code` varchar(64) DEFAULT '',
+  `counter` int(11) DEFAULT 0,
+  `reg_date` date DEFAULT NULL,
+  `status` varchar(20) DEFAULT 'APPROVED',
+  `id_number` varchar(20) DEFAULT '',
+  `id_type` varchar(20) DEFAULT '',
+  `login_id` varchar(20) DEFAULT '',
+  `password` varchar(20) DEFAULT '',
+  `salutation` varchar(20) DEFAULT '',
+  `phone` varchar(40) DEFAULT '',
+  `hp` varchar(20) DEFAULT '',
+  `approve_by` varchar(20) DEFAULT '',
+  `approve_date` date DEFAULT NULL,
+  `occupation` varchar(20) DEFAULT '',
+  `email` varchar(100) DEFAULT '',
+  `company_country_id` bigint(20) DEFAULT 0,
+  `nationality_name` varchar(20) DEFAULT '',
+  `nationality_id` bigint(20) unsigned DEFAULT 0,
+  `note` text DEFAULT NULL,
+  `dob` date DEFAULT NULL,
+  `interest` varchar(20) DEFAULT '',
+  `dob_ignore` int(11) DEFAULT 0,
+  `company_state_id` bigint(20) DEFAULT 0,
+  `credit_limit` decimal(10,2) DEFAULT 0.00,
+  `company_id` bigint(20) DEFAULT 0,
+  `npwp` varchar(100) DEFAULT '',
+  `type` int(11) DEFAULT 1,
+  `contact_person` varchar(100) DEFAULT '',
+  `zip_code` varchar(100) DEFAULT '',
+  `fax` varchar(100) DEFAULT '',
+  `website` varchar(100) DEFAULT '',
+  `phone_area` varchar(5) DEFAULT '',
+  `fax_area` varchar(5) DEFAULT '',
+  `middle_name` varchar(45) DEFAULT '',
+  `last_name` varchar(65) DEFAULT '',
+  `contact_middle_name` varchar(45) DEFAULT '',
+  `contact_last_name` varchar(65) DEFAULT '',
+  `contact_phone_area` varchar(45) DEFAULT '',
+  `contact_phone` varchar(45) DEFAULT '',
+  `contact_position` varchar(100) DEFAULT '',
+  `contact_email` varchar(100) DEFAULT '',
+  `address_2` varchar(200) DEFAULT NULL,
+  `country_code` varchar(50) DEFAULT NULL,
+  `induk_customer_id` bigint(20) DEFAULT 0,
+  `posisi_contact_person` varchar(100) DEFAULT NULL,
+  `def_due_date_day` int(10) DEFAULT 0,
+  `gol_price` varchar(45) DEFAULT 'gol_1',
+  `denda_account_id` bigint(20) unsigned DEFAULT 0,
+  `personal_discount` double DEFAULT 0,
+  `expired_date` date DEFAULT NULL,
+  `animal_name` varchar(45) DEFAULT NULL,
+  `postal_code` varchar(45) DEFAULT NULL,
+  `phone_area1` varchar(45) DEFAULT NULL,
+  `area_code` varchar(100) DEFAULT NULL,
+  `propinsi_id` bigint(20) DEFAULT 0,
+  `kabupaten_id` bigint(20) DEFAULT 0,
+  `kecamatan_id` bigint(20) DEFAULT 0,
+  `is_pkp` int(11) DEFAULT 0,
+  `pkp_company` varchar(120) DEFAULT NULL,
+  `pkp_address` varchar(240) DEFAULT NULL,
+  `pkp_nppkp` varchar(240) DEFAULT NULL,
+  `sch_senin` int(11) DEFAULT 0,
+  `sch_selasa` int(11) DEFAULT 0,
+  `sch_rabu` int(11) DEFAULT 0,
+  `sch_kamis` int(11) DEFAULT 0,
+  `sch_jumat` int(11) DEFAULT 0,
+  `sch_sabtu` int(11) DEFAULT 0,
+  `sch_minggu` int(11) DEFAULT 0,
+  `ignore_loc_credit_limit` int(11) DEFAULT 0,
+  `due_date` int(11) DEFAULT 0,
+  `max_pending_order` int(11) DEFAULT 0,
+  `QUERY_STRING` text DEFAULT NULL,
+  `STS_UPLOAD` int(3) DEFAULT 1,
+  `jatuh_tempo` int(11) DEFAULT 0,
+  `voucher_type` int(4) DEFAULT 0,
+  `foc_limit` decimal(25,2) DEFAULT 0.00,
+  `start_voucher` date DEFAULT NULL,
+  `marketing_id` bigint(20) DEFAULT 0,
+  `nama_npwp` varchar(240) DEFAULT NULL,
+  `alamat_npwp` varchar(240) DEFAULT NULL,
+  `ar_coa_id` bigint(20) DEFAULT 0,
+  `gender` varchar(20) DEFAULT NULL,
+  `marital_status` varchar(20) DEFAULT NULL COMMENT 'status perkawinan, kawin / belum kawin / cerai AFTER `gender`',
+  `title` varchar(10) DEFAULT '',
+  `default_payment_id` bigint(20) DEFAULT 0,
+  `default_merchant_id` bigint(20) DEFAULT 0,
+  `default_bank_id` bigint(20) DEFAULT 0,
+  `woocommerce_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`customer_id`),
+  UNIQUE KEY `XPKcustomer` (`customer_id`),
+  UNIQUE KEY `code` (`code`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `insert_customer` AFTER INSERT ON `customer` FOR EACH ROW BEGIN
+	INSERT INTO `android_logs` (
+	logs_id,table_name,reff_id,old_id,sts_loc1,sts_loc2,sts_loc3,sts_loc4,sts_loc5,sts_loc6,sts_loc7,sts_loc8,sts_loc9,sts_loc10,
+	sts_loc11,sts_loc12,sts_loc13,sts_loc14,sts_loc15,sts_loc16,sts_loc17,sts_loc18,sts_loc19,sts_loc20,
+	sts_loc21,sts_loc22,sts_loc23,sts_loc24,sts_loc25,sts_loc26,sts_loc27,sts_loc28,sts_loc29,sts_loc30,
+	action_handle) VALUE (
+	  UUID(),
+	  "customer",
+	  new.customer_id,
+	  0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  "insert"
+	  );
+    END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `update_customer` AFTER UPDATE ON `customer` FOR EACH ROW BEGIN
+	INSERT INTO `android_logs` (
+	logs_id,table_name,reff_id,old_id,sts_loc1,sts_loc2,sts_loc3,sts_loc4,sts_loc5,sts_loc6,sts_loc7,sts_loc8,sts_loc9,sts_loc10,
+	sts_loc11,sts_loc12,sts_loc13,sts_loc14,sts_loc15,sts_loc16,sts_loc17,sts_loc18,sts_loc19,sts_loc20,
+	sts_loc21,sts_loc22,sts_loc23,sts_loc24,sts_loc25,sts_loc26,sts_loc27,sts_loc28,sts_loc29,sts_loc30,
+	action_handle) VALUE (
+	  UUID(),
+	  "customer",
+	  new.customer_id,
+	  old.customer_id,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  "update"
+	);
+    END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `delete_customer` BEFORE DELETE ON `customer` FOR EACH ROW BEGIN
+	INSERT INTO `android_logs` (
+	logs_id,table_name,reff_id,old_id,sts_loc1,sts_loc2,sts_loc3,sts_loc4,sts_loc5,sts_loc6,sts_loc7,sts_loc8,sts_loc9,sts_loc10,
+	sts_loc11,sts_loc12,sts_loc13,sts_loc14,sts_loc15,sts_loc16,sts_loc17,sts_loc18,sts_loc19,sts_loc20,
+	sts_loc21,sts_loc22,sts_loc23,sts_loc24,sts_loc25,sts_loc26,sts_loc27,sts_loc28,sts_loc29,sts_loc30,
+	action_handle) VALUE (
+	  UUID(),
+	  "customer",
+	  old.customer_id,
+	  0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  "delete"
+	);
+    END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+
+--
+-- Table structure for table `cutoff_hutang`
+--
+
+DROP TABLE IF EXISTS `cutoff_hutang`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `cutoff_hutang` (
+  `cutoff_hutang_id` bigint(20) NOT NULL DEFAULT 0,
+  `number` varchar(50) DEFAULT NULL,
+  `memo` varchar(255) DEFAULT NULL,
+  `vendor_id` bigint(20) DEFAULT NULL,
+  `date` datetime DEFAULT NULL,
+  `trans_date` datetime DEFAULT NULL,
+  `type` tinyint(2) DEFAULT 0,
+  `user_id` bigint(20) DEFAULT 0,
+  `posted_status` tinyint(2) DEFAULT 0,
+  `posted_date` datetime DEFAULT NULL,
+  `posted_by_id` bigint(20) DEFAULT 0,
+  PRIMARY KEY (`cutoff_hutang_id`),
+  KEY `trans_date` (`trans_date`),
+  KEY `type` (`type`),
+  KEY `vendor_id` (`vendor_id`),
+  KEY `posted_status` (`posted_status`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `cutoff_hutang_detail`
+--
+
+DROP TABLE IF EXISTS `cutoff_hutang_detail`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `cutoff_hutang_detail` (
+  `cutoff_hutang_detail_id` bigint(20) NOT NULL DEFAULT 0,
+  `cutoff_hutang_id` bigint(20) DEFAULT 0,
+  `ref_type` tinyint(2) DEFAULT 0,
+  `ref_id` bigint(20) DEFAULT 0,
+  `ref_number` varchar(50) DEFAULT NULL,
+  `system_amount` decimal(22,2) DEFAULT 0.00,
+  `real_amount` decimal(22,2) DEFAULT 0.00,
+  `status` int(3) DEFAULT 0,
+  PRIMARY KEY (`cutoff_hutang_detail_id`),
+  KEY `reftype` (`ref_type`),
+  KEY `refid` (`ref_id`),
+  KEY `ref_type` (`ref_type`),
+  KEY `ref_id` (`ref_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `dashboard_summary_grab`
+--
+
+DROP TABLE IF EXISTS `dashboard_summary_grab`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `dashboard_summary_grab` (
+  `dashboard_summary_grab_id` bigint(20) NOT NULL,
+  `created_at` datetime(6) DEFAULT NULL,
+  `product` varchar(255) DEFAULT NULL,
+  `sales_amount` decimal(19,2) DEFAULT NULL,
+  `sales_amount_today` decimal(19,2) DEFAULT NULL,
+  `total_sales` int(11) DEFAULT NULL,
+  `total_sales_today` int(11) DEFAULT NULL,
+  `updated_at` datetime(6) DEFAULT NULL,
+  PRIMARY KEY (`dashboard_summary_grab_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `department`
+--
+
+DROP TABLE IF EXISTS `department`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `department` (
+  `department_id` bigint(20) NOT NULL DEFAULT 0,
+  `name` varchar(64) DEFAULT NULL,
+  `description` varchar(120) DEFAULT NULL,
+  `ref_id` bigint(20) unsigned NOT NULL DEFAULT 0,
+  `code` varchar(45) NOT NULL DEFAULT '',
+  `level` int(10) unsigned NOT NULL DEFAULT 0,
+  `type` varchar(45) NOT NULL DEFAULT '',
+  `company_id` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`department_id`),
+  UNIQUE KEY `XPKdepartmet` (`department_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `desa`
+--
+
+DROP TABLE IF EXISTS `desa`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `desa` (
+  `desa_id` bigint(20) unsigned NOT NULL DEFAULT 0,
+  `kecamatan_id` bigint(20) unsigned NOT NULL DEFAULT 0,
+  `kode` varchar(10) DEFAULT NULL,
+  `nama` varchar(128) DEFAULT NULL,
+  PRIMARY KEY (`desa_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `dinas`
+--
+
+DROP TABLE IF EXISTS `dinas`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `dinas` (
+  `dinas_id` bigint(20) NOT NULL DEFAULT 0,
+  `nama` varchar(220) DEFAULT NULL,
+  PRIMARY KEY (`dinas_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `dinas_unit`
+--
+
+DROP TABLE IF EXISTS `dinas_unit`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `dinas_unit` (
+  `dinas_id` bigint(20) DEFAULT NULL,
+  `dinas_unit_id` bigint(20) NOT NULL DEFAULT 0,
+  `nama` varchar(220) DEFAULT NULL,
+  PRIMARY KEY (`dinas_unit_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `document_history`
+--
+
+DROP TABLE IF EXISTS `document_history`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `document_history` (
+  `document_history_id` bigint(20) NOT NULL DEFAULT 0,
+  `type` tinyint(4) DEFAULT 0,
+  `user_id` bigint(20) DEFAULT 0,
+  `employee_id` bigint(20) DEFAULT 0,
+  `description` text DEFAULT NULL,
+  `ref_id` bigint(20) DEFAULT 0,
+  `date` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`document_history_id`),
+  KEY `type` (`type`,`ref_id`),
+  KEY `typex` (`type`),
+  KEY `type_user` (`type`,`user_id`),
+  KEY `type_ref_id` (`type`,`ref_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `employee`
+--
+
+DROP TABLE IF EXISTS `employee`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `employee` (
+  `employee_id` bigint(20) NOT NULL DEFAULT 0,
+  `department_id` bigint(20) DEFAULT NULL,
+  `section_id` bigint(20) DEFAULT NULL,
+  `name` varchar(64) DEFAULT NULL,
+  `address` varchar(120) DEFAULT NULL,
+  `city` varchar(120) DEFAULT NULL,
+  `state` varchar(120) DEFAULT NULL,
+  `country_name` varchar(120) DEFAULT NULL,
+  `emp_num` varchar(20) DEFAULT NULL,
+  `phone` varchar(20) DEFAULT NULL,
+  `hp` varchar(20) DEFAULT NULL,
+  `marital_status` varchar(20) DEFAULT NULL,
+  `dob` date DEFAULT NULL,
+  `commencing_date` date DEFAULT NULL,
+  `jamsostek` varchar(20) DEFAULT NULL,
+  `emp_status` varchar(20) DEFAULT NULL,
+  `id_number` varchar(20) DEFAULT NULL,
+  `id_type` varchar(20) DEFAULT NULL,
+  `jamsostek_id` varchar(20) DEFAULT NULL,
+  `country_id` bigint(20) DEFAULT NULL,
+  `nationality_id` bigint(20) DEFAULT NULL,
+  `nationality_name` varchar(120) DEFAULT NULL,
+  `emp_type` varchar(64) DEFAULT NULL,
+  `resign_date` date DEFAULT NULL,
+  `resign_reason` varchar(64) DEFAULT NULL,
+  `resign_note` varchar(120) DEFAULT NULL,
+  `contract_end` date DEFAULT NULL,
+  `ignore_birth` int(11) DEFAULT NULL,
+  `location_id` bigint(20) DEFAULT 0,
+  `company_id` bigint(20) DEFAULT 0,
+  `position` varchar(145) DEFAULT '-',
+  `can_take_advance` int(11) DEFAULT NULL,
+  `is_sales` int(11) DEFAULT 0,
+  `is_driver` int(11) DEFAULT 0,
+  `is_teknisi` int(11) DEFAULT 0,
+  `is_marketing` int(11) DEFAULT 0,
+  `is_therapist` int(11) DEFAULT 0,
+  PRIMARY KEY (`employee_id`),
+  UNIQUE KEY `XPKemployee` (`employee_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `employee_attendance`
+--
+
+DROP TABLE IF EXISTS `employee_attendance`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `employee_attendance` (
+  `employee_attendance_id` bigint(20) NOT NULL,
+  `user_id` bigint(20) DEFAULT 0,
+  `employee_id` bigint(20) DEFAULT 0,
+  `full_name` varchar(120) DEFAULT NULL,
+  `location_id` bigint(20) DEFAULT 0,
+  `date` date DEFAULT NULL,
+  `check_in_date` datetime DEFAULT NULL,
+  `check_out_date` datetime DEFAULT NULL,
+  `img_path_check_in` text DEFAULT NULL,
+  `img_path_check_out` text DEFAULT NULL,
+  `shift_id` bigint(25) DEFAULT 0,
+  PRIMARY KEY (`employee_attendance_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `exchangerate`
+--
+
+DROP TABLE IF EXISTS `exchangerate`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `exchangerate` (
+  `exchangerate_id` bigint(20) NOT NULL DEFAULT 0,
+  `value_usd` decimal(10,2) DEFAULT NULL,
+  `date` datetime DEFAULT NULL,
+  `value_idr` decimal(10,2) DEFAULT NULL,
+  `value_euro` decimal(10,2) DEFAULT NULL,
+  `status` int(11) DEFAULT NULL,
+  `user_id` bigint(20) DEFAULT NULL,
+  `currency_idr_id` bigint(20) unsigned NOT NULL DEFAULT 0,
+  `currency_usd_id` bigint(20) unsigned NOT NULL DEFAULT 0,
+  `currency_euro_id` bigint(20) unsigned NOT NULL DEFAULT 0,
+  `company_id` bigint(20) NOT NULL DEFAULT 0,
+  `value_yen` decimal(10,2) DEFAULT 0.00,
+  `currency_yen_id` bigint(20) DEFAULT 0,
+  `value_asd` decimal(10,2) DEFAULT 0.00,
+  `currency_asd_id` bigint(20) DEFAULT 0,
+  PRIMARY KEY (`exchangerate_id`),
+  UNIQUE KEY `XPKexchangerate` (`exchangerate_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `faktur_pajak`
+--
+
+DROP TABLE IF EXISTS `faktur_pajak`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `faktur_pajak` (
+  `faktur_pajak_id` bigint(20) DEFAULT NULL,
+  `nama_pkp` varchar(300) DEFAULT NULL,
+  `number` varchar(45) DEFAULT NULL,
+  `counter` int(11) DEFAULT NULL,
+  `transfer_number` varchar(45) DEFAULT NULL,
+  `sales_number` varchar(45) DEFAULT NULL,
+  `pkp_address` varchar(60) DEFAULT NULL,
+  `npwp_pkp` varchar(60) DEFAULT NULL,
+  `customer_id` bigint(20) DEFAULT 0,
+  `customer_address` varchar(60) DEFAULT NULL,
+  `sales_id` bigint(20) DEFAULT 0,
+  `prefix_number` varchar(30) DEFAULT NULL,
+  `location_id` bigint(20) DEFAULT 0,
+  `npwp_customer` varchar(45) DEFAULT NULL,
+  `type_faktur` int(11) DEFAULT 0,
+  `date` datetime DEFAULT NULL,
+  `location_to_id` bigint(20) DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `faktur_pajak_detail`
+--
+
+DROP TABLE IF EXISTS `faktur_pajak_detail`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `faktur_pajak_detail` (
+  `faktur_pajak_detail_id` bigint(20) DEFAULT NULL,
+  `faktur_pajak_id` bigint(20) DEFAULT NULL,
+  `item_master_id` bigint(20) DEFAULT NULL,
+  `item_name` varchar(300) DEFAULT NULL,
+  `total` double DEFAULT NULL,
+  `discount` double DEFAULT NULL,
+  `qty` double DEFAULT 0,
+  `transfer_id` bigint(20) DEFAULT 0,
+  `price` float(10,2) DEFAULT NULL,
+  `date` datetime DEFAULT NULL,
+  `counter` int(11) DEFAULT 0,
+  `sales_id` bigint(20) DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `file_upload`
+--
+
+DROP TABLE IF EXISTS `file_upload`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `file_upload` (
+  `file_upload_id` bigint(20) NOT NULL DEFAULT 0,
+  `reff_id` bigint(20) DEFAULT 0,
+  `type` int(3) DEFAULT 0,
+  `file_name` varchar(100) DEFAULT NULL,
+  `original_name` varchar(100) DEFAULT NULL,
+  `note` text DEFAULT NULL,
+  `upload_date` datetime DEFAULT NULL,
+  `file_type` varchar(100) DEFAULT NULL,
+  `user_id` bigint(20) DEFAULT 0,
+  PRIMARY KEY (`file_upload_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `giro`
+--
+
+DROP TABLE IF EXISTS `giro`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `giro` (
+  `giro_id` bigint(20) NOT NULL DEFAULT 0,
+  `name` varchar(120) DEFAULT NULL,
+  `coa_id` bigint(20) DEFAULT 0,
+  PRIMARY KEY (`giro_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `gl`
+--
+
+DROP TABLE IF EXISTS `gl`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `gl` (
+  `gl_id` bigint(20) NOT NULL DEFAULT 0,
+  `journal_number` varchar(60) DEFAULT NULL,
+  `journal_counter` int(25) DEFAULT NULL,
+  `journal_prefix` varchar(20) DEFAULT NULL,
+  `date` date DEFAULT NULL,
+  `trans_date` date DEFAULT NULL,
+  `operator_id` bigint(20) DEFAULT NULL,
+  `operator_name` varchar(60) DEFAULT NULL,
+  `journal_type` int(11) DEFAULT NULL,
+  `owner_id` bigint(20) DEFAULT NULL,
+  `ref_number` varchar(25) DEFAULT NULL,
+  `currency_id` bigint(20) DEFAULT NULL,
+  `memo` text DEFAULT NULL,
+  `period_id` bigint(20) NOT NULL DEFAULT 0,
+  `activity_status` varchar(45) DEFAULT '',
+  `not_activity_base` int(10) unsigned DEFAULT NULL,
+  `is_reversal` int(11) DEFAULT 0,
+  `reversal_date` datetime DEFAULT NULL,
+  `reversal_type` int(11) DEFAULT 0,
+  `reversal_status` int(11) DEFAULT 0,
+  `posted_status` int(11) DEFAULT 0,
+  `posted_by_id` bigint(20) DEFAULT 0,
+  `posted_date` datetime DEFAULT NULL,
+  `effective_date` datetime DEFAULT NULL,
+  `referensi_id` bigint(20) DEFAULT NULL,
+  `ref_journal_number` varchar(60) DEFAULT '',
+  PRIMARY KEY (`gl_id`),
+  UNIQUE KEY `XPKgl` (`gl_id`),
+  UNIQUE KEY `uniqjurnal_number` (`journal_number`),
+  KEY `ownerId` (`owner_id`),
+  KEY `period` (`period_id`),
+  KEY `date` (`date`),
+  KEY `jurnal_number` (`journal_number`),
+  KEY `trans_date` (`trans_date`),
+  KEY `jurnal_type` (`journal_type`),
+  KEY `posted_status` (`posted_status`),
+  KEY `referensi_id` (`referensi_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `gl_detail`
+--
+
+DROP TABLE IF EXISTS `gl_detail`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `gl_detail` (
+  `gl_id` bigint(20) DEFAULT NULL,
+  `gl_detail_id` bigint(20) NOT NULL DEFAULT 0,
+  `coa_id` bigint(20) DEFAULT NULL,
+  `debet` decimal(25,2) DEFAULT NULL,
+  `credit` decimal(25,2) DEFAULT NULL,
+  `foreign_currency_id` bigint(20) DEFAULT NULL,
+  `foreign_currency_amount` decimal(25,2) DEFAULT NULL,
+  `memo` text DEFAULT NULL,
+  `booked_rate` decimal(25,2) DEFAULT NULL,
+  `department_id` bigint(20) DEFAULT 0,
+  `section_id` bigint(20) DEFAULT 0,
+  `sub_section_id` bigint(20) DEFAULT 0,
+  `job_id` bigint(20) DEFAULT 0,
+  `status_transaksi` int(11) DEFAULT 0,
+  `customer_id` bigint(20) DEFAULT 0,
+  `division_id` bigint(20) DEFAULT NULL,
+  `directorate_id` bigint(20) DEFAULT NULL,
+  `coa_level1_id` bigint(20) DEFAULT 0,
+  `coa_level2_id` bigint(20) DEFAULT 0,
+  `coa_level3_id` bigint(20) DEFAULT 0,
+  `coa_level4_id` bigint(20) DEFAULT 0,
+  `coa_level5_id` bigint(20) DEFAULT 0,
+  `coa_level6_id` bigint(20) DEFAULT 0,
+  `coa_level7_id` bigint(20) DEFAULT 0,
+  `dep_level1_id` bigint(20) DEFAULT 0,
+  `dep_level2_id` bigint(20) DEFAULT 0,
+  `dep_level3_id` bigint(20) DEFAULT 0,
+  `dep_level4_id` bigint(20) DEFAULT 0,
+  `dep_level5_id` bigint(20) DEFAULT 0,
+  `segment1_id` bigint(20) DEFAULT 0,
+  `segment2_id` bigint(20) DEFAULT 0,
+  `segment3_id` bigint(20) DEFAULT 0,
+  `segment4_id` bigint(20) DEFAULT 0,
+  `segment5_id` bigint(20) DEFAULT 0,
+  `segment6_id` bigint(20) DEFAULT 0,
+  `segment7_id` bigint(20) DEFAULT 0,
+  `segment8_id` bigint(20) DEFAULT 0,
+  `segment9_id` bigint(20) DEFAULT 0,
+  `segment10_id` bigint(20) DEFAULT 0,
+  `segment11_id` bigint(20) DEFAULT 0,
+  `segment12_id` bigint(20) DEFAULT 0,
+  `segment13_id` bigint(20) DEFAULT 0,
+  `segment14_id` bigint(20) DEFAULT 0,
+  `segment15_id` bigint(20) DEFAULT 0,
+  `module_id` bigint(20) DEFAULT 0,
+  `gldetail_id` bigint(20) DEFAULT 0,
+  `dep_level0_id` bigint(20) DEFAULT 0,
+  PRIMARY KEY (`gl_detail_id`),
+  UNIQUE KEY `XPKgl_detail` (`gl_detail_id`),
+  KEY `coa_id` (`coa_id`),
+  KEY `gl_id` (`gl_id`),
+  KEY `coa_level1` (`coa_level1_id`),
+  KEY `coa_level2` (`coa_level2_id`),
+  KEY `coa_lovel3` (`coa_level3_id`),
+  KEY `coa_level4` (`coa_level4_id`),
+  KEY `coa_level5` (`coa_level5_id`),
+  KEY `coa_level6` (`coa_level6_id`),
+  KEY `coa_level7` (`coa_level7_id`),
+  KEY `segment1` (`segment1_id`),
+  KEY `segment2` (`segment2_id`),
+  KEY `segment3` (`segment3_id`),
+  KEY `segment4` (`segment4_id`),
+  KEY `segment5` (`segment5_id`),
+  KEY `segment6` (`segment6_id`),
+  KEY `segment7` (`segment7_id`),
+  KEY `segment8` (`segment8_id`),
+  KEY `segment9` (`segment9_id`),
+  KEY `segment10` (`segment10_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `gn_product`
+--
+
+DROP TABLE IF EXISTS `gn_product`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `gn_product` (
+  `product_id` bigint(25) NOT NULL,
+  `gn_product_id` varchar(30) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `spu` varchar(255) DEFAULT NULL,
+  `full_category_id` varchar(255) DEFAULT NULL,
+  `sale_status` varchar(255) DEFAULT NULL,
+  `conditions` varchar(255) DEFAULT NULL,
+  `short_description` varchar(255) DEFAULT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `length` int(10) DEFAULT 1,
+  `width` int(10) DEFAULT 1,
+  `weight` int(10) DEFAULT 1,
+  `length_unit` varchar(25) DEFAULT NULL,
+  `weight_unit` varchar(25) DEFAULT NULL,
+  `declare_amount` decimal(20,2) DEFAULT 0.00,
+  `declare_weight` int(10) DEFAULT 0,
+  `declare_currency` varchar(25) DEFAULT NULL,
+  `declare_en_name` varchar(25) DEFAULT NULL,
+  `declare_zh_name` varchar(25) DEFAULT NULL,
+  `declare_hs_code` varchar(25) DEFAULT NULL,
+  `type` varchar(25) DEFAULT NULL,
+  `status` varchar(25) DEFAULT NULL,
+  `images` text DEFAULT NULL,
+  `height` int(10) DEFAULT 0,
+  PRIMARY KEY (`product_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `gn_product_detail`
+--
+
+DROP TABLE IF EXISTS `gn_product_detail`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `gn_product_detail` (
+  `product_detail_id` bigint(25) NOT NULL,
+  `product_id` bigint(25) DEFAULT 0,
+  `item_master_id` bigint(25) DEFAULT 0,
+  `selling_price` decimal(20,2) DEFAULT 0.00,
+  `gn_variant_id` varchar(30) DEFAULT NULL,
+  PRIMARY KEY (`product_detail_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `gn_product_variant_price`
+--
+
+DROP TABLE IF EXISTS `gn_product_variant_price`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `gn_product_variant_price` (
+  `product_variant_price_id` bigint(25) NOT NULL,
+  `product_variant_id` bigint(25) DEFAULT NULL,
+  `shop_id` varchar(25) DEFAULT NULL,
+  `gn_variant_price_id` varchar(30) DEFAULT NULL,
+  `selling_price` decimal(25,2) DEFAULT 0.00,
+  PRIMARY KEY (`product_variant_price_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `gn_shop`
+--
+
+DROP TABLE IF EXISTS `gn_shop`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `gn_shop` (
+  `shop_id` bigint(25) NOT NULL,
+  `gn_shop_id` varchar(30) DEFAULT NULL,
+  `channel` varchar(25) DEFAULT NULL,
+  `name` varchar(100) DEFAULT NULL,
+  `customer_id` bigint(25) DEFAULT NULL,
+  PRIMARY KEY (`shop_id`),
+  UNIQUE KEY `gn_shop_id` (`gn_shop_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `gn_synch`
+--
+
+DROP TABLE IF EXISTS `gn_synch`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `gn_synch` (
+  `synch_id` bigint(22) NOT NULL DEFAULT 0,
+  `last_synch_master` datetime DEFAULT NULL,
+  `last_synch_sales` datetime DEFAULT NULL,
+  `last_synch_stock` datetime DEFAULT NULL,
+  PRIMARY KEY (`synch_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `grab_menu_sync_status`
+--
+
+DROP TABLE IF EXISTS `grab_menu_sync_status`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `grab_menu_sync_status` (
+  `id` bigint(20) NOT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `merchant_id` varchar(255) DEFAULT NULL,
+  `product` varchar(255) DEFAULT NULL,
+  `status` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `grab_packaging_item`
+--
+
+DROP TABLE IF EXISTS `grab_packaging_item`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `grab_packaging_item` (
+  `id` bigint(20) NOT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `product` varchar(255) DEFAULT NULL,
+  `item_master_id` bigint(20) DEFAULT NULL,
+  `location_id` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK7qsdf30hskj4remj6ttautbjx` (`item_master_id`),
+  KEY `FK8xkr908lxswc1yas12jdk957w` (`location_id`),
+  CONSTRAINT `FK7qsdf30hskj4remj6ttautbjx` FOREIGN KEY (`item_master_id`) REFERENCES `pos_item_master` (`item_master_id`),
+  CONSTRAINT `FK8xkr908lxswc1yas12jdk957w` FOREIGN KEY (`location_id`) REFERENCES `pos_location` (`location_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `grabfood_item_group`
+--
+
+DROP TABLE IF EXISTS `grabfood_item_group`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `grabfood_item_group` (
+  `id` bigint(20) NOT NULL,
+  `created_at` datetime(6) DEFAULT NULL,
+  `grabfood_item_group_id` varchar(255) DEFAULT NULL,
+  `name` varchar(100) DEFAULT NULL,
+  `sequence` int(11) DEFAULT NULL,
+  `updated_at` datetime(6) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `grabfood_item_mapping`
+--
+
+DROP TABLE IF EXISTS `grabfood_item_mapping`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `grabfood_item_mapping` (
+  `id` bigint(20) NOT NULL,
+  `barcode` varchar(255) DEFAULT NULL,
+  `created_at` datetime(6) DEFAULT NULL,
+  `description` text DEFAULT NULL,
+  `is_published` int(11) DEFAULT NULL,
+  `item_name` varchar(255) DEFAULT NULL,
+  `special_type` varchar(255) DEFAULT NULL,
+  `updated_at` datetime(6) DEFAULT NULL,
+  `grabfood_item_group_id` bigint(20) DEFAULT NULL,
+  `item_master_id` bigint(20) DEFAULT NULL,
+  `location_id` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FKgqfn1e3e4by5hxd2x6f4nx1gv` (`grabfood_item_group_id`),
+  KEY `FKluqi0aaj47cay931te0q8ll1l` (`item_master_id`),
+  KEY `FKbpccyuuemq5pr8lopyob6np5t` (`location_id`),
+  CONSTRAINT `FKbpccyuuemq5pr8lopyob6np5t` FOREIGN KEY (`location_id`) REFERENCES `pos_location` (`location_id`),
+  CONSTRAINT `FKgqfn1e3e4by5hxd2x6f4nx1gv` FOREIGN KEY (`grabfood_item_group_id`) REFERENCES `grabfood_item_group` (`id`),
+  CONSTRAINT `FKluqi0aaj47cay931te0q8ll1l` FOREIGN KEY (`item_master_id`) REFERENCES `pos_item_master` (`item_master_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `grabmart_item_category`
+--
+
+DROP TABLE IF EXISTS `grabmart_item_category`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `grabmart_item_category` (
+  `id` bigint(20) NOT NULL,
+  `created_at` datetime(6) DEFAULT NULL,
+  `grabmart_item_category_id` varchar(255) DEFAULT NULL,
+  `name` varchar(100) DEFAULT NULL,
+  `sequence` int(11) DEFAULT NULL,
+  `updated_at` datetime(6) DEFAULT NULL,
+  `grabmart_item_group_id` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FKf2trutuq54hsd86vcarulsm3a` (`grabmart_item_group_id`),
+  CONSTRAINT `FKf2trutuq54hsd86vcarulsm3a` FOREIGN KEY (`grabmart_item_group_id`) REFERENCES `grabmart_item_group` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `grabmart_item_category_mapping`
+--
+
+DROP TABLE IF EXISTS `grabmart_item_category_mapping`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `grabmart_item_category_mapping` (
+  `id` bigint(20) NOT NULL,
+  `created_at` datetime(6) DEFAULT NULL,
+  `grabmart_item_category_id` varchar(255) DEFAULT NULL,
+  `updated_at` datetime(6) DEFAULT NULL,
+  `item_category_id` bigint(20) DEFAULT NULL,
+  `item_master_id` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FKj4ifyo8csyqsbyosnal6smx04` (`item_category_id`),
+  KEY `FKb4s754ajj0cvcjrnop6g2u2po` (`item_master_id`),
+  CONSTRAINT `FKb4s754ajj0cvcjrnop6g2u2po` FOREIGN KEY (`item_master_id`) REFERENCES `pos_item_master` (`item_master_id`),
+  CONSTRAINT `FKj4ifyo8csyqsbyosnal6smx04` FOREIGN KEY (`item_category_id`) REFERENCES `pos_item_category` (`item_category_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `grabmart_item_group`
+--
+
+DROP TABLE IF EXISTS `grabmart_item_group`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `grabmart_item_group` (
+  `id` bigint(20) NOT NULL,
+  `created_at` datetime(6) DEFAULT NULL,
+  `grabmart_item_group_id` varchar(255) DEFAULT NULL,
+  `name` varchar(100) DEFAULT NULL,
+  `sequence` int(11) DEFAULT NULL,
+  `updated_at` datetime(6) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `grabmart_item_mapping`
+--
+
+DROP TABLE IF EXISTS `grabmart_item_mapping`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `grabmart_item_mapping` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `created_at` datetime(6) DEFAULT NULL,
+  `grabmart_unit` varchar(255) DEFAULT NULL,
+  `is_published` int(11) DEFAULT NULL,
+  `item_name` varchar(255) DEFAULT NULL,
+  `special_type` varchar(255) DEFAULT NULL,
+  `updated_at` datetime(6) DEFAULT NULL,
+  `value` decimal(22,2) DEFAULT NULL,
+  `grabmart_item_category_id` bigint(20) DEFAULT NULL,
+  `grabmart_item_group_id` bigint(20) DEFAULT NULL,
+  `item_master_id` bigint(20) DEFAULT NULL,
+  `location_id` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK2iayc830s2xowxnnm0e8ouris` (`grabmart_item_category_id`),
+  KEY `FK4kjkb5pej7iwduk8hqwkwjdmd` (`grabmart_item_group_id`),
+  KEY `FK5ppj98t0l25b7s1bw4q8oef7x` (`item_master_id`),
+  KEY `FKlbsvto34slvapp9oykb1oiteu` (`location_id`),
+  CONSTRAINT `FK2iayc830s2xowxnnm0e8ouris` FOREIGN KEY (`grabmart_item_category_id`) REFERENCES `grabmart_item_category` (`id`),
+  CONSTRAINT `FK4kjkb5pej7iwduk8hqwkwjdmd` FOREIGN KEY (`grabmart_item_group_id`) REFERENCES `grabmart_item_group` (`id`),
+  CONSTRAINT `FK5ppj98t0l25b7s1bw4q8oef7x` FOREIGN KEY (`item_master_id`) REFERENCES `pos_item_master` (`item_master_id`),
+  CONSTRAINT `FKlbsvto34slvapp9oykb1oiteu` FOREIGN KEY (`location_id`) REFERENCES `pos_location` (`location_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `grp`
+--
+
+DROP TABLE IF EXISTS `grp`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `grp` (
+  `group_id` bigint(20) NOT NULL DEFAULT 0,
+  `group_name` varchar(64) DEFAULT NULL,
+  `reg_date` datetime DEFAULT NULL,
+  `description` text DEFAULT NULL,
+  PRIMARY KEY (`group_id`),
+  UNIQUE KEY `XPKgrp` (`group_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `history_account`
+--
+
+DROP TABLE IF EXISTS `history_account`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `history_account` (
+  `history_account_id` bigint(20) NOT NULL,
+  `type_perkiraan` int(2) DEFAULT NULL,
+  `user_id` bigint(20) DEFAULT NULL,
+  `description` text DEFAULT NULL,
+  `ref_id` bigint(20) DEFAULT NULL,
+  `date` datetime DEFAULT NULL,
+  PRIMARY KEY (`history_account_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `history_budget`
+--
+
+DROP TABLE IF EXISTS `history_budget`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `history_budget` (
+  `history_budget_id` bigint(20) NOT NULL DEFAULT 0,
+  `type` int(10) DEFAULT 0,
+  `user_id` bigint(20) DEFAULT 0,
+  `employee_id` bigint(20) DEFAULT 0,
+  `description` varchar(200) DEFAULT NULL,
+  `ref_id` bigint(20) DEFAULT 0,
+  `date` datetime DEFAULT NULL,
+  `full_name` varchar(100) DEFAULT NULL,
+  `month` int(2) DEFAULT 0,
+  `year` int(4) DEFAULT 0,
+  `segment1_id` bigint(20) DEFAULT 0,
+  `period_id` bigint(20) DEFAULT 0,
+  PRIMARY KEY (`history_budget_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `history_cashier`
+--
+
+DROP TABLE IF EXISTS `history_cashier`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `history_cashier` (
+  `history_cashier_id` bigint(20) NOT NULL DEFAULT 0,
+  `type` tinyint(4) NOT NULL DEFAULT 0,
+  `user_id` bigint(20) NOT NULL DEFAULT 0,
+  `cancelled_by` bigint(20) NOT NULL DEFAULT 0,
+  `description` text DEFAULT NULL,
+  `item_master_id` bigint(20) NOT NULL DEFAULT 0,
+  `ref_id` bigint(20) NOT NULL DEFAULT 0,
+  `date` timestamp NULL DEFAULT NULL,
+  `location_id` bigint(20) NOT NULL DEFAULT 0,
+  `query_string` text DEFAULT NULL,
+  `sts_upload` int(3) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`history_cashier_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `history_po`
+--
+
+DROP TABLE IF EXISTS `history_po`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `history_po` (
+  `history_po_id` bigint(20) NOT NULL,
+  `user_id` bigint(20) DEFAULT 0,
+  `description` text DEFAULT NULL,
+  `reff_po_id` bigint(20) DEFAULT 0,
+  `reff_receive_id` bigint(20) DEFAULT 0,
+  `date` datetime DEFAULT NULL,
+  PRIMARY KEY (`history_po_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `history_user`
+--
+
+DROP TABLE IF EXISTS `history_user`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `history_user` (
+  `history_user_id` bigint(20) NOT NULL DEFAULT 0,
+  `type` tinyint(4) DEFAULT 0,
+  `user_id` bigint(20) DEFAULT 0,
+  `employee_id` bigint(20) DEFAULT 0,
+  `description` text DEFAULT NULL,
+  `ref_id` bigint(20) DEFAULT 0,
+  `date` timestamp NULL DEFAULT NULL,
+  `cogs` decimal(22,2) DEFAULT 0.00,
+  PRIMARY KEY (`history_user_id`),
+  KEY `type` (`type`),
+  KEY `refId` (`ref_id`),
+  KEY `userId` (`user_id`),
+  KEY `employeeId` (`employee_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `induk_customer`
+--
+
+DROP TABLE IF EXISTS `induk_customer`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `induk_customer` (
+  `INDUK_CUSTOMER_ID` bigint(20) NOT NULL DEFAULT 0,
+  `NAME` varchar(64) DEFAULT NULL,
+  `ADDRESS` varchar(200) DEFAULT NULL,
+  `CITY` varchar(64) DEFAULT NULL,
+  `COUNTRY_ID` bigint(20) DEFAULT NULL,
+  `POSTAL_CODE` varchar(64) DEFAULT NULL,
+  `CONTACT_PERSON` varchar(64) DEFAULT NULL,
+  `POSISI_CONTACT_PERSON` varchar(64) DEFAULT NULL,
+  `COUNTRY_CODE` varchar(100) NOT NULL DEFAULT '',
+  `AREA_CODE` varchar(100) NOT NULL DEFAULT '',
+  `PHONE` varchar(30) DEFAULT NULL,
+  `WEBSITE` varchar(64) DEFAULT NULL,
+  `NPWP` varchar(100) DEFAULT '',
+  `EMAIL` varchar(64) DEFAULT NULL,
+  `FAX` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`INDUK_CUSTOMER_ID`),
+  UNIQUE KEY `XPKCRM_INDUK_CUSTOMER` (`INDUK_CUSTOMER_ID`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `item_master_bank`
+--
+
+DROP TABLE IF EXISTS `item_master_bank`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `item_master_bank` (
+  `item_master_bank_id` bigint(20) NOT NULL DEFAULT 0,
+  `item_master_id` bigint(20) DEFAULT 0,
+  `coa_bank_id` bigint(20) DEFAULT 0,
+  `type` int(2) DEFAULT 0 COMMENT 'tipe',
+  `fee_amount` decimal(22,2) DEFAULT 0.00,
+  `note` text DEFAULT NULL,
+  `use_default_coa_revenue` int(1) DEFAULT 0 COMMENT '1:yes, 0:no',
+  `coa_revenue_id` bigint(20) DEFAULT 0,
+  `last_update` datetime DEFAULT NULL,
+  PRIMARY KEY (`item_master_bank_id`),
+  UNIQUE KEY `item_master_id` (`item_master_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `kas_opname`
+--
+
+DROP TABLE IF EXISTS `kas_opname`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `kas_opname` (
+  `kas_opname_id` bigint(22) NOT NULL DEFAULT 0,
+  `currency_id` bigint(22) DEFAULT NULL,
+  `amount` double DEFAULT NULL,
+  `qty` int(11) DEFAULT NULL,
+  `type` int(11) DEFAULT NULL,
+  `memo` text DEFAULT NULL,
+  `date_transaction` date DEFAULT NULL,
+  PRIMARY KEY (`kas_opname_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `log_status`
+--
+
+DROP TABLE IF EXISTS `log_status`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `log_status` (
+  `log_status_id` bigint(20) unsigned NOT NULL DEFAULT 0,
+  `log_id` bigint(20) DEFAULT NULL,
+  `company_id` bigint(20) DEFAULT NULL,
+  `location_id` bigint(20) DEFAULT NULL,
+  `date` datetime DEFAULT NULL,
+  `status` int(11) DEFAULT 0,
+  PRIMARY KEY (`log_status_id`),
+  KEY `status` (`status`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `log_stock_standar`
+--
+
+DROP TABLE IF EXISTS `log_stock_standar`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `log_stock_standar` (
+  `log_stock_standar_id` bigint(20) unsigned NOT NULL DEFAULT 0,
+  `date` datetime DEFAULT NULL,
+  `log_desc` text DEFAULT NULL,
+  `stock_min_id` bigint(20) DEFAULT NULL,
+  `user_id` bigint(20) DEFAULT NULL,
+  `user_name` varchar(100) DEFAULT NULL,
+  `qty_standar` double DEFAULT NULL,
+  PRIMARY KEY (`log_stock_standar_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `log_user`
+--
+
+DROP TABLE IF EXISTS `log_user`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `log_user` (
+  `log_user_id` bigint(20) NOT NULL DEFAULT 0,
+  `type` tinyint(4) DEFAULT 0,
+  `user_id` bigint(20) DEFAULT 0,
+  `employee_id` bigint(20) DEFAULT 0,
+  `description` text DEFAULT NULL,
+  `ref_id` bigint(20) DEFAULT 0,
+  `date` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`log_user_id`),
+  KEY `type` (`type`,`ref_id`),
+  KEY `typex` (`type`),
+  KEY `type_user` (`type`,`user_id`),
+  KEY `type_ref_id` (`type`,`ref_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `logs`
+--
+
+DROP TABLE IF EXISTS `logs`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `logs` (
+  `log_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `date` timestamp NOT NULL DEFAULT current_timestamp(),
+  `query_string` text NOT NULL,
+  `periode_id` bigint(20) unsigned NOT NULL DEFAULT 0,
+  `company_id` bigint(20) DEFAULT 0,
+  `sync_status` int(11) DEFAULT 0,
+  `period_middle_date` datetime DEFAULT NULL,
+  `table_name` varchar(145) NOT NULL DEFAULT '',
+  `sts_loc1` int(3) DEFAULT 0,
+  `sts_loc2` int(3) DEFAULT 0,
+  `sts_loc3` int(3) DEFAULT 0,
+  `sts_loc4` int(3) DEFAULT 0,
+  `sts_loc5` int(3) DEFAULT 0,
+  `sts_loc6` int(3) DEFAULT 0,
+  `sts_loc7` int(3) DEFAULT 0,
+  `sts_loc8` int(3) DEFAULT 0,
+  `sts_loc9` int(3) DEFAULT 0,
+  `sts_loc10` int(3) DEFAULT 0,
+  `sts_loc11` int(3) DEFAULT 0,
+  `sts_loc12` int(3) DEFAULT 0,
+  `sts_loc13` int(3) DEFAULT 0,
+  `sts_loc14` int(3) DEFAULT 0,
+  `sts_loc15` int(3) DEFAULT 0,
+  `sts_loc16` int(3) DEFAULT 0,
+  `sts_loc17` int(3) DEFAULT 0,
+  `sts_loc18` int(3) DEFAULT 0,
+  `sts_loc19` int(3) DEFAULT 0,
+  `sts_loc20` int(3) DEFAULT 0,
+  `sts_loc21` int(3) DEFAULT 0,
+  `sts_loc22` int(3) DEFAULT 0,
+  `sts_loc23` int(3) DEFAULT 0,
+  `sts_loc24` int(3) NOT NULL DEFAULT 0,
+  `sts_loc25` int(3) unsigned NOT NULL DEFAULT 0,
+  `sts_loc26` int(3) DEFAULT 0,
+  `sts_loc27` int(3) DEFAULT 0,
+  `sts_loc28` int(3) DEFAULT 0,
+  `sts_loc29` int(3) DEFAULT 0,
+  `sts_loc30` int(3) DEFAULT 0,
+  `sts_loc31` int(3) DEFAULT 0,
+  `sts_loc32` int(3) NOT NULL DEFAULT 0,
+  `sts_loc33` int(3) NOT NULL DEFAULT 0,
+  `sts_loc34` int(3) DEFAULT 0,
+  `sts_loc35` int(3) DEFAULT 0,
+  `sts_loc36` int(3) DEFAULT 0,
+  `sts_loc37` int(3) DEFAULT 0,
+  `sts_loc38` int(3) DEFAULT 0,
+  `sts_loc39` int(3) DEFAULT 0,
+  `sts_loc40` int(3) DEFAULT 0,
+  `sts_loc41` int(3) DEFAULT 0,
+  `sts_loc42` int(3) DEFAULT 0,
+  `sts_loc43` int(3) DEFAULT 0,
+  `sts_loc44` int(3) DEFAULT 0,
+  `sts_loc45` int(3) DEFAULT 0,
+  `sts_loc46` int(3) DEFAULT 0,
+  `sts_loc47` int(3) DEFAULT 0,
+  `sts_loc48` int(3) DEFAULT 0,
+  `sts_loc49` int(3) DEFAULT 0,
+  `sts_loc50` int(3) DEFAULT 0,
+  `sts_loc51` int(3) DEFAULT 0,
+  `sts_loc52` int(3) DEFAULT 0,
+  `sts_loc54` int(3) DEFAULT 0,
+  `sts_loc55` int(3) DEFAULT 0,
+  `sts_loc56` int(3) DEFAULT 0,
+  `sts_loc57` int(3) DEFAULT 0,
+  PRIMARY KEY (`log_id`),
+  KEY `loc1` (`sts_loc1`),
+  KEY `loc2` (`sts_loc2`),
+  KEY `loc3` (`sts_loc3`),
+  KEY `loc4` (`sts_loc4`),
+  KEY `loc5` (`sts_loc5`),
+  KEY `loc6` (`sts_loc6`),
+  KEY `loc7` (`sts_loc7`),
+  KEY `loc8` (`sts_loc8`),
+  KEY `loc9` (`sts_loc9`),
+  KEY `loc10` (`sts_loc10`),
+  KEY `loc11` (`sts_loc11`),
+  KEY `loc12` (`sts_loc12`),
+  KEY `loc13` (`sts_loc13`),
+  KEY `loc14` (`sts_loc14`),
+  KEY `loc15` (`sts_loc15`),
+  KEY `loc16` (`sts_loc16`),
+  KEY `loc17` (`sts_loc17`),
+  KEY `loc18` (`sts_loc18`),
+  KEY `loc19` (`sts_loc19`),
+  KEY `loc20` (`sts_loc20`),
+  KEY `tableName` (`table_name`),
+  KEY `date` (`date`)
+) ENGINE=InnoDB AUTO_INCREMENT=129 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `logs_download`
+--
+
+DROP TABLE IF EXISTS `logs_download`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `logs_download` (
+  `logs_download_id` bigint(20) NOT NULL,
+  `date` datetime DEFAULT NULL,
+  `table_name` varchar(50) DEFAULT '',
+  `owner_id` bigint(20) DEFAULT 0,
+  `action` varchar(10) DEFAULT '' COMMENT 'insert, update, delete',
+  PRIMARY KEY (`logs_download_id`),
+  KEY `table_name` (`table_name`),
+  KEY `date` (`date`),
+  KEY `owner_id` (`owner_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `logs_download_detail`
+--
+
+DROP TABLE IF EXISTS `logs_download_detail`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `logs_download_detail` (
+  `logs_download_detail_id` bigint(20) NOT NULL DEFAULT 0,
+  `logs_download_id` bigint(20) DEFAULT 0,
+  `location_id` bigint(20) DEFAULT 0,
+  `cash_master_id` bigint(20) DEFAULT 0,
+  `status` int(11) DEFAULT NULL,
+  `count` int(1) DEFAULT 0,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`logs_download_detail_id`),
+  KEY `logs_id` (`logs_download_id`),
+  KEY `location_id` (`location_id`),
+  KEY `cash_master_id` (`cash_master_id`),
+  KEY `status` (`status`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `logs_maintenance`
+--
+
+DROP TABLE IF EXISTS `logs_maintenance`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `logs_maintenance` (
+  `logs_maintenance_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `date` timestamp NOT NULL DEFAULT current_timestamp(),
+  `delete_limit` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `user_id` bigint(20) unsigned NOT NULL DEFAULT 0,
+  PRIMARY KEY (`logs_maintenance_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `logs_operation`
+--
+
+DROP TABLE IF EXISTS `logs_operation`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `logs_operation` (
+  `log_operation_id` bigint(20) NOT NULL,
+  `date` datetime DEFAULT NULL,
+  `log_desc` text DEFAULT NULL,
+  `user_id` bigint(20) DEFAULT NULL,
+  `user_name` varchar(45) DEFAULT NULL,
+  `owner_id` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`log_operation_id`),
+  KEY `ownerId` (`owner_id`),
+  KEY `date` (`date`),
+  KEY `userId` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `logs_synch`
+--
+
+DROP TABLE IF EXISTS `logs_synch`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `logs_synch` (
+  `logs_synch_id` bigint(20) NOT NULL,
+  `date` datetime DEFAULT NULL,
+  `table_name` varchar(50) DEFAULT '',
+  `owner_id` bigint(20) DEFAULT 0,
+  `query_string` text DEFAULT NULL,
+  `action` varchar(10) DEFAULT '' COMMENT 'insert, update, delete',
+  PRIMARY KEY (`logs_synch_id`),
+  KEY `table_name` (`table_name`),
+  KEY `date` (`date`),
+  KEY `owner_id` (`owner_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `logs_synch_detail`
+--
+
+DROP TABLE IF EXISTS `logs_synch_detail`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `logs_synch_detail` (
+  `logs_synch_detail_id` bigint(20) NOT NULL DEFAULT 0,
+  `logs_synch_id` bigint(20) DEFAULT 0,
+  `app_id` varchar(50) DEFAULT '0',
+  `status` int(1) DEFAULT 0,
+  `count` int(1) DEFAULT 0,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `note` text DEFAULT NULL,
+  PRIMARY KEY (`logs_synch_detail_id`),
+  KEY `logsid` (`logs_synch_id`),
+  KEY `app_id` (`app_id`),
+  KEY `status` (`status`),
+  KEY `count` (`count`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `marketing`
+--
+
+DROP TABLE IF EXISTS `marketing`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `marketing` (
+  `marketing_id` bigint(20) NOT NULL DEFAULT 0,
+  `name` varchar(250) DEFAULT NULL,
+  `address` text DEFAULT NULL,
+  PRIMARY KEY (`marketing_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `member`
+--
+
+DROP TABLE IF EXISTS `member`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `member` (
+  `member_id` bigint(20) NOT NULL DEFAULT 0,
+  `nama` varchar(200) DEFAULT NULL,
+  `alamat` varchar(200) DEFAULT NULL,
+  `kabupaten_id` bigint(20) DEFAULT 0,
+  `kecamatan_id` bigint(20) DEFAULT 0,
+  `desa_id` bigint(20) DEFAULT 0,
+  `kota_id` bigint(20) DEFAULT 0,
+  `tgl_lahir` date DEFAULT NULL,
+  `status` varchar(20) DEFAULT NULL,
+  `phone` varchar(20) DEFAULT NULL,
+  `hp` varchar(20) DEFAULT NULL,
+  `pekerjaan_id` bigint(20) DEFAULT 0,
+  `email` varchar(100) DEFAULT NULL,
+  `nama_perusahaan` varchar(200) DEFAULT NULL,
+  `alamat_perusahaan` varchar(200) DEFAULT NULL,
+  `note` text DEFAULT NULL,
+  `zip_code` varchar(10) DEFAULT NULL,
+  `fax` varchar(18) DEFAULT NULL,
+  `phone_area` varchar(5) DEFAULT '',
+  `phone_perusahaan` varchar(20) DEFAULT NULL,
+  `no_member` varchar(50) DEFAULT NULL,
+  `nama_ahli_waris` varchar(128) DEFAULT NULL,
+  `nama_penanggung` varchar(128) DEFAULT NULL,
+  `sibuhar` int(2) DEFAULT 0,
+  `simple` int(2) DEFAULT 0,
+  `siraya` int(2) DEFAULT 0,
+  `simapan` int(2) DEFAULT 0,
+  `simp_rencana` int(2) DEFAULT 0,
+  `sisuka` int(2) DEFAULT 0,
+  `tambahan1` int(2) DEFAULT 0,
+  `tambahan2` int(2) DEFAULT 0,
+  `tambahan3` int(2) DEFAULT 0,
+  `tambahan4` int(2) DEFAULT 0,
+  `tambahan5` int(2) DEFAULT 0,
+  `tambahan6` int(2) DEFAULT 0,
+  `tambahan7` int(2) DEFAULT 0,
+  `kuk` int(2) DEFAULT 0,
+  `kmp` int(2) DEFAULT 0,
+  `kip` int(2) DEFAULT 0,
+  `ktm` int(2) DEFAULT 0,
+  `kpp` int(2) DEFAULT 0,
+  `kiper` int(2) DEFAULT 0,
+  `kiperum` int(2) DEFAULT 0,
+  `khusus` int(2) DEFAULT 0,
+  `tambahan11` int(2) DEFAULT 0,
+  `tambahan12` int(2) DEFAULT 0,
+  `tambahan13` int(2) DEFAULT 0,
+  `tambahan14` int(2) DEFAULT 0,
+  `tambahan15` int(2) DEFAULT 0,
+  `tambahan16` int(2) DEFAULT 0,
+  `tambahan17` int(2) DEFAULT 0,
+  `tambahan18` int(2) DEFAULT 0,
+  `tambahan19` int(2) DEFAULT 0,
+  `agama` varchar(45) DEFAULT NULL,
+  `pendidikan` varchar(128) DEFAULT NULL,
+  `jenis_kelamin` int(2) DEFAULT 0,
+  `tgl_masuk` date DEFAULT NULL,
+  `tgl_keluar` date DEFAULT NULL,
+  `tgl_pendidikan` date DEFAULT NULL,
+  `simpanan_pokok` decimal(10,2) DEFAULT 0.00,
+  `status_pegawai` int(11) DEFAULT NULL,
+  `dinas_id` bigint(20) DEFAULT NULL,
+  `dinas_unit_id` bigint(20) DEFAULT NULL,
+  `shu_jan` decimal(25,15) DEFAULT NULL,
+  `shu_feb` decimal(25,15) DEFAULT NULL,
+  `shu_mar` decimal(25,15) DEFAULT NULL,
+  `shu_apr` decimal(25,15) DEFAULT NULL,
+  `shu_may` decimal(25,15) DEFAULT NULL,
+  `shu_jun` decimal(25,15) DEFAULT NULL,
+  `shu_jul` decimal(25,15) DEFAULT NULL,
+  `shu_aug` decimal(25,15) DEFAULT NULL,
+  `shu_sep` decimal(25,15) DEFAULT NULL,
+  `shu_oct` decimal(25,15) DEFAULT NULL,
+  `shu_nov` decimal(25,15) DEFAULT NULL,
+  `shu_dec` decimal(25,15) DEFAULT NULL,
+  PRIMARY KEY (`member_id`),
+  UNIQUE KEY `XPKmember` (`member_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci ROW_FORMAT=DYNAMIC;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `memorial`
+--
+
+DROP TABLE IF EXISTS `memorial`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `memorial` (
+  `memorial_id` bigint(20) NOT NULL DEFAULT 0,
+  `start_date` datetime DEFAULT NULL,
+  `end_date` datetime DEFAULT NULL,
+  `location_id` bigint(20) DEFAULT 0,
+  `vendor_id` bigint(20) DEFAULT 0,
+  `user_id` bigint(20) DEFAULT 0,
+  `create_date` datetime DEFAULT NULL,
+  `uniq_key_id` bigint(20) DEFAULT 0,
+  PRIMARY KEY (`memorial_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `memorial_detail`
+--
+
+DROP TABLE IF EXISTS `memorial_detail`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `memorial_detail` (
+  `memorial_detail_id` bigint(20) NOT NULL DEFAULT 0,
+  `memorial_id` bigint(20) DEFAULT 0,
+  `coa_id` bigint(20) DEFAULT 0,
+  `type` int(2) DEFAULT 0,
+  `qty` decimal(22,2) DEFAULT 0.00,
+  `value` decimal(22,2) DEFAULT 0.00,
+  `amount` decimal(22,2) DEFAULT 0.00,
+  `note` text DEFAULT NULL,
+  PRIMARY KEY (`memorial_detail_id`),
+  KEY `type` (`type`),
+  KEY `coa_id` (`coa_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `memorial_konsinyasi`
+--
+
+DROP TABLE IF EXISTS `memorial_konsinyasi`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `memorial_konsinyasi` (
+  `memorial_konsinyasi_id` bigint(20) NOT NULL DEFAULT 0,
+  `start_date` datetime DEFAULT NULL,
+  `end_date` datetime DEFAULT NULL,
+  `vendor_id` bigint(20) DEFAULT 0,
+  `location_id` bigint(20) DEFAULT 0,
+  `user_id` bigint(20) DEFAULT 0,
+  `create_date` datetime DEFAULT NULL,
+  `uniq_key_id` bigint(20) DEFAULT 0,
+  `type` int(5) DEFAULT NULL,
+  PRIMARY KEY (`memorial_konsinyasi_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `memorial_konsinyasi_detail`
+--
+
+DROP TABLE IF EXISTS `memorial_konsinyasi_detail`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `memorial_konsinyasi_detail` (
+  `memorial_konsinyasi_detail_id` bigint(20) NOT NULL DEFAULT 0,
+  `memorial_konsinyasi_id` bigint(20) DEFAULT 0,
+  `coa_id` bigint(20) DEFAULT 0,
+  `amount` decimal(25,2) DEFAULT 0.00,
+  `note` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`memorial_konsinyasi_detail_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `merchant`
+--
+
+DROP TABLE IF EXISTS `merchant`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `merchant` (
+  `merchant_id` bigint(20) NOT NULL DEFAULT 0,
+  `bank_id` bigint(20) DEFAULT 0,
+  `location_id` bigint(20) DEFAULT 0,
+  `code_merchant` varchar(120) DEFAULT NULL,
+  `persen_expense` decimal(20,2) DEFAULT 0.00,
+  `description` varchar(120) DEFAULT NULL,
+  `coa_id` bigint(20) DEFAULT 0,
+  `coa_expense_id` bigint(20) DEFAULT 0,
+  `type_payment` int(11) DEFAULT 0,
+  `coa_diskon_id` bigint(20) DEFAULT 0,
+  `payment_by` int(11) DEFAULT 0,
+  `persen_diskon` decimal(20,2) DEFAULT 0.00,
+  `pendapatan_merchant` bigint(20) DEFAULT 0,
+  `posting_expense` int(11) DEFAULT 0,
+  `payment_method_id` bigint(20) DEFAULT 0,
+  PRIMARY KEY (`merchant_id`),
+  KEY `bank_id` (`bank_id`),
+  KEY `location_id` (`location_id`),
+  KEY `coa_id` (`coa_id`),
+  KEY `coa_expense_id` (`coa_expense_id`),
+  KEY `type_payment` (`type_payment`),
+  KEY `coa_diskon_id` (`coa_diskon_id`),
+  KEY `FK4t0jux9e0mupyl8tlpfegnm9i` (`payment_method_id`),
+  CONSTRAINT `FK4t0jux9e0mupyl8tlpfegnm9i` FOREIGN KEY (`payment_method_id`) REFERENCES `payment_method` (`payment_method_id`),
+  CONSTRAINT `FKa06nqxub372nlot76anjeto0s` FOREIGN KEY (`location_id`) REFERENCES `pos_location` (`location_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `insert_merchant` AFTER INSERT ON `merchant` FOR EACH ROW BEGIN
+	INSERT INTO `android_logs` (
+	logs_id,table_name,reff_id,old_id,sts_loc1,sts_loc2,sts_loc3,sts_loc4,sts_loc5,sts_loc6,sts_loc7,sts_loc8,sts_loc9,sts_loc10,
+	sts_loc11,sts_loc12,sts_loc13,sts_loc14,sts_loc15,sts_loc16,sts_loc17,sts_loc18,sts_loc19,sts_loc20,
+	sts_loc21,sts_loc22,sts_loc23,sts_loc24,sts_loc25,sts_loc26,sts_loc27,sts_loc28,sts_loc29,sts_loc30,
+	action_handle) VALUE (
+	  UUID(),
+	  "merchant",
+	  new.merchant_id,
+	  0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  "insert"
+	  );
+    END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `update_merchant` AFTER UPDATE ON `merchant` FOR EACH ROW BEGIN
+	INSERT INTO `android_logs` (
+	logs_id,table_name,reff_id,old_id,sts_loc1,sts_loc2,sts_loc3,sts_loc4,sts_loc5,sts_loc6,sts_loc7,sts_loc8,sts_loc9,sts_loc10,
+	sts_loc11,sts_loc12,sts_loc13,sts_loc14,sts_loc15,sts_loc16,sts_loc17,sts_loc18,sts_loc19,sts_loc20,
+	sts_loc21,sts_loc22,sts_loc23,sts_loc24,sts_loc25,sts_loc26,sts_loc27,sts_loc28,sts_loc29,sts_loc30,
+	action_handle) VALUE (
+	  UUID(),
+	  "merchant",
+	  new.merchant_id,
+	  old.merchant_id,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  "update"
+	);
+    END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `delete_merchant` BEFORE DELETE ON `merchant` FOR EACH ROW BEGIN
+	INSERT INTO `android_logs` (
+	logs_id,table_name,reff_id,old_id,sts_loc1,sts_loc2,sts_loc3,sts_loc4,sts_loc5,sts_loc6,sts_loc7,sts_loc8,sts_loc9,sts_loc10,
+	sts_loc11,sts_loc12,sts_loc13,sts_loc14,sts_loc15,sts_loc16,sts_loc17,sts_loc18,sts_loc19,sts_loc20,
+	sts_loc21,sts_loc22,sts_loc23,sts_loc24,sts_loc25,sts_loc26,sts_loc27,sts_loc28,sts_loc29,sts_loc30,
+	action_handle) VALUE (
+	  UUID(),
+	  "merchant",
+	  old.merchant_id,
+	  0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  "delete"
+	);
+    END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+
+--
+-- Table structure for table `module`
+--
+
+DROP TABLE IF EXISTS `module`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `module` (
+  `module_id` bigint(20) NOT NULL DEFAULT 0,
+  `parent_id` bigint(20) DEFAULT NULL,
+  `code` varchar(20) DEFAULT NULL,
+  `level` varchar(4) DEFAULT NULL,
+  `description` text DEFAULT NULL,
+  `output_deliver` text DEFAULT NULL,
+  `perform_indicator` text DEFAULT NULL,
+  `assum_risk` text DEFAULT NULL,
+  `status` varchar(20) DEFAULT NULL,
+  `type` varchar(20) DEFAULT NULL,
+  `cost_implication` text DEFAULT NULL,
+  `initial` varchar(45) DEFAULT NULL,
+  `expired_date` datetime DEFAULT NULL,
+  `position_level` varchar(45) DEFAULT NULL,
+  `activity_period_id` bigint(20) unsigned DEFAULT 0,
+  `segment1_id` bigint(20) DEFAULT 0,
+  `segment2_id` bigint(20) DEFAULT 0,
+  `segment3_id` bigint(20) DEFAULT 0,
+  `segment4_id` bigint(20) DEFAULT 0,
+  `segment5_id` bigint(20) DEFAULT 0,
+  `segment6_id` bigint(20) DEFAULT 0,
+  `segment7_id` bigint(20) DEFAULT 0,
+  `segment8_id` bigint(20) DEFAULT 0,
+  `segment9_id` bigint(20) DEFAULT 0,
+  `segment10_id` bigint(20) DEFAULT 0,
+  `segment11_id` bigint(20) DEFAULT 0,
+  `segment12_id` bigint(20) DEFAULT 0,
+  `segment13_id` bigint(20) DEFAULT 0,
+  `segment14_id` bigint(20) DEFAULT 0,
+  `segment15_id` bigint(20) DEFAULT 0,
+  `act_day` text DEFAULT NULL,
+  `act_time` text DEFAULT NULL,
+  `act_date` text DEFAULT NULL,
+  `note` text DEFAULT NULL,
+  `total_budget` decimal(10,2) DEFAULT 0.00,
+  `total_budget_used` decimal(10,2) DEFAULT 0.00,
+  `module_level` int(11) DEFAULT 0,
+  `doc_status` int(11) DEFAULT 0,
+  `create_id` bigint(20) DEFAULT 0,
+  `create_date` date DEFAULT NULL,
+  `approval1_id` bigint(20) DEFAULT 0,
+  `approval1_date` date DEFAULT NULL,
+  PRIMARY KEY (`module_id`),
+  UNIQUE KEY `XPKmodule` (`module_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci ROW_FORMAT=DYNAMIC;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `module_budget`
+--
+
+DROP TABLE IF EXISTS `module_budget`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `module_budget` (
+  `module_budget_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `coa_id` bigint(20) DEFAULT 0,
+  `description` varchar(145) DEFAULT NULL,
+  `amount` decimal(25,5) DEFAULT NULL,
+  `currency_id` bigint(20) DEFAULT NULL,
+  `module_id` bigint(20) DEFAULT NULL,
+  `amount_used` decimal(25,5) DEFAULT NULL,
+  PRIMARY KEY (`module_budget_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `payment_method`
+--
+
+DROP TABLE IF EXISTS `payment_method`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `payment_method` (
+  `payment_method_id` bigint(20) NOT NULL DEFAULT 0,
+  `description` varchar(100) DEFAULT NULL,
+  `pos_code` int(11) DEFAULT 0,
+  `status` int(11) DEFAULT 0,
+  `sort_order` int(11) DEFAULT 0,
+  `merchant_payment` int(11) DEFAULT 0,
+  `merchant_type` int(11) DEFAULT 0,
+  `ap_status` int(11) DEFAULT 0,
+  `segment1_id` bigint(20) DEFAULT 0,
+  `type` int(4) DEFAULT 0,
+  `coa_id` bigint(20) DEFAULT 0,
+  PRIMARY KEY (`payment_method_id`),
+  UNIQUE KEY `Index_2` (`description`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `insert_payment_method` AFTER INSERT ON `payment_method` FOR EACH ROW BEGIN
+	INSERT INTO `android_logs` (
+	logs_id,table_name,reff_id,old_id,sts_loc1,sts_loc2,sts_loc3,sts_loc4,sts_loc5,sts_loc6,sts_loc7,sts_loc8,sts_loc9,sts_loc10,
+	sts_loc11,sts_loc12,sts_loc13,sts_loc14,sts_loc15,sts_loc16,sts_loc17,sts_loc18,sts_loc19,sts_loc20,
+	sts_loc21,sts_loc22,sts_loc23,sts_loc24,sts_loc25,sts_loc26,sts_loc27,sts_loc28,sts_loc29,sts_loc30,
+	action_handle) VALUE (
+	  UUID(),
+	  "payment_method",
+	  new.payment_method_id,
+	  0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  "insert"
+	  );
+    END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `update_payment_method` AFTER UPDATE ON `payment_method` FOR EACH ROW BEGIN
+	INSERT INTO `android_logs` (logs_id,table_name,reff_id,old_id,sts_loc1,sts_loc2,sts_loc3,sts_loc4,sts_loc5,sts_loc6,sts_loc7,sts_loc8,sts_loc9,sts_loc10,
+	sts_loc11,sts_loc12,sts_loc13,sts_loc14,sts_loc15,sts_loc16,sts_loc17,sts_loc18,sts_loc19,sts_loc20,
+	sts_loc21,sts_loc22,sts_loc23,sts_loc24,sts_loc25,sts_loc26,sts_loc27,sts_loc28,sts_loc29,sts_loc30,action_handle) VALUE (
+	  UUID(),
+	  "payment_method",
+	  new.payment_method_id,
+	  old.payment_method_id,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	   "update"
+	);
+    END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `delete_payment_method` BEFORE DELETE ON `payment_method` FOR EACH ROW BEGIN
+	INSERT INTO `android_logs` (
+	logs_id,table_name,reff_id,old_id,sts_loc1,sts_loc2,sts_loc3,sts_loc4,sts_loc5,sts_loc6,sts_loc7,sts_loc8,sts_loc9,sts_loc10,
+	sts_loc11,sts_loc12,sts_loc13,sts_loc14,sts_loc15,sts_loc16,sts_loc17,sts_loc18,sts_loc19,sts_loc20,
+	sts_loc21,sts_loc22,sts_loc23,sts_loc24,sts_loc25,sts_loc26,sts_loc27,sts_loc28,sts_loc29,sts_loc30,
+	action_handle) VALUE (
+	  UUID(),
+	  "payment_method",
+	  old.payment_method_id,
+	  0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  "delete"
+	);
+    END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+
+--
+-- Table structure for table `pekerjaan`
+--
+
+DROP TABLE IF EXISTS `pekerjaan`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pekerjaan` (
+  `pekerjaan_id` bigint(20) NOT NULL DEFAULT 0,
+  `kode` varchar(10) DEFAULT NULL,
+  `nama` varchar(128) DEFAULT NULL,
+  PRIMARY KEY (`pekerjaan_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `periode`
+--
+
+DROP TABLE IF EXISTS `periode`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `periode` (
+  `periode_id` bigint(20) NOT NULL DEFAULT 0,
+  `start_date` date DEFAULT NULL,
+  `end_date` date DEFAULT NULL,
+  `status` varchar(20) DEFAULT NULL,
+  `name` varchar(60) DEFAULT NULL,
+  `input_tolerance` date DEFAULT NULL,
+  `type` int(11) DEFAULT 0,
+  `table_name` varchar(120) DEFAULT NULL,
+  PRIMARY KEY (`periode_id`),
+  UNIQUE KEY `XPKperiode` (`periode_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pettycash_expenses`
+--
+
+DROP TABLE IF EXISTS `pettycash_expenses`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pettycash_expenses` (
+  `pettycash_expense_id` bigint(20) NOT NULL DEFAULT 0,
+  `pettycash_replenishment_id` bigint(20) DEFAULT NULL,
+  `pettycash_payment_id` bigint(20) DEFAULT NULL,
+  `amount` decimal(10,2) DEFAULT NULL,
+  PRIMARY KEY (`pettycash_expense_id`),
+  UNIQUE KEY `XPKpettycash_expenses` (`pettycash_expense_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pettycash_payment`
+--
+
+DROP TABLE IF EXISTS `pettycash_payment`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pettycash_payment` (
+  `pettycash_payment_id` bigint(20) NOT NULL DEFAULT 0,
+  `coa_id` bigint(20) DEFAULT NULL,
+  `journal_number` varchar(30) DEFAULT NULL,
+  `journal_counter` int(11) DEFAULT NULL,
+  `journal_prefix` varchar(20) DEFAULT NULL,
+  `date` date DEFAULT NULL,
+  `trans_date` date DEFAULT NULL,
+  `memo` text DEFAULT NULL,
+  `operator_id` bigint(20) DEFAULT NULL,
+  `operator_name` varchar(64) DEFAULT NULL,
+  `amount` decimal(25,2) DEFAULT NULL,
+  `replace_status` int(11) DEFAULT NULL,
+  `activity_status` varchar(45) NOT NULL DEFAULT '',
+  `posted_status` int(11) DEFAULT 0,
+  `posted_by_id` bigint(20) DEFAULT 0,
+  `posted_date` datetime DEFAULT NULL,
+  `effective_date` datetime DEFAULT NULL,
+  `share_group_id` bigint(20) DEFAULT NULL,
+  `share_category_id` bigint(20) DEFAULT NULL,
+  `status` int(11) DEFAULT NULL,
+  `expense_category_id` bigint(20) DEFAULT NULL,
+  `type` int(11) DEFAULT 0,
+  `customer_id` bigint(20) DEFAULT 0,
+  `type_kasbon` int(11) DEFAULT 0,
+  `employee_id` bigint(20) DEFAULT NULL,
+  `referensi_id` bigint(20) DEFAULT NULL,
+  `segment1_id` bigint(20) DEFAULT 0,
+  `segment2_id` bigint(20) DEFAULT 0,
+  `segment3_id` bigint(20) DEFAULT 0,
+  `segment4_id` bigint(20) DEFAULT 0,
+  `segment5_id` bigint(20) DEFAULT 0,
+  `segment6_id` bigint(20) DEFAULT 0,
+  `segment7_id` bigint(20) DEFAULT 0,
+  `segment8_id` bigint(20) DEFAULT 0,
+  `segment9_id` bigint(20) DEFAULT 0,
+  `segment10_id` bigint(20) DEFAULT 0,
+  `segment11_id` bigint(20) DEFAULT 0,
+  `segment12_id` bigint(20) DEFAULT 0,
+  `segment13_id` bigint(20) DEFAULT 0,
+  `segment14_id` bigint(20) DEFAULT 0,
+  `segment15_id` bigint(20) DEFAULT 0,
+  `payment_to` varchar(120) DEFAULT NULL,
+  `periode_id` bigint(20) DEFAULT 0,
+  `vendor_id` bigint(20) DEFAULT 0,
+  PRIMARY KEY (`pettycash_payment_id`),
+  UNIQUE KEY `XPKpettycash_payment` (`pettycash_payment_id`),
+  UNIQUE KEY `Index_3` (`journal_number`),
+  KEY `jurnal_number` (`journal_number`),
+  KEY `trans_date` (`trans_date`),
+  KEY `posted_status` (`posted_status`),
+  KEY `type` (`type`),
+  KEY `referensi_id` (`referensi_id`),
+  KEY `period_id` (`periode_id`),
+  KEY `segment1` (`segment1_id`),
+  KEY `segment2` (`segment2_id`),
+  KEY `segment3` (`segment3_id`),
+  KEY `segment4` (`segment4_id`),
+  KEY `segment5` (`segment5_id`),
+  KEY `segment6` (`segment6_id`),
+  KEY `segment7` (`segment7_id`),
+  KEY `segment8` (`segment8_id`),
+  KEY `segment9` (`segment9_id`),
+  KEY `segment10` (`segment10_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pettycash_payment_detail`
+--
+
+DROP TABLE IF EXISTS `pettycash_payment_detail`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pettycash_payment_detail` (
+  `pettycash_payment_id` bigint(20) DEFAULT NULL,
+  `pettycash_payment_detail_id` bigint(20) NOT NULL DEFAULT 0,
+  `coa_id` bigint(20) DEFAULT NULL,
+  `amount` decimal(25,2) DEFAULT NULL,
+  `memo` varchar(220) DEFAULT NULL,
+  `department_id` bigint(20) unsigned NOT NULL DEFAULT 0,
+  `type` int(11) DEFAULT NULL,
+  `segment1_id` bigint(20) DEFAULT 0,
+  `segment2_id` bigint(20) DEFAULT 0,
+  `segment3_id` bigint(20) DEFAULT 0,
+  `segment4_id` bigint(20) DEFAULT 0,
+  `segment5_id` bigint(20) DEFAULT 0,
+  `segment6_id` bigint(20) DEFAULT 0,
+  `segment7_id` bigint(20) DEFAULT 0,
+  `segment8_id` bigint(20) DEFAULT 0,
+  `segment9_id` bigint(20) DEFAULT 0,
+  `segment10_id` bigint(20) DEFAULT 0,
+  `segment11_id` bigint(20) DEFAULT 0,
+  `segment12_id` bigint(20) DEFAULT 0,
+  `segment13_id` bigint(20) DEFAULT 0,
+  `segment14_id` bigint(20) DEFAULT 0,
+  `segment15_id` bigint(20) DEFAULT 0,
+  `module_id` bigint(20) DEFAULT 0,
+  `credit_amount` decimal(25,2) DEFAULT 0.00,
+  PRIMARY KEY (`pettycash_payment_detail_id`),
+  UNIQUE KEY `XPKpettycash_payment_detail` (`pettycash_payment_detail_id`),
+  KEY `pettycash_payment_id` (`pettycash_payment_id`),
+  KEY `type` (`type`),
+  KEY `coa_id` (`coa_id`),
+  KEY `segment1` (`segment1_id`),
+  KEY `segment2` (`segment2_id`),
+  KEY `segment3` (`segment3_id`),
+  KEY `segment4` (`segment4_id`),
+  KEY `segment5` (`segment5_id`),
+  KEY `segment6` (`segment6_id`),
+  KEY `segment7` (`segment7_id`),
+  KEY `segment8` (`segment8_id`),
+  KEY `segment9` (`segment9_id`),
+  KEY `segment10` (`segment10_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pettycash_replenishment`
+--
+
+DROP TABLE IF EXISTS `pettycash_replenishment`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pettycash_replenishment` (
+  `pettycash_replenishment_id` bigint(20) NOT NULL DEFAULT 0,
+  `replace_coa_id` bigint(20) DEFAULT NULL,
+  `replace_from_coa_id` bigint(20) DEFAULT NULL,
+  `memo` varchar(220) DEFAULT NULL,
+  `date` date DEFAULT NULL,
+  `trans_date` date DEFAULT NULL,
+  `operator_id` bigint(20) DEFAULT NULL,
+  `operator_name` varchar(20) DEFAULT NULL,
+  `replace_amount` decimal(10,2) DEFAULT NULL,
+  `journal_number` varchar(20) DEFAULT NULL,
+  `journal_prefix` varchar(20) DEFAULT NULL,
+  `journal_counter` int(11) DEFAULT NULL,
+  `status` varchar(65) CHARACTER SET latin1 COLLATE latin1_bin NOT NULL DEFAULT '',
+  `customer_id` bigint(20) DEFAULT NULL,
+  `segment1_id` bigint(20) DEFAULT 0,
+  `segment2_id` bigint(20) DEFAULT 0,
+  `segment3_id` bigint(20) DEFAULT 0,
+  `segment4_id` bigint(20) DEFAULT 0,
+  `segment5_id` bigint(20) DEFAULT 0,
+  `segment6_id` bigint(20) DEFAULT 0,
+  `segment7_id` bigint(20) DEFAULT 0,
+  `segment8_id` bigint(20) DEFAULT 0,
+  `segment9_id` bigint(20) DEFAULT 0,
+  `segment10_id` bigint(20) DEFAULT 0,
+  `segment11_id` bigint(20) DEFAULT 0,
+  `segment12_id` bigint(20) DEFAULT 0,
+  `segment13_id` bigint(20) DEFAULT 0,
+  `segment14_id` bigint(20) DEFAULT 0,
+  `segment15_id` bigint(20) DEFAULT 0,
+  `posted_status` int(11) DEFAULT 0,
+  `posted_by_id` bigint(20) DEFAULT 0,
+  `posted_date` date DEFAULT NULL,
+  `effective_date` date DEFAULT NULL,
+  PRIMARY KEY (`pettycash_replenishment_id`),
+  UNIQUE KEY `XPKpettycash_replenishment` (`pettycash_replenishment_id`),
+  UNIQUE KEY `Index_3` (`journal_number`),
+  KEY `replace_coa_id` (`replace_coa_id`),
+  KEY `replace_from_coa_id` (`replace_from_coa_id`),
+  KEY `trans_date` (`trans_date`),
+  KEY `jurnal_number` (`journal_number`),
+  KEY `posted_status` (`posted_status`),
+  KEY `segment1` (`segment1_id`),
+  KEY `segment2` (`segment2_id`),
+  KEY `segment3` (`segment3_id`),
+  KEY `segment4` (`segment4_id`),
+  KEY `segment5` (`segment5_id`),
+  KEY `segment6` (`segment6_id`),
+  KEY `segment7` (`segment7_id`),
+  KEY `segment8` (`segment8_id`),
+  KEY `segment9` (`segment9_id`),
+  KEY `segment10` (`segment10_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `playground_children`
+--
+
+DROP TABLE IF EXISTS `playground_children`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `playground_children` (
+  `id` bigint(20) NOT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `age` int(11) DEFAULT NULL,
+  `parent_id` bigint(20) DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FKtrh1xw7jn1rjo96kx8jaq7boi` (`parent_id`),
+  CONSTRAINT `FKtrh1xw7jn1rjo96kx8jaq7boi` FOREIGN KEY (`parent_id`) REFERENCES `playground_parent` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `playground_parent`
+--
+
+DROP TABLE IF EXISTS `playground_parent`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `playground_parent` (
+  `id` bigint(20) NOT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `phone` varchar(255) DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `code` varchar(255) DEFAULT '',
+  `updated_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `playground_registration`
+--
+
+DROP TABLE IF EXISTS `playground_registration`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `playground_registration` (
+  `id` bigint(20) NOT NULL,
+  `number` varchar(255) DEFAULT NULL,
+  `prefix` varchar(255) DEFAULT NULL,
+  `counter` int(11) DEFAULT NULL,
+  `parent_id` bigint(20) DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UK_3aeo4fda91ghnjttcaksg3s2w` (`number`),
+  KEY `FK8mh2sm4i67up9dnk5f7ar7ce4` (`parent_id`),
+  CONSTRAINT `FK8mh2sm4i67up9dnk5f7ar7ce4` FOREIGN KEY (`parent_id`) REFERENCES `playground_parent` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `playground_session`
+--
+
+DROP TABLE IF EXISTS `playground_session`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `playground_session` (
+  `id` bigint(20) NOT NULL,
+  `child_id` bigint(20) DEFAULT NULL,
+  `is_active` int(11) DEFAULT NULL,
+  `start_time` datetime DEFAULT NULL,
+  `end_time` datetime DEFAULT NULL,
+  `user_id` bigint(20) DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `code` varchar(25) DEFAULT '',
+  PRIMARY KEY (`id`),
+  KEY `idx_end_time` (`end_time`),
+  KEY `idx_active_end` (`is_active`,`end_time`),
+  KEY `FKq3fel0amb9bl4ww82sspkarpm` (`child_id`),
+  KEY `FKgq2spvqgchkdla81ocqeuq101` (`user_id`),
+  CONSTRAINT `FKgq2spvqgchkdla81ocqeuq101` FOREIGN KEY (`user_id`) REFERENCES `sysuser` (`user_id`),
+  CONSTRAINT `FKq3fel0amb9bl4ww82sspkarpm` FOREIGN KEY (`child_id`) REFERENCES `playground_children` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_adjusment`
+--
+
+DROP TABLE IF EXISTS `pos_adjusment`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_adjusment` (
+  `adjusment_id` bigint(20) NOT NULL DEFAULT 0,
+  `date` datetime DEFAULT NULL,
+  `status` varchar(20) DEFAULT NULL,
+  `location_id` bigint(20) DEFAULT NULL,
+  `note` text DEFAULT NULL,
+  `counter` int(11) DEFAULT NULL,
+  `number` varchar(20) DEFAULT NULL,
+  `approval_1` bigint(20) DEFAULT NULL,
+  `approval_2` bigint(20) DEFAULT NULL,
+  `approval_3` bigint(20) DEFAULT NULL,
+  `user_id` bigint(20) DEFAULT NULL,
+  `prefix_number` varchar(20) DEFAULT NULL,
+  `approval_1_date` datetime DEFAULT NULL,
+  `approval_2_date` datetime DEFAULT NULL,
+  `approval_3_date` datetime DEFAULT NULL,
+  `type` int(10) DEFAULT NULL,
+  `company_id` bigint(20) DEFAULT NULL,
+  `posted_status` int(10) DEFAULT 0,
+  `posted_by_id` bigint(20) DEFAULT 0,
+  `posted_date` date DEFAULT NULL,
+  `effective_date` date DEFAULT NULL,
+  `opname_id` bigint(20) DEFAULT 0,
+  `created_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`adjusment_id`),
+  UNIQUE KEY `uniq_number` (`number`),
+  KEY `location_id` (`location_id`),
+  KEY `STATUS` (`status`),
+  KEY `DATE` (`date`),
+  KEY `number` (`number`),
+  KEY `approval_1` (`approval_1`),
+  KEY `approval_2` (`approval_2`),
+  KEY `approval_3` (`approval_3`),
+  KEY `user_id` (`user_id`),
+  KEY `approval_1_date` (`approval_1_date`),
+  KEY `approval_2_date` (`approval_2_date`),
+  KEY `approval_3_date` (`approval_3_date`),
+  KEY `TYPE` (`type`),
+  KEY `posted_status` (`posted_status`),
+  KEY `posted_by_id` (`posted_by_id`),
+  KEY `posted_date` (`posted_date`),
+  KEY `opname_id` (`opname_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_adjusment_item`
+--
+
+DROP TABLE IF EXISTS `pos_adjusment_item`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_adjusment_item` (
+  `adjusment_item_id` bigint(20) NOT NULL DEFAULT 0,
+  `adjusment_id` bigint(20) DEFAULT 0,
+  `item_master_id` bigint(20) DEFAULT 0,
+  `qty_system` decimal(22,3) DEFAULT 0.000,
+  `qty_real` decimal(22,3) DEFAULT 0.000,
+  `notes` varchar(245) DEFAULT NULL,
+  `qty_balance` decimal(22,3) NOT NULL DEFAULT 0.000,
+  `price` decimal(20,2) NOT NULL DEFAULT 0.00,
+  `amount` decimal(20,2) NOT NULL DEFAULT 0.00,
+  `type` int(10) unsigned DEFAULT 0,
+  `company_id` bigint(20) DEFAULT 0,
+  PRIMARY KEY (`adjusment_item_id`),
+  KEY `adjusment_id` (`adjusment_id`),
+  KEY `item_master_id` (`item_master_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_adjusment_reason`
+--
+
+DROP TABLE IF EXISTS `pos_adjusment_reason`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_adjusment_reason` (
+  `adjusment_reason_id` bigint(20) NOT NULL DEFAULT 0,
+  `reason` varchar(150) DEFAULT NULL,
+  `coa_id` bigint(20) DEFAULT 0,
+  PRIMARY KEY (`adjusment_reason_id`),
+  KEY `coa_id` (`coa_id`),
+  KEY `reason` (`reason`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_adjusment_val`
+--
+
+DROP TABLE IF EXISTS `pos_adjusment_val`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_adjusment_val` (
+  `adjusment_val_id` bigint(20) NOT NULL DEFAULT 0,
+  `counter` int(4) DEFAULT 0,
+  `number` varchar(120) DEFAULT NULL,
+  `date` datetime DEFAULT NULL,
+  `status` varchar(120) DEFAULT NULL,
+  `note` varchar(1220) DEFAULT NULL,
+  `approval_1` bigint(20) DEFAULT 0,
+  `approval_2` bigint(20) DEFAULT 0,
+  `user_id` bigint(20) DEFAULT 0,
+  `location_id` bigint(20) DEFAULT 0,
+  `prefix_number` varchar(120) DEFAULT NULL,
+  `approval_1_date` datetime DEFAULT NULL,
+  `approval_2_date` datetime DEFAULT NULL,
+  `type` int(4) DEFAULT 0,
+  `posted_status` int(4) DEFAULT 0,
+  `posted_by_id` bigint(20) DEFAULT 0,
+  `posted_date` date DEFAULT NULL,
+  PRIMARY KEY (`adjusment_val_id`),
+  UNIQUE KEY `number_uniq` (`number`),
+  KEY `approval_1_date` (`approval_1_date`),
+  KEY `number` (`number`),
+  KEY `location_id` (`location_id`),
+  KEY `posted_status` (`posted_status`),
+  KEY `status` (`status`),
+  KEY `app_2_date` (`approval_2_date`),
+  KEY `date` (`date`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_adjusment_val_item`
+--
+
+DROP TABLE IF EXISTS `pos_adjusment_val_item`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_adjusment_val_item` (
+  `adjusment_val_item_id` bigint(20) NOT NULL DEFAULT 0,
+  `adjusment_val_id` bigint(20) DEFAULT 0,
+  `item_master_id` bigint(20) DEFAULT 0,
+  `qty_ending` decimal(22,2) DEFAULT 0.00,
+  `amount_ending` decimal(22,2) DEFAULT 0.00,
+  `amount` decimal(22,2) DEFAULT 0.00,
+  PRIMARY KEY (`adjusment_val_item_id`),
+  UNIQUE KEY `adjusment_val_id` (`adjusment_val_id`,`item_master_id`),
+  KEY `adj_val_id` (`adjusment_val_id`),
+  KEY `item_id` (`item_master_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_auto_order`
+--
+
+DROP TABLE IF EXISTS `pos_auto_order`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_auto_order` (
+  `auto_order_id` bigint(20) NOT NULL DEFAULT 0,
+  `date` datetime DEFAULT NULL,
+  `location_id` bigint(20) DEFAULT NULL,
+  `item_master_id` bigint(20) DEFAULT NULL,
+  `transfer_id` bigint(20) DEFAULT NULL,
+  `transfer_item_id` bigint(20) DEFAULT NULL,
+  `purchase_id` bigint(20) DEFAULT NULL,
+  `purchase_item_id` bigint(20) DEFAULT NULL,
+  `qty_order` double DEFAULT NULL,
+  `status` varchar(20) DEFAULT NULL,
+  `number` varchar(20) DEFAULT NULL,
+  `counter` int(11) DEFAULT NULL,
+  `prefix_number` varchar(20) DEFAULT NULL,
+  `qty_proces` double NOT NULL DEFAULT 0,
+  `qty_stock` double NOT NULL DEFAULT 0,
+  `qty_standar` double NOT NULL DEFAULT 0,
+  `qty_po_prev` double NOT NULL DEFAULT 0,
+  `date_proces` datetime DEFAULT NULL,
+  PRIMARY KEY (`auto_order_id`),
+  KEY `lokasi` (`location_id`,`item_master_id`),
+  KEY `check_order` (`location_id`,`status`,`item_master_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_cash_cashier`
+--
+
+DROP TABLE IF EXISTS `pos_cash_cashier`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_cash_cashier` (
+  `CASH_CASHIER_ID` bigint(20) NOT NULL DEFAULT 0,
+  `CASH_MASTER_ID` bigint(20) NOT NULL DEFAULT 0,
+  `USER_ID` bigint(20) NOT NULL DEFAULT 0,
+  `SHIFT_ID` bigint(20) NOT NULL DEFAULT 0,
+  `DATE_OPEN` datetime DEFAULT NULL,
+  `CURRENCY_ID_OPEN` bigint(20) DEFAULT NULL,
+  `RATE_OPEN` double DEFAULT NULL,
+  `AMOUNT_OPEN` double DEFAULT NULL,
+  `DATE_CLOSING` datetime DEFAULT NULL,
+  `CURRENCY_ID_CLOSING` bigint(20) DEFAULT NULL,
+  `RATE_CLOSING` double DEFAULT NULL,
+  `AMOUNT_CLOSING` double DEFAULT NULL,
+  `STATUS` int(11) DEFAULT NULL,
+  `SHOULD_VALUE` double DEFAULT 0,
+  `COMPANY_ID` bigint(20) DEFAULT 0,
+  `AMOUNT_GUIDE_PAYMENT` double DEFAULT 0,
+  `COUNT_SALES` double DEFAULT 0,
+  `COUNT_DETAIL` double DEFAULT 0,
+  `COUNT_PAYMENT` double DEFAULT 0,
+  `STS_UPLOAD` int(1) DEFAULT 0,
+  PRIMARY KEY (`CASH_CASHIER_ID`),
+  KEY `FKg9be2w7f569v6c1q5pnp8nhr8` (`CASH_MASTER_ID`),
+  KEY `FKsl8hh1x9m7b1bbvdci5ffotj1` (`CURRENCY_ID_CLOSING`),
+  KEY `FK44wtmlcdtmwbfku5e6u5scaly` (`CURRENCY_ID_OPEN`),
+  KEY `FK88xoecxvyw3l01ueiqc4yotsd` (`SHIFT_ID`),
+  KEY `FKd24cwsjcksn37civrfr50w58k` (`USER_ID`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_cash_master`
+--
+
+DROP TABLE IF EXISTS `pos_cash_master`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_cash_master` (
+  `CASH_MASTER_ID` bigint(20) NOT NULL DEFAULT 0,
+  `CASHIER_NUMBER` int(4) DEFAULT NULL,
+  `LOCATION_ID` bigint(20) NOT NULL DEFAULT 0,
+  `COMPANY_ID` bigint(20) DEFAULT NULL,
+  `sts_loc` varchar(45) DEFAULT NULL,
+  `type` int(2) DEFAULT 0,
+  PRIMARY KEY (`CASH_MASTER_ID`),
+  UNIQUE KEY `XPKCASH_MASTER` (`CASH_MASTER_ID`),
+  KEY `FK8o54nbfj7btn4tcxr49hw5uig` (`LOCATION_ID`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `insert_cash_master` AFTER INSERT ON `pos_cash_master` FOR EACH ROW BEGIN
+	INSERT INTO `android_logs` (
+	logs_id,table_name,reff_id,old_id,sts_loc1,sts_loc2,sts_loc3,sts_loc4,sts_loc5,sts_loc6,sts_loc7,sts_loc8,sts_loc9,sts_loc10,
+	sts_loc11,sts_loc12,sts_loc13,sts_loc14,sts_loc15,sts_loc16,sts_loc17,sts_loc18,sts_loc19,sts_loc20,
+	sts_loc21,sts_loc22,sts_loc23,sts_loc24,sts_loc25,sts_loc26,sts_loc27,sts_loc28,sts_loc29,sts_loc30,
+	action_handle) VALUE (
+	  UUID(),
+	  "pos_cash_master",
+	  new.cash_master_id,
+	  0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  "insert"
+	  );
+    END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `update_cash_master` AFTER UPDATE ON `pos_cash_master` FOR EACH ROW BEGIN
+	INSERT INTO `android_logs` (logs_id,table_name,reff_id,old_id,sts_loc1,sts_loc2,sts_loc3,sts_loc4,sts_loc5,sts_loc6,sts_loc7,sts_loc8,sts_loc9,sts_loc10,
+	sts_loc11,sts_loc12,sts_loc13,sts_loc14,sts_loc15,sts_loc16,sts_loc17,sts_loc18,sts_loc19,sts_loc20,
+	sts_loc21,sts_loc22,sts_loc23,sts_loc24,sts_loc25,sts_loc26,sts_loc27,sts_loc28,sts_loc29,sts_loc30,action_handle) VALUE (
+	  UUID(),
+	  "pos_cash_master",
+	  new.cash_master_id,
+	  old.cash_master_id,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	   "update"
+	);
+    END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `delete_cash_master` BEFORE DELETE ON `pos_cash_master` FOR EACH ROW BEGIN
+	INSERT INTO `android_logs` (
+	logs_id,table_name,reff_id,old_id,sts_loc1,sts_loc2,sts_loc3,sts_loc4,sts_loc5,sts_loc6,sts_loc7,sts_loc8,sts_loc9,sts_loc10,
+	sts_loc11,sts_loc12,sts_loc13,sts_loc14,sts_loc15,sts_loc16,sts_loc17,sts_loc18,sts_loc19,sts_loc20,
+	sts_loc21,sts_loc22,sts_loc23,sts_loc24,sts_loc25,sts_loc26,sts_loc27,sts_loc28,sts_loc29,sts_loc30,
+	action_handle) VALUE (
+	  UUID(),
+	  "pos_cash_master",
+	  old.cash_master_id,
+	  0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  "delete"
+	);
+    END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+
+--
+-- Table structure for table `pos_cash_session`
+--
+
+DROP TABLE IF EXISTS `pos_cash_session`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_cash_session` (
+  `sess_code` int(11) NOT NULL AUTO_INCREMENT,
+  `user_login` varchar(30) DEFAULT NULL,
+  `pos_code` varchar(30) DEFAULT NULL,
+  `shf_code` varchar(30) DEFAULT NULL,
+  `sess_start` datetime DEFAULT NULL,
+  `sess_finish` datetime DEFAULT NULL,
+  `sess_status` varchar(20) DEFAULT NULL,
+  `sess_posting` varchar(10) DEFAULT NULL,
+  `company_id` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`sess_code`),
+  UNIQUE KEY `sess_code_uid` (`sess_code`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci ROW_FORMAT=DYNAMIC;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_change_logs`
+--
+
+DROP TABLE IF EXISTS `pos_change_logs`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_change_logs` (
+  `change_logs_id` bigint(20) NOT NULL DEFAULT 0,
+  `date` datetime DEFAULT NULL,
+  `version` varchar(100) DEFAULT NULL,
+  `descriptions` varchar(255) DEFAULT NULL,
+  `file_name` varchar(150) DEFAULT NULL,
+  `status` varchar(15) DEFAULT NULL,
+  PRIMARY KEY (`change_logs_id`),
+  KEY `date` (`date`),
+  KEY `status` (`status`),
+  KEY `version` (`version`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_change_logs_detail`
+--
+
+DROP TABLE IF EXISTS `pos_change_logs_detail`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_change_logs_detail` (
+  `change_logs_detail_id` bigint(20) NOT NULL,
+  `change_logs_id` bigint(20) DEFAULT NULL,
+  `type` varchar(50) DEFAULT NULL,
+  `sequence` int(4) DEFAULT NULL,
+  `path_source` varchar(200) DEFAULT NULL,
+  `path_destination` varchar(200) DEFAULT NULL,
+  `descriptions` varchar(200) DEFAULT NULL,
+  PRIMARY KEY (`change_logs_detail_id`),
+  KEY `change_logs_id` (`change_logs_id`),
+  KEY `type` (`type`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_change_logs_location`
+--
+
+DROP TABLE IF EXISTS `pos_change_logs_location`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_change_logs_location` (
+  `change_logs_location_id` bigint(20) NOT NULL DEFAULT 0,
+  `change_logs_id` bigint(20) DEFAULT 0,
+  `location_id` bigint(20) DEFAULT 0,
+  `cash_master_id` bigint(20) DEFAULT 0,
+  `sts_download` int(4) DEFAULT 0,
+  `sts_update` int(4) DEFAULT 0,
+  PRIMARY KEY (`change_logs_location_id`),
+  KEY `change_logs_id` (`change_logs_id`),
+  KEY `cash_master_id` (`cash_master_id`),
+  KEY `sts_download` (`sts_download`),
+  KEY `sts_update` (`sts_update`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_change_payment`
+--
+
+DROP TABLE IF EXISTS `pos_change_payment`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_change_payment` (
+  `change_payment_id` bigint(20) DEFAULT NULL,
+  `sales_id` bigint(20) DEFAULT NULL,
+  `currency_id` bigint(20) DEFAULT NULL,
+  `amount` decimal(25,2) DEFAULT NULL,
+  `rate` double DEFAULT NULL,
+  `company_id` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_chef`
+--
+
+DROP TABLE IF EXISTS `pos_chef`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_chef` (
+  `chef_id` bigint(20) NOT NULL,
+  `item_master_id` bigint(20) DEFAULT NULL,
+  `selling_price` decimal(22,2) DEFAULT NULL,
+  `created_date` datetime DEFAULT NULL,
+  `margin` decimal(22,2) DEFAULT NULL,
+  `up_margin` decimal(22,2) DEFAULT NULL,
+  PRIMARY KEY (`chef_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_chef_item`
+--
+
+DROP TABLE IF EXISTS `pos_chef_item`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_chef_item` (
+  `chef_item_id` bigint(20) NOT NULL DEFAULT 0,
+  `chef_id` bigint(20) DEFAULT 0,
+  `item_master_id` bigint(20) DEFAULT 0,
+  `qty` decimal(22,3) DEFAULT 0.000,
+  `uom_id` bigint(20) DEFAULT 0,
+  `cost` decimal(22,2) DEFAULT 0.00,
+  `user_id` bigint(20) DEFAULT 0,
+  `last_update` datetime DEFAULT NULL,
+  `conversi_recipe_qty` decimal(22,2) DEFAULT 0.00,
+  `uom_recipe_id` bigint(20) DEFAULT 0,
+  `qty_recipe` decimal(22,2) DEFAULT 0.00,
+  PRIMARY KEY (`chef_item_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_class_item`
+--
+
+DROP TABLE IF EXISTS `pos_class_item`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_class_item` (
+  `class_item_id` bigint(20) NOT NULL DEFAULT 0,
+  `name` varchar(45) DEFAULT '',
+  `note` varchar(200) DEFAULT '',
+  PRIMARY KEY (`class_item_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_closing_opname`
+--
+
+DROP TABLE IF EXISTS `pos_closing_opname`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_closing_opname` (
+  `closing_opname_id` bigint(20) NOT NULL,
+  `date` datetime DEFAULT NULL,
+  `location_id` bigint(20) DEFAULT NULL,
+  `item_master_id` bigint(20) DEFAULT NULL,
+  `qty` decimal(10,3) DEFAULT 0.000,
+  `opname_id` bigint(20) DEFAULT NULL,
+  `hpp` double DEFAULT NULL,
+  `harga_jual` double DEFAULT NULL,
+  PRIMARY KEY (`closing_opname_id`),
+  UNIQUE KEY `Index_2` (`item_master_id`,`opname_id`),
+  KEY `date` (`date`),
+  KEY `locationId` (`location_id`),
+  KEY `itemMasterId` (`item_master_id`),
+  KEY `opnameId` (`opname_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_color`
+--
+
+DROP TABLE IF EXISTS `pos_color`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_color` (
+  `color_id` bigint(22) NOT NULL DEFAULT 0,
+  `name` varchar(100) DEFAULT NULL,
+  `code` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`color_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_costing`
+--
+
+DROP TABLE IF EXISTS `pos_costing`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_costing` (
+  `costing_id` bigint(20) NOT NULL DEFAULT 0,
+  `date` datetime DEFAULT NULL,
+  `counter` int(11) DEFAULT NULL,
+  `number` varchar(45) DEFAULT NULL,
+  `note` text DEFAULT NULL,
+  `approval_1` bigint(20) DEFAULT NULL,
+  `approval_2` bigint(20) DEFAULT NULL,
+  `approval_3` bigint(20) DEFAULT NULL,
+  `status` varchar(45) DEFAULT NULL,
+  `location_id` bigint(20) DEFAULT NULL,
+  `user_id` bigint(20) DEFAULT NULL,
+  `prefix_number` varchar(20) DEFAULT NULL,
+  `posted_status` int(10) DEFAULT 0,
+  `posted_by_id` bigint(20) DEFAULT 0,
+  `posted_date` date DEFAULT NULL,
+  `effective_date` datetime DEFAULT NULL,
+  `location_post_id` bigint(20) DEFAULT 0,
+  `cancel_date` datetime DEFAULT NULL,
+  `type` tinyint(4) DEFAULT 0,
+  `created_at` datetime DEFAULT NULL,
+  `ref_number` varchar(45) DEFAULT '',
+  PRIMARY KEY (`costing_id`),
+  UNIQUE KEY `unik` (`number`),
+  KEY `DATE` (`date`),
+  KEY `number` (`number`),
+  KEY `approval_1` (`approval_1`),
+  KEY `approval_2` (`approval_2`),
+  KEY `approval_3` (`approval_3`),
+  KEY `STATUS` (`status`),
+  KEY `user_id` (`user_id`),
+  KEY `effective_date` (`effective_date`),
+  KEY `location_post_id` (`location_post_id`),
+  KEY `posted_status` (`posted_status`),
+  KEY `posted_by_id` (`posted_by_id`),
+  KEY `posted_date` (`posted_date`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_costing_item`
+--
+
+DROP TABLE IF EXISTS `pos_costing_item`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_costing_item` (
+  `costing_item_id` bigint(20) NOT NULL DEFAULT 0,
+  `costing_id` bigint(20) DEFAULT NULL,
+  `item_master_id` bigint(20) DEFAULT NULL,
+  `qty` decimal(12,3) DEFAULT NULL,
+  `price` double DEFAULT NULL,
+  `amount` double DEFAULT NULL,
+  PRIMARY KEY (`costing_item_id`),
+  UNIQUE KEY `uniqKey1` (`costing_id`,`item_master_id`),
+  KEY `costing_id` (`costing_id`),
+  KEY `item_master_id` (`item_master_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_credit_payment`
+--
+
+DROP TABLE IF EXISTS `pos_credit_payment`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_credit_payment` (
+  `CREDIT_PAYMENT_ID` bigint(20) NOT NULL DEFAULT 0,
+  `SALES_ID` bigint(20) DEFAULT NULL,
+  `CURRENCY_ID` bigint(20) NOT NULL DEFAULT 0,
+  `PAY_DATETIME` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `AMOUNT` double DEFAULT NULL,
+  `RATE` double DEFAULT NULL,
+  `CASH_CASHIER_ID` bigint(20) DEFAULT NULL,
+  `COMPANY_ID` bigint(20) DEFAULT NULL,
+  `posted_status` int(11) DEFAULT 0,
+  `posted_date` date DEFAULT NULL,
+  `effective_date` date DEFAULT NULL,
+  `posted_by_id` bigint(20) DEFAULT 0,
+  `type` int(3) DEFAULT 0,
+  `bank_id` bigint(20) DEFAULT 0,
+  `customer_id` bigint(20) DEFAULT 0,
+  `number` varchar(100) DEFAULT NULL,
+  `name` varchar(100) DEFAULT NULL,
+  `merchant_id` bigint(20) DEFAULT 0,
+  `giro_id` bigint(20) DEFAULT 0,
+  `expired_date` datetime DEFAULT NULL,
+  `last_balance` decimal(22,2) DEFAULT 0.00,
+  `total_paid` decimal(22,2) DEFAULT 0.00,
+  `total_retur` decimal(22,2) DEFAULT 0.00,
+  `cost_card_amount` decimal(22,2) DEFAULT 0.00,
+  `cost_card_percent` decimal(22,2) DEFAULT 0.00,
+  `payment_method_id` bigint(20) DEFAULT 0,
+  PRIMARY KEY (`CREDIT_PAYMENT_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_credit_payment_main`
+--
+
+DROP TABLE IF EXISTS `pos_credit_payment_main`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_credit_payment_main` (
+  `CREDIT_PAYMENT_MAIN_ID` bigint(20) NOT NULL DEFAULT 0,
+  `SALES_ID` bigint(20) NOT NULL DEFAULT 0,
+  `INV_DATE` datetime DEFAULT NULL,
+  `INV_NUMBER` varchar(20) DEFAULT NULL,
+  `COMPANY_ID` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`CREDIT_PAYMENT_MAIN_ID`),
+  UNIQUE KEY `XPKCASH_CREDIT_PAYMENT_MAIN` (`CREDIT_PAYMENT_MAIN_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_customer_contract`
+--
+
+DROP TABLE IF EXISTS `pos_customer_contract`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_customer_contract` (
+  `customer_contract_id` bigint(20) DEFAULT NULL,
+  `customer_id` bigint(20) DEFAULT NULL,
+  `number` varchar(45) DEFAULT NULL,
+  `status` varchar(60) DEFAULT NULL,
+  `prefix_number` varchar(30) DEFAULT NULL,
+  `counter` int(5) DEFAULT NULL,
+  `start_date` date DEFAULT NULL,
+  `end_date` date DEFAULT NULL,
+  `note` varchar(450) DEFAULT NULL,
+  `user_id` bigint(20) DEFAULT NULL,
+  `approval_1` bigint(20) DEFAULT NULL,
+  `create_date` datetime DEFAULT NULL,
+  `approval_1_date` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_customer_contract_detail`
+--
+
+DROP TABLE IF EXISTS `pos_customer_contract_detail`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_customer_contract_detail` (
+  `customer_contract_detail_id` bigint(20) DEFAULT NULL,
+  `customer_contract_id` bigint(20) DEFAULT NULL,
+  `item_master_id` bigint(20) DEFAULT NULL,
+  `uom_id` bigint(20) DEFAULT NULL,
+  `conv_qty` decimal(24,0) DEFAULT NULL,
+  `selling_price` decimal(24,0) DEFAULT NULL,
+  `discount` decimal(24,0) DEFAULT NULL,
+  `tax` int(1) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_delivery_order`
+--
+
+DROP TABLE IF EXISTS `pos_delivery_order`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_delivery_order` (
+  `delivery_order_id` bigint(20) NOT NULL DEFAULT 0,
+  `sales_order_id` bigint(20) DEFAULT 0,
+  `location_id` bigint(20) DEFAULT 0,
+  `type` int(4) DEFAULT NULL,
+  `number` varchar(120) DEFAULT NULL,
+  `counter` int(11) DEFAULT NULL,
+  `prefix_number` varchar(20) DEFAULT NULL,
+  `customer_id` bigint(20) DEFAULT 0,
+  `trans_date` datetime DEFAULT NULL,
+  `delivery_date` datetime DEFAULT NULL,
+  `due_date` date DEFAULT NULL,
+  `expired_date` date DEFAULT NULL,
+  `note` text DEFAULT NULL,
+  `amount` decimal(22,2) DEFAULT 0.00,
+  `price_include_tax` int(4) DEFAULT 0,
+  `tax_percent` decimal(10,2) DEFAULT 0.00,
+  `tax_value` decimal(22,2) DEFAULT 0.00,
+  `discount_percent` decimal(10,2) DEFAULT 0.00,
+  `discount_value` decimal(22,2) DEFAULT 0.00,
+  `status` varchar(15) DEFAULT '0',
+  `user_id` bigint(20) DEFAULT 0,
+  `approval_1` bigint(20) DEFAULT 0,
+  `approval_2` bigint(20) DEFAULT 0,
+  `approval_3` bigint(20) DEFAULT 0,
+  `approval_1_date` datetime DEFAULT NULL,
+  `approval_2_date` datetime DEFAULT NULL,
+  `approval_3_date` datetime DEFAULT NULL,
+  `canceled_by` bigint(20) DEFAULT 0,
+  `canceled_date` datetime DEFAULT NULL,
+  `destination_address` varchar(150) DEFAULT '',
+  `driver_id` bigint(20) DEFAULT 0,
+  `coa_do_ar_id` bigint(20) DEFAULT 0,
+  `coa_do_revenue_id` bigint(20) DEFAULT 0,
+  PRIMARY KEY (`delivery_order_id`),
+  KEY `sales_order_id` (`sales_order_id`),
+  KEY `type` (`type`),
+  KEY `number` (`number`),
+  KEY `prefix_number` (`prefix_number`),
+  KEY `customer_id` (`customer_id`),
+  KEY `trans_date` (`trans_date`),
+  KEY `due_date` (`due_date`),
+  KEY `expired_date` (`expired_date`),
+  KEY `price_include_tax` (`price_include_tax`),
+  KEY `status` (`status`),
+  KEY `user_id` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_delivery_order_detail`
+--
+
+DROP TABLE IF EXISTS `pos_delivery_order_detail`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_delivery_order_detail` (
+  `delivery_order_detail_id` bigint(20) NOT NULL DEFAULT 0,
+  `delivery_order_id` bigint(20) DEFAULT 0,
+  `sales_order_detail_id` bigint(20) DEFAULT 0,
+  `item_master_id` bigint(20) DEFAULT 0,
+  `is_bkp` int(1) DEFAULT 0,
+  `cogs` decimal(22,2) DEFAULT 0.00,
+  `selling_price` decimal(22,2) DEFAULT 0.00,
+  `qty` decimal(12,2) DEFAULT 0.00,
+  `discount_percent` decimal(10,2) DEFAULT 0.00,
+  `discount_amount` decimal(22,2) DEFAULT 0.00,
+  `total_amount` decimal(22,2) DEFAULT 0.00,
+  `uom_order_id` bigint(20) DEFAULT 0,
+  `uom_stock_id` bigint(20) DEFAULT 0,
+  `conv_qty` decimal(12,2) DEFAULT 0.00,
+  `tax` decimal(4,2) DEFAULT 0.00,
+  PRIMARY KEY (`delivery_order_detail_id`),
+  KEY `delivery_order_id` (`delivery_order_id`),
+  KEY `sales_order_detail_id` (`sales_order_detail_id`),
+  KEY `item_master_id` (`item_master_id`),
+  KEY `is_bkp` (`is_bkp`),
+  KEY `uom_order_id` (`uom_order_id`),
+  KEY `uom_stock_id` (`uom_stock_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_gender`
+--
+
+DROP TABLE IF EXISTS `pos_gender`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_gender` (
+  `gender_id` bigint(20) NOT NULL DEFAULT 0,
+  `name` varchar(100) DEFAULT NULL,
+  `code` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`gender_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_general_affair`
+--
+
+DROP TABLE IF EXISTS `pos_general_affair`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_general_affair` (
+  `general_affair_id` bigint(20) NOT NULL DEFAULT 0,
+  `date` datetime DEFAULT NULL,
+  `date_trans` datetime DEFAULT NULL,
+  `counter` int(11) DEFAULT NULL,
+  `number` varchar(20) DEFAULT NULL,
+  `note` text DEFAULT NULL,
+  `approval_1` bigint(20) NOT NULL DEFAULT 0,
+  `approval_1_date` datetime DEFAULT NULL,
+  `status` varchar(20) DEFAULT NULL,
+  `location_id` bigint(20) NOT NULL DEFAULT 0,
+  `user_id` bigint(20) NOT NULL DEFAULT 0,
+  `prefix_number` varchar(20) DEFAULT NULL,
+  `posted_status` int(11) DEFAULT NULL,
+  `posted_by_id` bigint(20) NOT NULL DEFAULT 0,
+  `posted_date` datetime DEFAULT NULL,
+  `location_post_id` bigint(20) NOT NULL DEFAULT 0,
+  `created_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`general_affair_id`),
+  UNIQUE KEY `numberUniq` (`number`),
+  KEY `dateTrans` (`date_trans`),
+  KEY `counter` (`counter`),
+  KEY `number` (`number`),
+  KEY `locationId` (`location_id`),
+  KEY `approval1Date` (`approval_1_date`),
+  KEY `postedStatus` (`posted_status`),
+  KEY `status` (`status`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_general_affair_detail`
+--
+
+DROP TABLE IF EXISTS `pos_general_affair_detail`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_general_affair_detail` (
+  `general_affair_detail_id` bigint(20) NOT NULL DEFAULT 0,
+  `general_affair_id` bigint(20) DEFAULT NULL,
+  `item_master_id` bigint(20) DEFAULT NULL,
+  `qty` decimal(22,2) DEFAULT 0.00,
+  `price` decimal(22,2) NOT NULL DEFAULT 0.00,
+  `amount` decimal(22,2) NOT NULL DEFAULT 0.00,
+  PRIMARY KEY (`general_affair_detail_id`),
+  UNIQUE KEY `uniqKey` (`general_affair_id`,`item_master_id`),
+  KEY `genid` (`general_affair_id`),
+  KEY `itemMasterId` (`item_master_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_guide_payment`
+--
+
+DROP TABLE IF EXISTS `pos_guide_payment`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_guide_payment` (
+  `guide_payment_id` bigint(20) NOT NULL,
+  `number` varchar(120) DEFAULT NULL,
+  `number_prefix` varchar(20) DEFAULT NULL,
+  `counter` int(10) DEFAULT 0,
+  `cash_cashier_id` bigint(20) DEFAULT 0,
+  `guide_id` bigint(20) DEFAULT NULL,
+  `amount` decimal(20,0) DEFAULT 0,
+  `com_by_group_id` bigint(20) DEFAULT 0,
+  `commission_amount` decimal(10,2) NOT NULL DEFAULT 0.00,
+  `commission_percent` decimal(10,2) NOT NULL DEFAULT 0.00,
+  `status_payment` int(11) NOT NULL DEFAULT 0,
+  `query_string` text DEFAULT NULL,
+  `sts_upload` int(11) DEFAULT 0,
+  PRIMARY KEY (`guide_payment_id`),
+  KEY `gd1` (`number`,`number_prefix`,`counter`),
+  KEY `gd2` (`status_payment`),
+  KEY `gd3` (`number_prefix`,`guide_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_item_barcode`
+--
+
+DROP TABLE IF EXISTS `pos_item_barcode`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_item_barcode` (
+  `item_barcode_id` bigint(20) DEFAULT NULL,
+  `item_master_id` bigint(20) DEFAULT NULL,
+  `barcode` varchar(30) DEFAULT NULL,
+  `reg_date` datetime DEFAULT NULL,
+  `user_id` bigint(20) DEFAULT NULL,
+  `status` int(11) DEFAULT NULL,
+  UNIQUE KEY `barcodeunik` (`barcode`),
+  UNIQUE KEY `itembarcodeunik` (`item_master_id`,`barcode`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_item_category`
+--
+
+DROP TABLE IF EXISTS `pos_item_category`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_item_category` (
+  `item_category_id` bigint(20) NOT NULL DEFAULT 0,
+  `item_group_id` bigint(20) DEFAULT NULL,
+  `name` varchar(64) DEFAULT NULL,
+  `priority` int(11) DEFAULT NULL,
+  `account_code` varchar(20) DEFAULT NULL,
+  `group_code` varchar(45) DEFAULT NULL,
+  `code` varchar(45) DEFAULT NULL,
+  `company_id` bigint(20) DEFAULT NULL,
+  `group_type` int(11) DEFAULT NULL,
+  PRIMARY KEY (`item_category_id`),
+  UNIQUE KEY `XPKitem_category` (`item_category_id`),
+  UNIQUE KEY `Index_3` (`name`),
+  KEY `item_group_id` (`item_group_id`),
+  KEY `NAME` (`name`),
+  CONSTRAINT `FKmtc8pkbp14qm9ggn9ktobm11r` FOREIGN KEY (`item_group_id`) REFERENCES `pos_item_group` (`item_group_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci ROW_FORMAT=DYNAMIC;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `insert_item_category` AFTER INSERT ON `pos_item_category` FOR EACH ROW BEGIN		
+	INSERT INTO `android_logs` (
+	logs_id,table_name,reff_id,old_id,sts_loc1,sts_loc2,sts_loc3,sts_loc4,sts_loc5,sts_loc6,sts_loc7,sts_loc8,sts_loc9,sts_loc10,
+	sts_loc11,sts_loc12,sts_loc13,sts_loc14,sts_loc15,sts_loc16,sts_loc17,sts_loc18,sts_loc19,sts_loc20,
+	sts_loc21,sts_loc22,sts_loc23,sts_loc24,sts_loc25,sts_loc26,sts_loc27,sts_loc28,sts_loc29,sts_loc30,
+	action_handle) VALUE (
+	  UUID(),
+	  'pos_item_category',
+	  new.item_category_id,
+	  0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  'insert'
+	);
+    END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `update_item_category` AFTER UPDATE ON `pos_item_category` FOR EACH ROW BEGIN 	
+	    INSERT INTO `android_logs` (logs_id,table_name,reff_id,old_id,sts_loc1,sts_loc2,sts_loc3,sts_loc4,sts_loc5,sts_loc6,sts_loc7,sts_loc8,sts_loc9,sts_loc10,
+sts_loc11,sts_loc12,sts_loc13,sts_loc14,sts_loc15,sts_loc16,sts_loc17,sts_loc18,sts_loc19,sts_loc20,
+sts_loc21,sts_loc22,sts_loc23,sts_loc24,sts_loc25,sts_loc26,sts_loc27,sts_loc28,sts_loc29,sts_loc30,
+action_handle) VALUE (
+	  UUID(),
+	  "pos_item_category",
+	  new.item_category_id,
+	  old.item_category_id,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	   "update"
+	);	
+    END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `delete_item_category` BEFORE DELETE ON `pos_item_category` FOR EACH ROW BEGIN 	
+	INSERT INTO `android_logs` (logs_id,table_name,reff_id,old_id,sts_loc1,sts_loc2,sts_loc3,sts_loc4,sts_loc5,sts_loc6,sts_loc7,sts_loc8,sts_loc9,sts_loc10,
+	sts_loc11,sts_loc12,sts_loc13,sts_loc14,sts_loc15,sts_loc16,sts_loc17,sts_loc18,sts_loc19,sts_loc20,
+	sts_loc21,sts_loc22,sts_loc23,sts_loc24,sts_loc25,sts_loc26,sts_loc27,sts_loc28,sts_loc29,sts_loc30,action_handle)  VALUE (
+	  UUID(),
+	  "pos_item_category",
+	  old.item_category_id,
+	  0, 
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  "delete"
+	);
+    END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+
+--
+-- Table structure for table `pos_item_class`
+--
+
+DROP TABLE IF EXISTS `pos_item_class`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_item_class` (
+  `item_class_id` bigint(20) NOT NULL DEFAULT 0,
+  `code` varchar(120) DEFAULT NULL,
+  `name` varchar(240) DEFAULT NULL,
+  `category_id` bigint(20) DEFAULT 0,
+  `level` int(4) DEFAULT 0,
+  `reference_id` bigint(20) DEFAULT 0,
+  `user_id` bigint(20) DEFAULT 0,
+  `last_update` datetime DEFAULT NULL,
+  PRIMARY KEY (`item_class_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_item_department`
+--
+
+DROP TABLE IF EXISTS `pos_item_department`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_item_department` (
+  `item_department_id` bigint(20) NOT NULL DEFAULT 0,
+  `item_division_id` bigint(20) DEFAULT 0,
+  `code` varchar(60) DEFAULT NULL,
+  `name` varchar(240) DEFAULT NULL,
+  `user_id` bigint(20) DEFAULT 0,
+  `last_update` datetime DEFAULT NULL,
+  PRIMARY KEY (`item_department_id`),
+  UNIQUE KEY `codeUniq` (`code`),
+  KEY `itemDivisionId` (`item_division_id`),
+  KEY `code` (`code`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_item_description`
+--
+
+DROP TABLE IF EXISTS `pos_item_description`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_item_description` (
+  `item_description_id` bigint(20) NOT NULL DEFAULT 0,
+  `item_master_id` bigint(20) DEFAULT 0,
+  `name` varchar(150) DEFAULT NULL,
+  `type` int(4) DEFAULT NULL,
+  PRIMARY KEY (`item_description_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_item_division`
+--
+
+DROP TABLE IF EXISTS `pos_item_division`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_item_division` (
+  `item_division_id` bigint(20) NOT NULL DEFAULT 0,
+  `code` varchar(60) DEFAULT NULL,
+  `name` varchar(240) DEFAULT NULL,
+  `user_id` bigint(20) DEFAULT 0,
+  `last_update` datetime DEFAULT NULL,
+  PRIMARY KEY (`item_division_id`),
+  UNIQUE KEY `codeUniq` (`code`),
+  KEY `code` (`code`),
+  KEY `name` (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_item_group`
+--
+
+DROP TABLE IF EXISTS `pos_item_group`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_item_group` (
+  `item_group_id` bigint(20) NOT NULL DEFAULT 0,
+  `item_division_id` bigint(20) DEFAULT 0,
+  `name` varchar(60) DEFAULT NULL,
+  `account_code` varchar(20) DEFAULT '',
+  `code` varchar(45) DEFAULT '',
+  `account_sales` varchar(45) DEFAULT '',
+  `account_cogs` varchar(45) DEFAULT '',
+  `account_inv` varchar(45) DEFAULT '',
+  `type` int(11) DEFAULT 0,
+  `image_name` varchar(45) DEFAULT NULL,
+  `company_id` bigint(20) DEFAULT 0,
+  `account_sales_cash` varchar(45) DEFAULT NULL,
+  `account_cash_income` varchar(45) DEFAULT '',
+  `account_credit_income` varchar(45) DEFAULT '',
+  `account_vat` varchar(45) DEFAULT '',
+  `account_pph` varchar(45) DEFAULT '',
+  `account_discount` varchar(45) DEFAULT '',
+  `account_sales_jasa` varchar(64) DEFAULT '',
+  `account_expense_jasa` varchar(64) DEFAULT '',
+  `account_costing` varchar(64) DEFAULT '',
+  `account_other_income` varchar(64) DEFAULT '',
+  `account_bonus_income` varchar(64) DEFAULT '',
+  `account_ajustment` varchar(64) DEFAULT '',
+  `bonus` int(11) DEFAULT 0,
+  `qty_beli` decimal(22,2) DEFAULT 0.00,
+  `qty_bonus` decimal(22,2) DEFAULT 0.00,
+  `account_grosir_sales` varchar(64) DEFAULT '',
+  `account_grosir_cogs` varchar(64) DEFAULT '',
+  `account_grosir_inventory` varchar(64) DEFAULT '',
+  `account_grosir_discount` varchar(64) DEFAULT '',
+  `account_grosir_adjusment` varchar(64) DEFAULT '',
+  `account_delivery_order` varchar(64) DEFAULT '',
+  `business_type` int(4) DEFAULT 0,
+  `woocommerce_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`item_group_id`),
+  UNIQUE KEY `XPKitem_group` (`item_group_id`),
+  UNIQUE KEY `nameUniq` (`name`),
+  UNIQUE KEY `codeUniq` (`code`),
+  KEY `account_sales` (`account_sales`),
+  KEY `account_cogs` (`account_cogs`),
+  KEY `account_inv` (`account_inv`),
+  KEY `account_sales_cash` (`account_sales_cash`),
+  KEY `account_cash_income` (`account_cash_income`),
+  KEY `account_credit_income` (`account_credit_income`),
+  KEY `account_vat` (`account_vat`),
+  KEY `account_pph` (`account_pph`),
+  KEY `account_discount` (`account_discount`),
+  KEY `account_sales_jasa` (`account_sales_jasa`),
+  KEY `account_costing` (`account_costing`),
+  KEY `account_other_income` (`account_other_income`),
+  KEY `account_bonus_income` (`account_bonus_income`),
+  KEY `account_ajustment` (`account_ajustment`),
+  KEY `account_grosir_sales` (`account_grosir_sales`),
+  KEY `account_grosir_cogs` (`account_grosir_cogs`),
+  KEY `account_grosir_inventory` (`account_grosir_inventory`),
+  KEY `account_grosir_discount` (`account_grosir_discount`),
+  KEY `account_grosir_adjusment` (`account_grosir_adjusment`),
+  KEY `code` (`code`),
+  KEY `name` (`name`),
+  KEY `itemDepartmentId` (`item_division_id`),
+  KEY `type` (`type`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci ROW_FORMAT=DYNAMIC;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `insert_item_group` AFTER INSERT ON `pos_item_group` FOR EACH ROW BEGIN
+	 INSERT INTO `android_logs` (logs_id,table_name,reff_id,old_id,sts_loc1,sts_loc2,sts_loc3,sts_loc4,sts_loc5,sts_loc6,sts_loc7,sts_loc8,sts_loc9,sts_loc10,
+	sts_loc11,sts_loc12,sts_loc13,sts_loc14,sts_loc15,sts_loc16,sts_loc17,sts_loc18,sts_loc19,sts_loc20,
+	sts_loc21,sts_loc22,sts_loc23,sts_loc24,sts_loc25,sts_loc26,sts_loc27,sts_loc28,sts_loc29,sts_loc30,action_handle) VALUE (
+	  UUID(),
+	  "pos_item_group",
+	  new.item_group_id,
+	  0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  "insert"
+	);
+    END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `update_item_group` AFTER UPDATE ON `pos_item_group` FOR EACH ROW BEGIN 
+	    INSERT INTO `android_logs` (logs_id,table_name,reff_id,old_id,sts_loc1,sts_loc2,sts_loc3,sts_loc4,sts_loc5,sts_loc6,sts_loc7,sts_loc8,sts_loc9,sts_loc10,
+	sts_loc11,sts_loc12,sts_loc13,sts_loc14,sts_loc15,sts_loc16,sts_loc17,sts_loc18,sts_loc19,sts_loc20,
+	sts_loc21,sts_loc22,sts_loc23,sts_loc24,sts_loc25,sts_loc26,sts_loc27,sts_loc28,sts_loc29,sts_loc30,action_handle) VALUE (
+	  UUID(),
+	  "pos_item_group",
+	  new.item_group_id,
+	  old.item_group_id,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	   "update"
+	);
+    END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `delete_item_group` BEFORE DELETE ON `pos_item_group` FOR EACH ROW BEGIN
+	INSERT INTO `android_logs` (logs_id,table_name,reff_id,old_id,sts_loc1,sts_loc2,sts_loc3,sts_loc4,sts_loc5,sts_loc6,sts_loc7,sts_loc8,sts_loc9,sts_loc10,
+	sts_loc11,sts_loc12,sts_loc13,sts_loc14,sts_loc15,sts_loc16,sts_loc17,sts_loc18,sts_loc19,sts_loc20,
+	sts_loc21,sts_loc22,sts_loc23,sts_loc24,sts_loc25,sts_loc26,sts_loc27,sts_loc28,sts_loc29,sts_loc30,action_handle) VALUE (
+		  UUID(),
+		  "pos_item_group",
+		  old.item_group_id,
+		  0, 
+		  0,0,0,0,0,0,0,0,0,0,
+		  0,0,0,0,0,0,0,0,0,0,
+		  0,0,0,0,0,0,0,0,0,0,
+		  "delete"
+		);
+    END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+
+--
+-- Table structure for table `pos_item_master`
+--
+
+DROP TABLE IF EXISTS `pos_item_master`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_item_master` (
+  `item_master_id` bigint(20) NOT NULL DEFAULT 0,
+  `item_division_id` bigint(20) DEFAULT 0,
+  `item_segment_id` bigint(20) DEFAULT 0,
+  `item_sub_segment_id` bigint(20) DEFAULT 0,
+  `item_group_id` bigint(20) DEFAULT 0,
+  `item_category_id` bigint(20) DEFAULT 0,
+  `class_id` bigint(20) DEFAULT 0,
+  `uom_purchase_id` bigint(20) DEFAULT 0,
+  `uom_recipe_id` bigint(20) DEFAULT 0,
+  `uom_stock_id` bigint(20) DEFAULT 0,
+  `uom_sales_id` bigint(20) DEFAULT 0,
+  `code` varchar(20) DEFAULT NULL,
+  `barcode` varchar(20) DEFAULT NULL,
+  `name` varchar(120) DEFAULT NULL,
+  `uom_purchase_stock_qty` decimal(10,2) DEFAULT 0.00,
+  `uom_stock_recipe_qty` decimal(10,2) DEFAULT 0.00,
+  `uom_stock_sales_qty` decimal(10,2) DEFAULT 0.00,
+  `for_sales` int(11) DEFAULT 0,
+  `for_buy` int(11) DEFAULT 0,
+  `is_active` int(11) DEFAULT 0,
+  `selling_price` decimal(25,2) DEFAULT 0.00,
+  `cogs` decimal(25,2) DEFAULT 0.00,
+  `recipe_item` int(11) DEFAULT 0,
+  `need_recipe` int(11) DEFAULT 0,
+  `user_id` bigint(20) DEFAULT 0,
+  `register_date` datetime DEFAULT NULL,
+  `last_update` datetime DEFAULT NULL,
+  `company_id` bigint(20) DEFAULT 0,
+  `type` int(11) DEFAULT 0,
+  `product_image` varchar(105) DEFAULT NULL,
+  `description` text DEFAULT NULL,
+  `default_vendor_id` bigint(20) DEFAULT 0,
+  `min_stock` decimal(10,2) DEFAULT 0.00,
+  `currency_id` bigint(20) DEFAULT 0,
+  `selling_price_usd` decimal(10,2) DEFAULT 0.00,
+  `cogs_usd` decimal(10,2) DEFAULT 0.00,
+  `apply_stock_code` int(11) DEFAULT 0,
+  `is_service` int(10) unsigned NOT NULL DEFAULT 0,
+  `cogs_consigment` decimal(25,2) DEFAULT 0.00,
+  `apply_stock_code_sales` int(11) DEFAULT 0,
+  `use_expired_date` int(10) DEFAULT 0,
+  `merk_id` bigint(20) unsigned DEFAULT 0,
+  `new_cogs` decimal(25,2) DEFAULT NULL,
+  `active_date` datetime DEFAULT '2022-01-01 00:00:00',
+  `is_bkp` int(10) unsigned NOT NULL DEFAULT 0,
+  `is_komisi` int(11) DEFAULT 0,
+  `barcode_2` varchar(20) DEFAULT NULL,
+  `barcode_3` varchar(20) DEFAULT NULL,
+  `counter_sku` int(10) unsigned DEFAULT 0,
+  `type_item` int(11) DEFAULT 0,
+  `uom_stock_sales1_qty` decimal(25,2) DEFAULT 0.00,
+  `uom_sales2_id` bigint(20) DEFAULT 0,
+  `uom_stock_sales2_qty` decimal(25,2) DEFAULT 0.00,
+  `uom_sales3_id` bigint(20) DEFAULT 0,
+  `uom_stock_sales3_qty` decimal(25,2) DEFAULT 0.00,
+  `uom_sales4_id` bigint(20) DEFAULT 0,
+  `uom_stock_sales4_qty` decimal(25,2) DEFAULT 0.00,
+  `uom_sales5_id` bigint(20) DEFAULT 0,
+  `uom_stock_sales5_qty` decimal(25,2) DEFAULT 0.00,
+  `delivery_unit` decimal(25,2) NOT NULL DEFAULT 1.00,
+  `location_order` bigint(20) NOT NULL DEFAULT 0,
+  `is_auto_order` int(11) NOT NULL DEFAULT 0,
+  `need_bom` int(11) NOT NULL DEFAULT 0,
+  `status_approved` varchar(25) DEFAULT NULL,
+  `approved_date` datetime DEFAULT NULL,
+  `user_id_approved` bigint(20) NOT NULL DEFAULT 0,
+  `status` varchar(25) DEFAULT NULL,
+  `short_name` varchar(120) DEFAULT NULL,
+  `open_price` int(11) DEFAULT 0,
+  `field1` varchar(40) DEFAULT NULL,
+  `field2` varchar(40) DEFAULT NULL,
+  `field3` varchar(40) DEFAULT NULL,
+  `field4` varchar(40) DEFAULT NULL,
+  `field5` varchar(40) DEFAULT NULL,
+  `field6` varchar(40) DEFAULT NULL,
+  `field7` varchar(40) DEFAULT NULL,
+  `field8` varchar(40) DEFAULT NULL,
+  `class_item_id` bigint(20) DEFAULT 0,
+  `size_id` bigint(20) DEFAULT 0,
+  `sizenum_id` bigint(20) DEFAULT 0,
+  `color_id` bigint(20) DEFAULT 0,
+  `gender_id` bigint(20) DEFAULT 0,
+  `style_id` bigint(20) DEFAULT 0,
+  `commission_percent` decimal(22,2) DEFAULT 0.00,
+  `is_taxservice` int(2) DEFAULT 0,
+  `woocommerce_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`item_master_id`),
+  UNIQUE KEY `Index_5` (`code`),
+  KEY `is_service` (`is_service`),
+  KEY `type_item` (`type_item`),
+  KEY `default_vendor_id` (`default_vendor_id`),
+  KEY `for_sales` (`for_sales`),
+  KEY `is_active` (`is_active`),
+  KEY `name` (`name`),
+  KEY `code` (`code`),
+  KEY `barcode` (`barcode`),
+  KEY `barcode_2` (`barcode_2`),
+  KEY `barcode_3` (`barcode_3`),
+  KEY `is_komisi` (`is_komisi`),
+  KEY `merk_id` (`merk_id`),
+  KEY `item_group_id` (`item_group_id`),
+  KEY `item_category_id` (`item_category_id`),
+  KEY `need_recipe` (`need_recipe`),
+  KEY `is_bkp` (`is_bkp`),
+  KEY `uom_stock_id` (`uom_stock_id`),
+  KEY `currency` (`currency_id`),
+  KEY `uom_sales_id` (`uom_sales_id`),
+  KEY `open_price` (`open_price`),
+  CONSTRAINT `FK1wm3uiccplxb0c2ekjal8thio` FOREIGN KEY (`item_category_id`) REFERENCES `pos_item_category` (`item_category_id`),
+  CONSTRAINT `FK5y3ikax6f8ifvxff3tvh9ow2` FOREIGN KEY (`item_group_id`) REFERENCES `pos_item_group` (`item_group_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `insert_pos_master` AFTER INSERT ON `pos_item_master` FOR EACH ROW BEGIN
+	    INSERT INTO `android_logs` (logs_id,table_name,reff_id,old_id,sts_loc1,sts_loc2,sts_loc3,sts_loc4,sts_loc5,sts_loc6,sts_loc7,sts_loc8,sts_loc9,sts_loc10,
+	sts_loc11,sts_loc12,sts_loc13,sts_loc14,sts_loc15,sts_loc16,sts_loc17,sts_loc18,sts_loc19,sts_loc20,
+	sts_loc21,sts_loc22,sts_loc23,sts_loc24,sts_loc25,sts_loc26,sts_loc27,sts_loc28,sts_loc29,sts_loc30,action_handle) VALUE (
+	  UUID(),
+	  "pos_item_master",
+	  new.item_master_id,
+	  0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  "insert"
+	);
+    END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `update_pos_master` AFTER UPDATE ON `pos_item_master` FOR EACH ROW BEGIN
+	INSERT INTO `android_logs` (logs_id,table_name,reff_id,old_id,sts_loc1,sts_loc2,sts_loc3,sts_loc4,sts_loc5,sts_loc6,sts_loc7,sts_loc8,sts_loc9,sts_loc10,
+	sts_loc11,sts_loc12,sts_loc13,sts_loc14,sts_loc15,sts_loc16,sts_loc17,sts_loc18,sts_loc19,sts_loc20,
+	sts_loc21,sts_loc22,sts_loc23,sts_loc24,sts_loc25,sts_loc26,sts_loc27,sts_loc28,sts_loc29,sts_loc30,action_handle) VALUE (
+	  UUID(),
+	  "pos_item_master",
+	  new.item_master_id,
+	  old.item_master_id,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	   "update"
+	);
+    END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `delete_pos_master` BEFORE DELETE ON `pos_item_master` FOR EACH ROW BEGIN
+	INSERT INTO `android_logs` (logs_id,table_name,reff_id,old_id,sts_loc1,sts_loc2,sts_loc3,sts_loc4,sts_loc5,sts_loc6,sts_loc7,sts_loc8,sts_loc9,sts_loc10,
+	sts_loc11,sts_loc12,sts_loc13,sts_loc14,sts_loc15,sts_loc16,sts_loc17,sts_loc18,sts_loc19,sts_loc20,
+	sts_loc21,sts_loc22,sts_loc23,sts_loc24,sts_loc25,sts_loc26,sts_loc27,sts_loc28,sts_loc29,sts_loc30,action_handle) VALUE (
+	  UUID(),
+	  "pos_item_master",
+	  old.item_master_id,
+	  0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	   "delete"
+	);	
+    END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+
+--
+-- Table structure for table `pos_item_master_coa`
+--
+
+DROP TABLE IF EXISTS `pos_item_master_coa`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_item_master_coa` (
+  `item_master_coa_id` bigint(20) NOT NULL DEFAULT 0,
+  `item_master_id` bigint(20) NOT NULL DEFAULT 0,
+  `type` int(11) DEFAULT 0,
+  `company_id` bigint(20) DEFAULT 0,
+  `account_sales` varchar(45) DEFAULT '',
+  `account_vat` varchar(45) DEFAULT '',
+  `account_pph` varchar(45) DEFAULT '',
+  `account_discount` varchar(45) DEFAULT '',
+  `account_sales_jasa` varchar(64) DEFAULT '',
+  `account_expense_jasa` varchar(64) DEFAULT '',
+  `account_costing` varchar(64) DEFAULT '',
+  `account_other_income` varchar(64) DEFAULT '',
+  `account_bonus_income` varchar(64) DEFAULT '',
+  `account_ajustment` varchar(64) DEFAULT '',
+  `account_cogs` varchar(45) DEFAULT '',
+  `account_inv` varchar(45) DEFAULT '',
+  `item_type` int(1) DEFAULT 0,
+  `fee_percent` decimal(22,2) DEFAULT 0.00,
+  `fee_amount` decimal(22,2) DEFAULT 0.00,
+  PRIMARY KEY (`item_master_coa_id`),
+  KEY `account_cogs` (`account_cogs`),
+  KEY `account_inv` (`account_inv`),
+  KEY `account_sales_cash` (`account_sales`),
+  KEY `account_vat` (`account_vat`),
+  KEY `account_pph` (`account_pph`),
+  KEY `account_discount` (`account_discount`),
+  KEY `account_sales_jasa` (`account_sales_jasa`),
+  KEY `account_costing` (`account_costing`),
+  KEY `account_other_income` (`account_other_income`),
+  KEY `account_bonus_income` (`account_bonus_income`),
+  KEY `account_ajustment` (`account_ajustment`),
+  KEY `itemMAsterId` (`item_master_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_item_master_image`
+--
+
+DROP TABLE IF EXISTS `pos_item_master_image`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_item_master_image` (
+  `item_master_image_id` bigint(20) NOT NULL,
+  `date` datetime(6) DEFAULT NULL,
+  `file_name` text DEFAULT NULL,
+  `note` text DEFAULT NULL,
+  `original_name` text DEFAULT NULL,
+  `path` text DEFAULT NULL,
+  `sequence` int(11) DEFAULT NULL,
+  `item_master_id` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`item_master_image_id`),
+  KEY `FKidjt7x7ei84my6mt0eeinqnfx` (`item_master_id`),
+  CONSTRAINT `FKidjt7x7ei84my6mt0eeinqnfx` FOREIGN KEY (`item_master_id`) REFERENCES `pos_item_master` (`item_master_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_item_master_location`
+--
+
+DROP TABLE IF EXISTS `pos_item_master_location`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_item_master_location` (
+  `item_master_location_id` bigint(20) NOT NULL,
+  `item_master_id` bigint(20) DEFAULT NULL,
+  `location_id` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`item_master_location_id`),
+  UNIQUE KEY `itemlocation` (`item_master_id`,`location_id`),
+  KEY `itemmaster` (`item_master_id`),
+  KEY `location` (`location_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_item_outlet`
+--
+
+DROP TABLE IF EXISTS `pos_item_outlet`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_item_outlet` (
+  `BILLING_TYPE_ID` bigint(20) NOT NULL DEFAULT 0,
+  `ITEM_MASTER_ID` bigint(20) NOT NULL DEFAULT 0,
+  `COMPANY_ID` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`BILLING_TYPE_ID`,`ITEM_MASTER_ID`),
+  UNIQUE KEY `XPKITEM_OUTLET` (`BILLING_TYPE_ID`,`ITEM_MASTER_ID`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_item_segment`
+--
+
+DROP TABLE IF EXISTS `pos_item_segment`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_item_segment` (
+  `item_segment_id` bigint(20) NOT NULL DEFAULT 0,
+  `item_category_id` bigint(20) DEFAULT 0,
+  `code` varchar(60) DEFAULT NULL,
+  `name` varchar(240) DEFAULT NULL,
+  `user_id` bigint(20) DEFAULT 0,
+  `last_update` datetime DEFAULT NULL,
+  PRIMARY KEY (`item_segment_id`),
+  KEY `itemDivisionId` (`item_category_id`),
+  KEY `code` (`code`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_item_sub_segment`
+--
+
+DROP TABLE IF EXISTS `pos_item_sub_segment`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_item_sub_segment` (
+  `item_sub_segment_id` bigint(20) NOT NULL DEFAULT 0,
+  `item_segment_id` bigint(20) DEFAULT 0,
+  `code` varchar(60) DEFAULT NULL,
+  `name` varchar(240) DEFAULT NULL,
+  `user_id` bigint(20) DEFAULT 0,
+  `last_update` datetime DEFAULT NULL,
+  PRIMARY KEY (`item_sub_segment_id`),
+  KEY `itemSegmentId` (`item_segment_id`),
+  KEY `code` (`code`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_location`
+--
+
+DROP TABLE IF EXISTS `pos_location`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_location` (
+  `location_id` bigint(20) NOT NULL DEFAULT 0,
+  `type` varchar(20) DEFAULT NULL,
+  `name` varchar(120) DEFAULT NULL,
+  `address_street` varchar(120) DEFAULT NULL,
+  `address_country` varchar(64) DEFAULT NULL,
+  `address_city` varchar(64) DEFAULT NULL,
+  `telp` varchar(20) DEFAULT NULL,
+  `pic` varchar(64) DEFAULT NULL,
+  `code` varchar(20) DEFAULT NULL,
+  `description` varchar(120) DEFAULT NULL,
+  `company_id` bigint(20) DEFAULT 0,
+  `coa_ar_id` bigint(20) DEFAULT 0,
+  `coa_ap_id` bigint(20) DEFAULT 0,
+  `coa_ppn_id` bigint(20) DEFAULT 0,
+  `coa_pph_id` bigint(20) DEFAULT 0,
+  `coa_discount_id` bigint(20) DEFAULT 0,
+  `coa_sales_code_id` bigint(20) DEFAULT 0,
+  `coa_project_pph_pasal_23_id` bigint(20) DEFAULT 0,
+  `coa_project_pph_pasal_22_id` bigint(20) DEFAULT 0,
+  `location_request` bigint(20) DEFAULT 0,
+  `gol_price` varchar(45) NOT NULL DEFAULT 'gol_1',
+  `npwp` varchar(60) DEFAULT NULL,
+  `prefix_faktur_pajak` varchar(60) DEFAULT NULL,
+  `prefix_faktur_transfer` varchar(60) DEFAULT NULL,
+  `aktif_auto_order` int(11) NOT NULL DEFAULT 0,
+  `date_start` datetime DEFAULT NULL,
+  `type_grosir` int(11) DEFAULT 0,
+  `type_24hour` int(4) DEFAULT 0,
+  `amount_target` decimal(22,2) DEFAULT 0.00,
+  `coa_ap_grosir_id` bigint(20) DEFAULT 0,
+  `dc_loc_id` bigint(20) unsigned NOT NULL DEFAULT 0,
+  `periode_delivery` int(10) unsigned NOT NULL DEFAULT 0,
+  `coa_ar_delivery_order_id` bigint(20) DEFAULT 0,
+  `is_active` int(2) DEFAULT 0,
+  `inactive_date` datetime DEFAULT NULL,
+  `loc_level` int(2) DEFAULT 1,
+  `ref_id` bigint(20) DEFAULT 0,
+  `is_pkp` int(2) DEFAULT 0,
+  `coa_pb1_id` bigint(20) DEFAULT 0,
+  PRIMARY KEY (`location_id`),
+  UNIQUE KEY `XPKlocation` (`location_id`),
+  UNIQUE KEY `code` (`code`),
+  KEY `Idxdc_location` (`dc_loc_id`),
+  KEY `TYPE` (`type`),
+  KEY `NAME` (`name`),
+  KEY `coa_ar_id` (`coa_ar_id`),
+  KEY `coa_ap_id` (`coa_ap_id`),
+  KEY `coa_ppn_id` (`coa_ppn_id`),
+  KEY `coa_pph_id` (`coa_pph_id`),
+  KEY `coa_discount_id` (`coa_discount_id`),
+  KEY `coa_sales_code_id` (`coa_sales_code_id`),
+  KEY `coa_project_pph_pasal_23_id` (`coa_project_pph_pasal_23_id`),
+  KEY `coa_project_pph_pasal_22_id` (`coa_project_pph_pasal_22_id`),
+  KEY `gol_price` (`gol_price`),
+  KEY `aktif_auto_order` (`aktif_auto_order`),
+  KEY `coa_ap_grosir_id` (`coa_ap_grosir_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci ROW_FORMAT=DYNAMIC;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_member_donation`
+--
+
+DROP TABLE IF EXISTS `pos_member_donation`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_member_donation` (
+  `member_donation_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `customer_id` bigint(20) DEFAULT 0,
+  `date` datetime DEFAULT NULL,
+  `point` decimal(10,2) DEFAULT 0.00,
+  `in_out` int(11) DEFAULT 0,
+  `type` int(11) DEFAULT 0,
+  `point_unit_value` decimal(10,2) DEFAULT 0.00,
+  `sales_id` bigint(20) DEFAULT 0,
+  `group_type` int(10) unsigned DEFAULT NULL,
+  `item_group_id` bigint(20) DEFAULT 0,
+  `last_point` decimal(22,2) DEFAULT 0.00,
+  `cash_cashier_id` bigint(20) DEFAULT NULL,
+  `location_id` bigint(20) DEFAULT 0,
+  `posted_status` int(11) DEFAULT 0,
+  `posted_by_id` bigint(20) DEFAULT 0,
+  `posted_date` datetime DEFAULT NULL,
+  `approval_1` bigint(20) DEFAULT 0,
+  PRIMARY KEY (`member_donation_id`),
+  KEY `customer_id` (`customer_id`),
+  KEY `sales_id` (`sales_id`),
+  KEY `in_out` (`in_out`),
+  KEY `type` (`type`),
+  KEY `date` (`date`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_member_point`
+--
+
+DROP TABLE IF EXISTS `pos_member_point`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_member_point` (
+  `member_point_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `customer_id` bigint(20) DEFAULT 0,
+  `date` datetime DEFAULT NULL,
+  `point` decimal(10,2) DEFAULT 0.00,
+  `in_out` int(11) DEFAULT 0,
+  `type` int(11) DEFAULT 0,
+  `point_unit_value` decimal(10,2) DEFAULT 0.00,
+  `sales_id` bigint(20) DEFAULT 0,
+  `group_type` int(10) unsigned DEFAULT NULL,
+  `item_group_id` bigint(20) DEFAULT 0,
+  `last_point` decimal(22,2) DEFAULT 0.00,
+  `cash_cashier_id` bigint(20) DEFAULT NULL,
+  `location_id` bigint(20) DEFAULT 0,
+  `posted_status` int(11) DEFAULT 0,
+  `posted_by_id` bigint(20) DEFAULT 0,
+  `posted_date` datetime DEFAULT NULL,
+  `approval_1` bigint(20) DEFAULT 0,
+  PRIMARY KEY (`member_point_id`),
+  KEY `customer_id` (`customer_id`),
+  KEY `date` (`date`),
+  KEY `type` (`type`),
+  KEY `location_id` (`location_id`),
+  KEY `sales_id` (`sales_id`),
+  KEY `posted_status` (`posted_status`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_member_point_adjustment`
+--
+
+DROP TABLE IF EXISTS `pos_member_point_adjustment`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_member_point_adjustment` (
+  `member_point_adjustment_id` bigint(20) NOT NULL DEFAULT 0,
+  `number` varchar(50) DEFAULT '',
+  `number_prefix` varchar(25) DEFAULT '',
+  `number_counter` int(10) DEFAULT 0,
+  `type` int(2) DEFAULT 0,
+  `customer_id` bigint(20) DEFAULT 0,
+  `user_id` bigint(20) DEFAULT 0,
+  `point` decimal(22,2) DEFAULT 0.00,
+  `approval_1` bigint(20) DEFAULT 0,
+  `date` date DEFAULT NULL,
+  `approval_1_date` datetime DEFAULT NULL,
+  `note` varchar(255) DEFAULT '',
+  `created_at` datetime DEFAULT NULL,
+  `status` varchar(25) DEFAULT '',
+  `canceled_date` datetime DEFAULT NULL,
+  `canceled_by_id` bigint(20) DEFAULT 0,
+  `location_id` bigint(20) DEFAULT 0,
+  PRIMARY KEY (`member_point_adjustment_id`),
+  KEY `customer` (`customer_id`),
+  KEY `date` (`date`),
+  KEY `status` (`status`),
+  KEY `number` (`number`),
+  KEY `prefix` (`number_prefix`),
+  KEY `counter` (`number_counter`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_member_point_setup`
+--
+
+DROP TABLE IF EXISTS `pos_member_point_setup`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_member_point_setup` (
+  `member_point_setup_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `group_type` int(11) DEFAULT 0,
+  `amount` decimal(10,2) DEFAULT 0.00,
+  `point` decimal(10,2) DEFAULT 0.00,
+  `user_id` bigint(20) DEFAULT 0,
+  `date` datetime NOT NULL,
+  `last_update_date` datetime NOT NULL,
+  `status` int(11) DEFAULT 0,
+  `point_unit_value` decimal(10,2) DEFAULT 0.00,
+  `start_date` datetime NOT NULL,
+  `end_date` datetime NOT NULL,
+  `amount_rounding` int(11) DEFAULT 0,
+  `min_rouding` decimal(10,2) DEFAULT 0.00,
+  `item_group_id` bigint(20) DEFAULT 0,
+  `double_point` int(3) DEFAULT 0,
+  `coa_expense_id` bigint(20) DEFAULT 0,
+  `induk_customer_id` bigint(20) DEFAULT 0,
+  `reimburst_value` decimal(22,2) DEFAULT 0.00,
+  PRIMARY KEY (`member_point_setup_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `insert_pos_member_point_setup` AFTER INSERT ON `pos_member_point_setup` FOR EACH ROW BEGIN
+	INSERT INTO `android_logs` (
+	logs_id,table_name,reff_id,old_id,sts_loc1,sts_loc2,sts_loc3,sts_loc4,sts_loc5,sts_loc6,sts_loc7,sts_loc8,sts_loc9,sts_loc10,
+	sts_loc11,sts_loc12,sts_loc13,sts_loc14,sts_loc15,sts_loc16,sts_loc17,sts_loc18,sts_loc19,sts_loc20,
+	sts_loc21,sts_loc22,sts_loc23,sts_loc24,sts_loc25,sts_loc26,sts_loc27,sts_loc28,sts_loc29,sts_loc30,
+	action_handle) VALUE (
+	  UUID(),
+	  "pos_member_point_setup",
+	  new.member_point_setup_id,
+	  0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  "insert"
+	  );
+    END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `update_pos_member_point_setup` AFTER UPDATE ON `pos_member_point_setup` FOR EACH ROW BEGIN
+	INSERT INTO `android_logs` (
+	logs_id,table_name,reff_id,old_id,sts_loc1,sts_loc2,sts_loc3,sts_loc4,sts_loc5,sts_loc6,sts_loc7,sts_loc8,sts_loc9,sts_loc10,
+	sts_loc11,sts_loc12,sts_loc13,sts_loc14,sts_loc15,sts_loc16,sts_loc17,sts_loc18,sts_loc19,sts_loc20,
+	sts_loc21,sts_loc22,sts_loc23,sts_loc24,sts_loc25,sts_loc26,sts_loc27,sts_loc28,sts_loc29,sts_loc30,
+	action_handle) VALUE (
+	  UUID(),
+	  "pos_member_point_setup",
+	  new.member_point_setup_id,
+	  old.member_point_setup_id,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  "update"
+	);
+    END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `delete_pos_member_point_setup` BEFORE DELETE ON `pos_member_point_setup` FOR EACH ROW BEGIN
+	INSERT INTO `android_logs` (
+	logs_id,table_name,reff_id,old_id,sts_loc1,sts_loc2,sts_loc3,sts_loc4,sts_loc5,sts_loc6,sts_loc7,sts_loc8,sts_loc9,sts_loc10,
+	sts_loc11,sts_loc12,sts_loc13,sts_loc14,sts_loc15,sts_loc16,sts_loc17,sts_loc18,sts_loc19,sts_loc20,
+	sts_loc21,sts_loc22,sts_loc23,sts_loc24,sts_loc25,sts_loc26,sts_loc27,sts_loc28,sts_loc29,sts_loc30,
+	action_handle) VALUE (
+	  UUID(),
+	  "pos_member_point_setup",
+	  old.member_point_setup_id,
+	  0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  "delete"
+	);
+    END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+
+--
+-- Table structure for table `pos_member_point_setup_detail`
+--
+
+DROP TABLE IF EXISTS `pos_member_point_setup_detail`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_member_point_setup_detail` (
+  `member_point_setup_detail_id` bigint(20) NOT NULL DEFAULT 0,
+  `member_point_setup_id` bigint(20) DEFAULT 0,
+  `item_group_id` bigint(20) DEFAULT 0,
+  `item_category_id` bigint(20) DEFAULT 0,
+  PRIMARY KEY (`member_point_setup_detail_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_merk`
+--
+
+DROP TABLE IF EXISTS `pos_merk`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_merk` (
+  `merk_id` bigint(20) NOT NULL DEFAULT 0,
+  `name` varchar(120) DEFAULT NULL,
+  `company_id` bigint(20) DEFAULT NULL,
+  `code` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`merk_id`),
+  KEY `name` (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_opening`
+--
+
+DROP TABLE IF EXISTS `pos_opening`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_opening` (
+  `sess_code` int(11) NOT NULL AUTO_INCREMENT,
+  `curr_symbol` varchar(30) NOT NULL DEFAULT '',
+  `curr_rate` decimal(18,2) DEFAULT NULL,
+  `op_amount` decimal(18,2) DEFAULT NULL,
+  `company_id` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`sess_code`,`curr_symbol`),
+  UNIQUE KEY `sess_code_uid` (`sess_code`,`curr_symbol`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci ROW_FORMAT=DYNAMIC;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_opname`
+--
+
+DROP TABLE IF EXISTS `pos_opname`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_opname` (
+  `opname_id` bigint(20) NOT NULL DEFAULT 0,
+  `date` datetime DEFAULT NULL,
+  `status` varchar(20) DEFAULT NULL,
+  `location_id` bigint(20) DEFAULT NULL,
+  `note` text DEFAULT NULL,
+  `counter` int(11) DEFAULT NULL,
+  `number` varchar(20) DEFAULT NULL,
+  `approval_1` bigint(20) DEFAULT NULL,
+  `approval_2` bigint(20) DEFAULT NULL,
+  `approval_3` bigint(20) DEFAULT NULL,
+  `user_id` bigint(20) DEFAULT NULL,
+  `prefix_number` varchar(20) DEFAULT NULL,
+  `approval_1_date` datetime DEFAULT '0000-00-00 00:00:00',
+  `approval_2_date` datetime DEFAULT '0000-00-00 00:00:00',
+  `approval_3_date` datetime DEFAULT '0000-00-00 00:00:00',
+  `type` int(10) unsigned DEFAULT NULL,
+  `company_id` bigint(20) DEFAULT NULL,
+  `opname_periode_id` bigint(20) DEFAULT NULL,
+  `type_opname` int(11) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`opname_id`),
+  UNIQUE KEY `numberUniq` (`number`),
+  KEY `locationId` (`location_id`),
+  KEY `number` (`number`),
+  KEY `counter` (`counter`),
+  KEY `date` (`date`),
+  KEY `status` (`status`),
+  KEY `type` (`type`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_opname_category`
+--
+
+DROP TABLE IF EXISTS `pos_opname_category`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_opname_category` (
+  `opname_category_id` bigint(20) NOT NULL DEFAULT 0,
+  `opname_id` bigint(20) DEFAULT 0,
+  `item_group_id` bigint(20) DEFAULT 0,
+  `item_category_id` bigint(20) DEFAULT 0,
+  PRIMARY KEY (`opname_category_id`),
+  KEY `opname_id` (`opname_id`),
+  KEY `item_group_id` (`item_group_id`),
+  KEY `item_category_id` (`item_category_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_opname_item`
+--
+
+DROP TABLE IF EXISTS `pos_opname_item`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_opname_item` (
+  `opname_item_id` bigint(20) NOT NULL DEFAULT 0,
+  `opname_id` bigint(20) DEFAULT 0,
+  `item_master_id` bigint(20) DEFAULT 0,
+  `qty_system` decimal(22,3) DEFAULT 0.000,
+  `qty_real` decimal(22,3) DEFAULT 0.000,
+  `note` varchar(245) DEFAULT NULL,
+  `type` int(10) unsigned DEFAULT 0,
+  `company_id` bigint(20) DEFAULT 0,
+  `sub_location_id` bigint(20) DEFAULT 0,
+  `opname_sub_location_id` bigint(20) DEFAULT 0,
+  `date` datetime DEFAULT NULL,
+  PRIMARY KEY (`opname_item_id`),
+  UNIQUE KEY `Index_2` (`item_master_id`,`opname_sub_location_id`),
+  KEY `opnameId` (`opname_id`),
+  KEY `itemMasterId` (`item_master_id`),
+  KEY `subLocationId` (`sub_location_id`),
+  KEY `opnameSubLocationId` (`opname_sub_location_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_opname_periode`
+--
+
+DROP TABLE IF EXISTS `pos_opname_periode`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_opname_periode` (
+  `opname_periode_id` bigint(20) unsigned NOT NULL DEFAULT 0,
+  `name` varchar(45) DEFAULT NULL,
+  `start_date` datetime DEFAULT NULL,
+  `end_date` datetime DEFAULT NULL,
+  `status` varchar(45) DEFAULT NULL,
+  `user_id` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`opname_periode_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_opname_sub_location`
+--
+
+DROP TABLE IF EXISTS `pos_opname_sub_location`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_opname_sub_location` (
+  `opname_sub_location_id` bigint(20) unsigned NOT NULL DEFAULT 0,
+  `opname_id` bigint(20) unsigned DEFAULT NULL,
+  `sub_location_id` bigint(20) unsigned DEFAULT NULL,
+  `sub_location_name` varchar(45) DEFAULT NULL,
+  `status` varchar(45) DEFAULT NULL,
+  `user_id` bigint(20) DEFAULT NULL,
+  `form_number` varchar(45) DEFAULT NULL,
+  `date` date DEFAULT NULL,
+  PRIMARY KEY (`opname_sub_location_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_payment`
+--
+
+DROP TABLE IF EXISTS `pos_payment`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_payment` (
+  `payment_id` bigint(20) NOT NULL DEFAULT 0,
+  `sales_id` bigint(20) DEFAULT NULL,
+  `currency_id` bigint(20) DEFAULT NULL,
+  `pay_date` datetime DEFAULT NULL,
+  `pay_type` int(11) DEFAULT NULL,
+  `amount` decimal(25,2) DEFAULT NULL,
+  `rate` double DEFAULT NULL,
+  `cost_card_amount` double DEFAULT NULL,
+  `cost_card_percent` double DEFAULT NULL,
+  `cc_id` bigint(20) DEFAULT NULL,
+  `bank_id` bigint(20) DEFAULT 0,
+  `merchant_id` bigint(20) DEFAULT 0,
+  `voucher_amount` decimal(25,2) DEFAULT 0.00,
+  `payment_method_id` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`payment_id`),
+  KEY `sales_pay` (`sales_id`,`pay_type`),
+  KEY `payment_method_id` (`payment_method_id`),
+  KEY `paymentSales` (`sales_id`,`payment_method_id`),
+  KEY `FK90rw5ltl1r7ppjlkvsm5y2esi` (`bank_id`),
+  KEY `FKhrxacj1fvk1vfsp5p10fed5jg` (`merchant_id`),
+  CONSTRAINT `FK4s67fdd1wednolbtwnq1baqwq` FOREIGN KEY (`sales_id`) REFERENCES `pos_sales` (`sales_id`),
+  CONSTRAINT `FK90rw5ltl1r7ppjlkvsm5y2esi` FOREIGN KEY (`bank_id`) REFERENCES `bank` (`bank_id`),
+  CONSTRAINT `FKgv9fb01gpuml6y8sijtkwdge2` FOREIGN KEY (`payment_method_id`) REFERENCES `payment_method` (`payment_method_id`),
+  CONSTRAINT `FKhrxacj1fvk1vfsp5p10fed5jg` FOREIGN KEY (`merchant_id`) REFERENCES `merchant` (`merchant_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_payment_transaction`
+--
+
+DROP TABLE IF EXISTS `pos_payment_transaction`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_payment_transaction` (
+  `payment_transaction_id` bigint(20) NOT NULL DEFAULT 0,
+  `sales_transaction_id` bigint(20) DEFAULT NULL,
+  `currency_id` bigint(20) DEFAULT NULL,
+  `pay_date` datetime DEFAULT NULL,
+  `pay_type` int(11) DEFAULT NULL,
+  `amount` decimal(25,2) DEFAULT NULL,
+  `rate` double DEFAULT NULL,
+  `cost_card_amount` double DEFAULT NULL,
+  `cost_card_percent` double DEFAULT NULL,
+  `cc_id` bigint(20) DEFAULT NULL,
+  `bank_id` bigint(20) DEFAULT 0,
+  `merchant_id` bigint(20) DEFAULT 0,
+  `voucher_amount` decimal(25,2) DEFAULT 0.00,
+  `STS_UPLOAD` int(3) DEFAULT 0,
+  `payment_method_id` bigint(20) DEFAULT 0,
+  PRIMARY KEY (`payment_transaction_id`),
+  KEY `sales_transaction_id` (`sales_transaction_id`),
+  KEY `pay_type` (`pay_type`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_penyakit`
+--
+
+DROP TABLE IF EXISTS `pos_penyakit`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_penyakit` (
+  `penyakit_id` bigint(20) NOT NULL,
+  `code` varchar(10) DEFAULT NULL,
+  `description` varchar(150) DEFAULT NULL,
+  PRIMARY KEY (`penyakit_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_phone_transaction`
+--
+
+DROP TABLE IF EXISTS `pos_phone_transaction`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_phone_transaction` (
+  `transaction_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `sales_id` bigint(20) unsigned NOT NULL,
+  `item_master_id` bigint(20) unsigned NOT NULL,
+  `number` varchar(20) NOT NULL,
+  `token` varchar(145) NOT NULL DEFAULT '',
+  `date` timestamp NOT NULL DEFAULT current_timestamp(),
+  `status` bigint(20) unsigned NOT NULL,
+  `user_id` bigint(20) DEFAULT NULL,
+  `location_id` bigint(20) unsigned NOT NULL,
+  `operator` varchar(145) NOT NULL DEFAULT '',
+  `server_id` varchar(100) NOT NULL DEFAULT '',
+  `sn` varchar(100) NOT NULL DEFAULT '',
+  `description` text NOT NULL,
+  PRIMARY KEY (`transaction_id`),
+  KEY `index_sts` (`transaction_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_price_type`
+--
+
+DROP TABLE IF EXISTS `pos_price_type`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_price_type` (
+  `price_type_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `item_master_id` bigint(20) unsigned NOT NULL DEFAULT 0,
+  `qty_from` int(10) unsigned NOT NULL DEFAULT 0,
+  `qty_to` int(10) unsigned NOT NULL DEFAULT 0,
+  `gol_1` decimal(22,2) NOT NULL DEFAULT 0.00,
+  `gol_2` decimal(22,2) NOT NULL DEFAULT 0.00,
+  `gol_3` decimal(22,2) NOT NULL DEFAULT 0.00,
+  `gol_4` decimal(22,2) NOT NULL DEFAULT 0.00,
+  `gol_5` decimal(22,2) NOT NULL DEFAULT 0.00,
+  `gol1_margin` decimal(22,2) NOT NULL DEFAULT 0.00,
+  `gol2_margin` decimal(22,2) NOT NULL DEFAULT 0.00,
+  `gol3_margin` decimal(22,2) NOT NULL DEFAULT 0.00,
+  `gol4_margin` decimal(22,2) NOT NULL DEFAULT 0.00,
+  `gol5_margin` decimal(22,2) NOT NULL DEFAULT 0.00,
+  `change_date` date DEFAULT NULL,
+  `gol_6` decimal(22,2) NOT NULL DEFAULT 0.00,
+  `gol_7` decimal(22,2) NOT NULL DEFAULT 0.00,
+  `gol_8` decimal(22,2) NOT NULL DEFAULT 0.00,
+  `gol_9` decimal(22,2) NOT NULL DEFAULT 0.00,
+  `gol_10` decimal(22,2) NOT NULL DEFAULT 0.00,
+  `gol6_margin` decimal(22,2) NOT NULL DEFAULT 0.00,
+  `gol7_margin` decimal(22,2) NOT NULL DEFAULT 0.00,
+  `gol8_margin` decimal(22,2) NOT NULL DEFAULT 0.00,
+  `gol9_margin` decimal(22,2) NOT NULL DEFAULT 0.00,
+  `gol10_margin` decimal(22,2) NOT NULL DEFAULT 0.00,
+  `gol_11` decimal(22,2) DEFAULT 0.00,
+  `gol11_margin` decimal(22,2) DEFAULT 0.00,
+  `harga_maksimum` decimal(20,2) DEFAULT 0.00,
+  `harga_normal` decimal(20,2) DEFAULT 0.00,
+  `harga_minimum` decimal(20,2) DEFAULT 0.00,
+  `gol_12` decimal(20,2) NOT NULL DEFAULT 0.00,
+  `gol_13` decimal(20,2) DEFAULT 0.00,
+  `gol_14` decimal(20,2) DEFAULT 0.00,
+  `gol_15` decimal(20,2) DEFAULT 0.00,
+  `gol12_margin` decimal(20,2) NOT NULL DEFAULT 0.00,
+  `gol13_margin` decimal(22,2) DEFAULT 0.00,
+  `gol14_margin` decimal(22,2) DEFAULT 0.00,
+  `gol15_margin` decimal(22,2) DEFAULT 0.00,
+  `uom_id` bigint(20) DEFAULT 0,
+  `conv_qty` decimal(10,2) DEFAULT 0.00,
+  PRIMARY KEY (`price_type_id`),
+  KEY `qty_from` (`qty_from`),
+  KEY `qty_to` (`qty_to`),
+  KEY `gol_1` (`gol_1`),
+  KEY `gol_2` (`gol_2`),
+  KEY `gol_3` (`gol_3`),
+  KEY `gol_4` (`gol_4`),
+  KEY `gol_5` (`gol_5`),
+  KEY `gol_6` (`gol_6`),
+  KEY `gol_7` (`gol_7`),
+  KEY `gol_8` (`gol_8`),
+  KEY `gol_9` (`gol_9`),
+  KEY `gol_10` (`gol_10`),
+  KEY `gol_11` (`gol_11`),
+  KEY `gol_12` (`gol_12`),
+  KEY `gol_13` (`gol_13`),
+  KEY `gol_14` (`gol_14`),
+  KEY `gol_15` (`gol_15`),
+  KEY `uom_id` (`uom_id`),
+  KEY `conv_qty` (`conv_qty`),
+  KEY `item_master_id` (`item_master_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=5044049329558420176 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `insert_price_type` AFTER INSERT ON `pos_price_type` FOR EACH ROW BEGIN
+	INSERT INTO `android_logs` (logs_id,table_name,reff_id,old_id,sts_loc1,sts_loc2,sts_loc3,sts_loc4,sts_loc5,sts_loc6,sts_loc7,sts_loc8,sts_loc9,sts_loc10,
+	sts_loc11,sts_loc12,sts_loc13,sts_loc14,sts_loc15,sts_loc16,sts_loc17,sts_loc18,sts_loc19,sts_loc20,
+	sts_loc21,sts_loc22,sts_loc23,sts_loc24,sts_loc25,sts_loc26,sts_loc27,sts_loc28,sts_loc29,sts_loc30,action_handle) VALUE (
+	  UUID(),
+	  "pos_price_type",
+	  new.price_type_id,
+	  0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  "insert"
+	);	
+    END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `update_price_type` AFTER UPDATE ON `pos_price_type` FOR EACH ROW BEGIN
+	INSERT INTO `android_logs` (logs_id,table_name,reff_id,old_id,sts_loc1,sts_loc2,sts_loc3,sts_loc4,sts_loc5,sts_loc6,sts_loc7,sts_loc8,sts_loc9,sts_loc10,
+	sts_loc11,sts_loc12,sts_loc13,sts_loc14,sts_loc15,sts_loc16,sts_loc17,sts_loc18,sts_loc19,sts_loc20,
+	sts_loc21,sts_loc22,sts_loc23,sts_loc24,sts_loc25,sts_loc26,sts_loc27,sts_loc28,sts_loc29,sts_loc30,action_handle) VALUE (
+	  UUID(),
+	  "pos_price_type",
+	  new.price_type_id,
+	  old.price_type_id,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	   "update"
+	);
+    END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `delete_price_type` BEFORE DELETE ON `pos_price_type` FOR EACH ROW BEGIN
+	INSERT INTO `android_logs` (logs_id,table_name,reff_id,old_id,sts_loc1,sts_loc2,sts_loc3,sts_loc4,sts_loc5,sts_loc6,sts_loc7,sts_loc8,sts_loc9,sts_loc10,
+	sts_loc11,sts_loc12,sts_loc13,sts_loc14,sts_loc15,sts_loc16,sts_loc17,sts_loc18,sts_loc19,sts_loc20,
+	sts_loc21,sts_loc22,sts_loc23,sts_loc24,sts_loc25,sts_loc26,sts_loc27,sts_loc28,sts_loc29,sts_loc30,action_handle) VALUE (
+	  UUID(),
+	  "pos_price_type",
+	  old.price_type_id, 
+	  0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  "delete"
+	);	
+    END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+
+--
+-- Table structure for table `pos_price_type_change`
+--
+
+DROP TABLE IF EXISTS `pos_price_type_change`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_price_type_change` (
+  `price_type_change_id` bigint(20) unsigned NOT NULL,
+  `price_type_id` bigint(20) DEFAULT 0,
+  `date` datetime DEFAULT '0000-00-00 00:00:00',
+  `active_date` datetime DEFAULT NULL,
+  `user_id` bigint(20) DEFAULT 0,
+  `status` int(11) DEFAULT 0,
+  `item_master_id` bigint(20) DEFAULT 0,
+  `qty_from` int(10) DEFAULT 0,
+  `qty_to` int(10) DEFAULT 0,
+  `gol_1` decimal(22,2) NOT NULL DEFAULT 0.00,
+  `gol_2` decimal(22,2) NOT NULL DEFAULT 0.00,
+  `gol_3` decimal(22,2) NOT NULL DEFAULT 0.00,
+  `gol_4` decimal(22,2) NOT NULL DEFAULT 0.00,
+  `gol_5` decimal(22,2) NOT NULL DEFAULT 0.00,
+  `gol1_margin` decimal(22,2) NOT NULL DEFAULT 0.00,
+  `gol2_margin` decimal(22,2) NOT NULL DEFAULT 0.00,
+  `gol3_margin` decimal(22,2) NOT NULL DEFAULT 0.00,
+  `gol4_margin` decimal(22,2) NOT NULL DEFAULT 0.00,
+  `gol5_margin` decimal(22,2) NOT NULL DEFAULT 0.00,
+  `change_date` datetime DEFAULT NULL,
+  `gol_6` decimal(22,2) NOT NULL DEFAULT 0.00,
+  `gol_7` decimal(22,2) NOT NULL DEFAULT 0.00,
+  `gol_8` decimal(22,2) NOT NULL DEFAULT 0.00,
+  `gol_9` decimal(22,2) NOT NULL DEFAULT 0.00,
+  `gol_10` decimal(22,2) NOT NULL DEFAULT 0.00,
+  `gol6_margin` decimal(22,2) NOT NULL DEFAULT 0.00,
+  `gol7_margin` decimal(22,2) NOT NULL DEFAULT 0.00,
+  `gol8_margin` decimal(22,2) NOT NULL DEFAULT 0.00,
+  `gol9_margin` decimal(22,2) NOT NULL DEFAULT 0.00,
+  `gol10_margin` decimal(22,2) NOT NULL DEFAULT 0.00,
+  `gol_1_ori` decimal(22,2) NOT NULL DEFAULT 0.00,
+  `gol_2_ori` decimal(22,2) NOT NULL DEFAULT 0.00,
+  `gol_3_ori` decimal(22,2) NOT NULL DEFAULT 0.00,
+  `gol_4_ori` decimal(22,2) NOT NULL DEFAULT 0.00,
+  `gol_5_ori` decimal(22,2) NOT NULL DEFAULT 0.00,
+  `gol_6_ori` decimal(22,2) NOT NULL DEFAULT 0.00,
+  `gol_7_ori` decimal(22,2) NOT NULL DEFAULT 0.00,
+  `gol_8_ori` decimal(22,2) NOT NULL DEFAULT 0.00,
+  `gol_9_ori` decimal(22,2) NOT NULL DEFAULT 0.00,
+  `gol_10_ori` decimal(22,2) NOT NULL DEFAULT 0.00,
+  `ref_number` varchar(40) DEFAULT '',
+  `vendor_id` bigint(20) DEFAULT 0,
+  `type` int(11) DEFAULT 0,
+  `gol2_margin_ori` decimal(10,2) DEFAULT 0.00,
+  `gol3_margin_ori` decimal(10,2) DEFAULT 0.00,
+  `gol4_margin_ori` decimal(10,2) DEFAULT 0.00,
+  `gol5_margin_ori` decimal(10,2) DEFAULT 0.00,
+  `gol6_margin_ori` decimal(10,2) DEFAULT 0.00,
+  `gol7_margin_ori` decimal(10,2) DEFAULT 0.00,
+  `gol8_margin_ori` decimal(10,2) DEFAULT 0.00,
+  `gol9_margin_ori` decimal(10,2) DEFAULT 0.00,
+  `gol10_margin_ori` decimal(10,2) DEFAULT 0.00,
+  `gol1_margin_ori` decimal(10,2) DEFAULT 0.00,
+  `counter` int(10) unsigned NOT NULL DEFAULT 0,
+  `prefix_number` varchar(45) DEFAULT NULL,
+  `gol_11` decimal(10,2) DEFAULT 0.00,
+  `gol_12` decimal(10,2) DEFAULT 0.00,
+  `gol_13` decimal(10,2) DEFAULT 0.00,
+  `gol_14` decimal(10,2) DEFAULT 0.00,
+  `gol_15` decimal(10,2) DEFAULT 0.00,
+  `gol11_margin` decimal(10,2) DEFAULT 0.00,
+  `gol12_margin` decimal(10,2) DEFAULT 0.00,
+  `gol13_margin` decimal(10,2) DEFAULT 0.00,
+  `gol14_margin` decimal(10,2) DEFAULT 0.00,
+  `gol15_margin` decimal(10,2) DEFAULT 0.00,
+  `gol_11_ori` decimal(10,2) DEFAULT 0.00,
+  `gol_12_ori` decimal(10,2) DEFAULT 0.00,
+  `gol_13_ori` decimal(10,2) DEFAULT 0.00,
+  `gol_14_ori` decimal(10,2) DEFAULT 0.00,
+  `gol_15_ori` decimal(10,2) DEFAULT 0.00,
+  `gol11_margin_ori` decimal(10,2) DEFAULT 0.00,
+  `gol12_margin_ori` decimal(10,2) DEFAULT 0.00,
+  `gol13_margin_ori` decimal(10,2) DEFAULT 0.00,
+  `gol14_margin_ori` decimal(10,2) DEFAULT 0.00,
+  `gol15_margin_ori` decimal(10,2) DEFAULT 0.00,
+  `harga_minimum` decimal(22,2) DEFAULT 0.00,
+  `harga_normal` decimal(22,2) DEFAULT 0.00,
+  `harga_maksimum` decimal(22,2) DEFAULT 0.00,
+  `uom_id` bigint(20) DEFAULT 0,
+  `conv_qty` decimal(10,2) DEFAULT 0.00,
+  PRIMARY KEY (`price_type_change_id`),
+  KEY `idxitem` (`item_master_id`),
+  KEY `Index_3` (`ref_number`),
+  KEY `Index_4` (`vendor_id`),
+  KEY `Index_5` (`active_date`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_print_order`
+--
+
+DROP TABLE IF EXISTS `pos_print_order`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_print_order` (
+  `print_order_id` bigint(20) NOT NULL DEFAULT 0,
+  `sales_id` bigint(20) NOT NULL DEFAULT 0,
+  `sales_detail_id` bigint(20) NOT NULL DEFAULT 0,
+  `item_master_id` bigint(20) NOT NULL DEFAULT 0,
+  `name` varchar(120) DEFAULT NULL,
+  `qty` double(12,2) NOT NULL DEFAULT 0.00,
+  `squence` int(5) NOT NULL DEFAULT 0,
+  `date` datetime DEFAULT NULL,
+  `print` int(3) NOT NULL DEFAULT 1,
+  `number` varchar(120) DEFAULT NULL,
+  `number_prefix` varchar(20) DEFAULT NULL,
+  `counter` int(11) NOT NULL DEFAULT 0,
+  `query_string` text DEFAULT NULL,
+  `sts_upload` int(11) DEFAULT 0,
+  `status_print` int(3) NOT NULL DEFAULT 0,
+  `note` text DEFAULT NULL,
+  PRIMARY KEY (`print_order_id`),
+  KEY `sales_id` (`sales_id`),
+  KEY `item_master_id` (`item_master_id`),
+  KEY `name` (`name`),
+  KEY `qty` (`qty`),
+  KEY `squence` (`squence`),
+  KEY `print` (`print`),
+  KEY `status_print` (`status_print`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_product_show_list`
+--
+
+DROP TABLE IF EXISTS `pos_product_show_list`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_product_show_list` (
+  `list_id` bigint(20) NOT NULL DEFAULT 0,
+  `company_id` bigint(20) NOT NULL DEFAULT 0,
+  `status` int(11) NOT NULL DEFAULT 0,
+  `name` varchar(100) NOT NULL DEFAULT '',
+  `string_value` varchar(100) NOT NULL DEFAULT '',
+  `uom_type` int(11) NOT NULL DEFAULT 0,
+  `group_type` int(11) NOT NULL DEFAULT 0,
+  `group_name` varchar(100) NOT NULL DEFAULT '',
+  `size` int(11) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`list_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_promotion`
+--
+
+DROP TABLE IF EXISTS `pos_promotion`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_promotion` (
+  `promotion_id` bigint(20) unsigned NOT NULL DEFAULT 0,
+  `start_date` datetime DEFAULT NULL,
+  `end_date` datetime DEFAULT NULL,
+  `user_id` bigint(20) unsigned DEFAULT NULL,
+  `user_name` varchar(45) DEFAULT NULL,
+  `promo_desc` text DEFAULT NULL,
+  `counter` int(10) unsigned NOT NULL DEFAULT 0,
+  `number` varchar(45) DEFAULT NULL,
+  `status` varchar(45) DEFAULT NULL,
+  `prefix_number` varchar(45) DEFAULT NULL,
+  `tipe` int(20) DEFAULT 0,
+  `jenis` int(20) DEFAULT 0,
+  `sub_type` int(2) DEFAULT 0,
+  `for_customer` int(2) DEFAULT 0,
+  `include_discount_customer` int(2) DEFAULT 0,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `path_image` text DEFAULT NULL,
+  `end_time` time DEFAULT NULL,
+  `start_time` time DEFAULT NULL,
+  PRIMARY KEY (`promotion_id`),
+  KEY `start_date` (`start_date`),
+  KEY `end_date` (`end_date`),
+  KEY `status` (`status`),
+  KEY `tipe` (`tipe`),
+  KEY `jenis` (`jenis`),
+  KEY `sub_type` (`sub_type`),
+  KEY `for_customer` (`for_customer`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `insert_promotion` AFTER INSERT ON `pos_promotion` FOR EACH ROW BEGIN
+	INSERT INTO `android_logs` (
+	logs_id,table_name,reff_id,old_id,sts_loc1,sts_loc2,sts_loc3,sts_loc4,sts_loc5,sts_loc6,sts_loc7,sts_loc8,sts_loc9,sts_loc10,
+	sts_loc11,sts_loc12,sts_loc13,sts_loc14,sts_loc15,sts_loc16,sts_loc17,sts_loc18,sts_loc19,sts_loc20,
+	sts_loc21,sts_loc22,sts_loc23,sts_loc24,sts_loc25,sts_loc26,sts_loc27,sts_loc28,sts_loc29,sts_loc30,
+	action_handle) VALUE (
+	  UUID(),
+	  "pos_promotion",
+	  new.promotion_id,
+	  0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  "insert"
+	  );
+    END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `update_promotion` AFTER UPDATE ON `pos_promotion` FOR EACH ROW BEGIN
+	INSERT INTO `android_logs` (
+	logs_id,table_name,reff_id,old_id,sts_loc1,sts_loc2,sts_loc3,sts_loc4,sts_loc5,sts_loc6,sts_loc7,sts_loc8,sts_loc9,sts_loc10,
+	sts_loc11,sts_loc12,sts_loc13,sts_loc14,sts_loc15,sts_loc16,sts_loc17,sts_loc18,sts_loc19,sts_loc20,
+	sts_loc21,sts_loc22,sts_loc23,sts_loc24,sts_loc25,sts_loc26,sts_loc27,sts_loc28,sts_loc29,sts_loc30,
+	action_handle) VALUE (
+	  UUID(),
+	  "pos_promotion",
+	  new.promotion_id,
+	  old.promotion_id,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  "update"
+	);
+    END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `delete_promotion` BEFORE DELETE ON `pos_promotion` FOR EACH ROW BEGIN
+	INSERT INTO `android_logs` (
+	logs_id,table_name,reff_id,old_id,sts_loc1,sts_loc2,sts_loc3,sts_loc4,sts_loc5,sts_loc6,sts_loc7,sts_loc8,sts_loc9,sts_loc10,
+	sts_loc11,sts_loc12,sts_loc13,sts_loc14,sts_loc15,sts_loc16,sts_loc17,sts_loc18,sts_loc19,sts_loc20,
+	sts_loc21,sts_loc22,sts_loc23,sts_loc24,sts_loc25,sts_loc26,sts_loc27,sts_loc28,sts_loc29,sts_loc30,
+	action_handle) VALUE (
+	  UUID(),
+	  "pos_promotion",
+	  old.promotion_id,
+	  0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  "delete"
+	);
+    END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+
+--
+-- Table structure for table `pos_promotion_grab`
+--
+
+DROP TABLE IF EXISTS `pos_promotion_grab`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_promotion_grab` (
+  `id` bigint(20) NOT NULL,
+  `bundleQuantity` int(11) DEFAULT NULL,
+  `cap` double DEFAULT NULL,
+  `counter` int(11) DEFAULT NULL,
+  `created_by` varchar(255) DEFAULT NULL,
+  `created_date` datetime DEFAULT NULL,
+  `custom_tag` varchar(255) DEFAULT NULL,
+  `eater_type` varchar(255) DEFAULT NULL,
+  `end_time` datetime DEFAULT NULL,
+  `min_basket_amount` double DEFAULT NULL,
+  `name` varchar(255) NOT NULL,
+  `number` varchar(255) NOT NULL,
+  `number_prefix` varchar(255) DEFAULT NULL,
+  `product` varchar(255) DEFAULT NULL,
+  `scope_type` varchar(255) DEFAULT NULL,
+  `start_time` datetime DEFAULT NULL,
+  `status` varchar(255) DEFAULT NULL,
+  `total_count` int(11) DEFAULT NULL,
+  `total_count_per_user` int(11) DEFAULT NULL,
+  `type` varchar(255) DEFAULT NULL,
+  `updated_date` datetime DEFAULT NULL,
+  `value` double DEFAULT NULL,
+  `user_id` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UK_t052jcfmuy0wj29mgevwdnr62` (`name`),
+  UNIQUE KEY `UK_rjiqg1fm3sj7c34beyndm1dws` (`number`),
+  KEY `FKt0lxwn36fsvntyw3xaqkh94r` (`user_id`),
+  CONSTRAINT `FKt0lxwn36fsvntyw3xaqkh94r` FOREIGN KEY (`user_id`) REFERENCES `sysuser` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_promotion_grab_detail`
+--
+
+DROP TABLE IF EXISTS `pos_promotion_grab_detail`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_promotion_grab_detail` (
+  `id` bigint(20) NOT NULL,
+  `object_id` varchar(255) DEFAULT NULL,
+  `promotion_grab_id` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK96nu2xlx05j2tdve16letb8bu` (`promotion_grab_id`),
+  CONSTRAINT `FK96nu2xlx05j2tdve16letb8bu` FOREIGN KEY (`promotion_grab_id`) REFERENCES `pos_promotion_grab` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_promotion_grab_location`
+--
+
+DROP TABLE IF EXISTS `pos_promotion_grab_location`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_promotion_grab_location` (
+  `id` bigint(20) NOT NULL,
+  `promotion_id_by_grab` varchar(255) DEFAULT NULL,
+  `location_id` bigint(20) DEFAULT NULL,
+  `promotion_grab_id` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FKl33yu6ycapql0m5tfx713rlx9` (`location_id`),
+  KEY `FK9gnvor7jmuc0cprycricsrm7r` (`promotion_grab_id`),
+  CONSTRAINT `FK9gnvor7jmuc0cprycricsrm7r` FOREIGN KEY (`promotion_grab_id`) REFERENCES `pos_promotion_grab` (`id`),
+  CONSTRAINT `FKl33yu6ycapql0m5tfx713rlx9` FOREIGN KEY (`location_id`) REFERENCES `pos_location` (`location_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_promotion_item`
+--
+
+DROP TABLE IF EXISTS `pos_promotion_item`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_promotion_item` (
+  `promotion_item_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `promotion_id` bigint(20) unsigned DEFAULT NULL,
+  `item_master_id` bigint(20) unsigned DEFAULT NULL,
+  `item_name` varchar(200) DEFAULT NULL,
+  `item_code` varchar(45) DEFAULT NULL,
+  `item_barcode` varchar(45) DEFAULT NULL,
+  `discount_percent` double DEFAULT NULL,
+  `discount_value` double DEFAULT NULL,
+  `selling_price` double DEFAULT 0,
+  `tipe` int(20) DEFAULT 0,
+  `qty_min` double DEFAULT 0,
+  `qty_bonus` double DEFAULT 0,
+  `is_variant` int(20) DEFAULT 0,
+  `item_group_id` bigint(20) DEFAULT 0,
+  `vendor_id` bigint(20) DEFAULT 0,
+  `amount` double(22,2) DEFAULT 0.00,
+  `claim_percent` double(22,2) DEFAULT 0.00,
+  `claim_amount` double(22,2) DEFAULT 0.00,
+  `discount_percent_2` double(22,2) DEFAULT 0.00,
+  `discount_value_2` double(22,2) DEFAULT 0.00,
+  `merk_id` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`promotion_item_id`),
+  KEY `promotion_id` (`promotion_id`),
+  KEY `item_master_id` (`item_master_id`),
+  KEY `tipe` (`tipe`),
+  KEY `qty_min` (`qty_min`),
+  KEY `qty_bonus` (`qty_bonus`),
+  KEY `item_group_id` (`item_group_id`),
+  KEY `vendor_id` (`vendor_id`),
+  CONSTRAINT `FKb73vlp29x3r2ictoxet3ir05t` FOREIGN KEY (`vendor_id`) REFERENCES `vendor` (`vendor_id`),
+  CONSTRAINT `FKgk9gbpoyyfc150tgknwawq28a` FOREIGN KEY (`promotion_id`) REFERENCES `pos_promotion` (`promotion_id`),
+  CONSTRAINT `FKn99cdl4hrn1sc8xmipr91ytw7` FOREIGN KEY (`item_group_id`) REFERENCES `pos_item_group` (`item_group_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `insert_promotion_item` AFTER INSERT ON `pos_promotion_item` FOR EACH ROW BEGIN
+	 INSERT INTO `android_logs` (logs_id,table_name,reff_id,old_id,sts_loc1,sts_loc2,sts_loc3,sts_loc4,sts_loc5,sts_loc6,sts_loc7,sts_loc8,sts_loc9,sts_loc10,
+	sts_loc11,sts_loc12,sts_loc13,sts_loc14,sts_loc15,sts_loc16,sts_loc17,sts_loc18,sts_loc19,sts_loc20,
+	sts_loc21,sts_loc22,sts_loc23,sts_loc24,sts_loc25,sts_loc26,sts_loc27,sts_loc28,sts_loc29,sts_loc30,action_handle) VALUE (
+	  UUID(),
+	  "pos_promotion_item",
+	  new.promotion_item_id,
+	  0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  "insert"
+	);
+    END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `update_promotion_item` AFTER UPDATE ON `pos_promotion_item` FOR EACH ROW BEGIN
+	INSERT INTO `android_logs` (
+	logs_id,table_name,reff_id,old_id,sts_loc1,sts_loc2,sts_loc3,sts_loc4,sts_loc5,sts_loc6,sts_loc7,sts_loc8,sts_loc9,sts_loc10,
+	sts_loc11,sts_loc12,sts_loc13,sts_loc14,sts_loc15,sts_loc16,sts_loc17,sts_loc18,sts_loc19,sts_loc20,
+	sts_loc21,sts_loc22,sts_loc23,sts_loc24,sts_loc25,sts_loc26,sts_loc27,sts_loc28,sts_loc29,sts_loc30,
+	action_handle) VALUE (
+	  UUID(),
+	  "pos_promotion_item",
+	  new.promotion_item_id,
+	  old.promotion_item_id,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  "update"
+	);
+    END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `delete_promotion_item` BEFORE DELETE ON `pos_promotion_item` FOR EACH ROW BEGIN
+	INSERT INTO `android_logs` (
+	logs_id,table_name,reff_id,old_id,sts_loc1,sts_loc2,sts_loc3,sts_loc4,sts_loc5,sts_loc6,sts_loc7,sts_loc8,sts_loc9,sts_loc10,
+	sts_loc11,sts_loc12,sts_loc13,sts_loc14,sts_loc15,sts_loc16,sts_loc17,sts_loc18,sts_loc19,sts_loc20,
+	sts_loc21,sts_loc22,sts_loc23,sts_loc24,sts_loc25,sts_loc26,sts_loc27,sts_loc28,sts_loc29,sts_loc30,
+	action_handle) VALUE (
+	  UUID(),
+	  "pos_promotion_item",
+	  old.promotion_item_id,
+	  0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  "delete"
+	);
+    END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+
+--
+-- Table structure for table `pos_promotion_location`
+--
+
+DROP TABLE IF EXISTS `pos_promotion_location`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_promotion_location` (
+  `promotion_location_id` bigint(20) unsigned NOT NULL DEFAULT 0,
+  `promotion_id` bigint(20) unsigned DEFAULT NULL,
+  `location_id` bigint(20) unsigned DEFAULT NULL,
+  `location_name` varchar(100) DEFAULT NULL,
+  `promotion_location` bigint(20) NOT NULL,
+  PRIMARY KEY (`promotion_location_id`),
+  KEY `promotion_id` (`promotion_id`),
+  KEY `location_id` (`location_id`),
+  CONSTRAINT `FK9vyyhd14o5wk5dmb07e2bvx4` FOREIGN KEY (`promotion_id`) REFERENCES `pos_promotion` (`promotion_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `insert_promotion_location` AFTER INSERT ON `pos_promotion_location` FOR EACH ROW BEGIN
+	INSERT INTO `android_logs` (
+	logs_id,table_name,reff_id,old_id,sts_loc1,sts_loc2,sts_loc3,sts_loc4,sts_loc5,sts_loc6,sts_loc7,sts_loc8,sts_loc9,sts_loc10,
+	sts_loc11,sts_loc12,sts_loc13,sts_loc14,sts_loc15,sts_loc16,sts_loc17,sts_loc18,sts_loc19,sts_loc20,
+	sts_loc21,sts_loc22,sts_loc23,sts_loc24,sts_loc25,sts_loc26,sts_loc27,sts_loc28,sts_loc29,sts_loc30,
+	action_handle) VALUE (
+	  UUID(),
+	  "pos_promotion_location",
+	  new.promotion_location_id,
+	  0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  "insert"
+	  );
+    END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `update_promotion_location` AFTER UPDATE ON `pos_promotion_location` FOR EACH ROW BEGIN
+	INSERT INTO `android_logs` (
+	logs_id,table_name,reff_id,old_id,sts_loc1,sts_loc2,sts_loc3,sts_loc4,sts_loc5,sts_loc6,sts_loc7,sts_loc8,sts_loc9,sts_loc10,
+	sts_loc11,sts_loc12,sts_loc13,sts_loc14,sts_loc15,sts_loc16,sts_loc17,sts_loc18,sts_loc19,sts_loc20,
+	sts_loc21,sts_loc22,sts_loc23,sts_loc24,sts_loc25,sts_loc26,sts_loc27,sts_loc28,sts_loc29,sts_loc30,
+	action_handle) VALUE (
+	  UUID(),
+	  "pos_promotion_location",
+	  new.promotion_location_id,
+	  old.promotion_location_id,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  "update"
+	);
+    END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `delete_promotion_location` BEFORE DELETE ON `pos_promotion_location` FOR EACH ROW BEGIN
+	INSERT INTO `android_logs` (
+	logs_id,table_name,reff_id,old_id,sts_loc1,sts_loc2,sts_loc3,sts_loc4,sts_loc5,sts_loc6,sts_loc7,sts_loc8,sts_loc9,sts_loc10,
+	sts_loc11,sts_loc12,sts_loc13,sts_loc14,sts_loc15,sts_loc16,sts_loc17,sts_loc18,sts_loc19,sts_loc20,
+	sts_loc21,sts_loc22,sts_loc23,sts_loc24,sts_loc25,sts_loc26,sts_loc27,sts_loc28,sts_loc29,sts_loc30,
+	action_handle) VALUE (
+	  UUID(),
+	  "pos_promotion_location",
+	  old.promotion_location_id,
+	  0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  "delete"
+	);
+    END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+
+--
+-- Table structure for table `pos_pulsa_listrik`
+--
+
+DROP TABLE IF EXISTS `pos_pulsa_listrik`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_pulsa_listrik` (
+  `transaction_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `sales_id` bigint(20) NOT NULL DEFAULT 0,
+  `item_master_id` bigint(20) NOT NULL DEFAULT 0,
+  `date` timestamp NOT NULL DEFAULT current_timestamp(),
+  `status` int(10) NOT NULL DEFAULT 0,
+  `user_id` bigint(20) NOT NULL DEFAULT 0,
+  `location_id` bigint(20) NOT NULL DEFAULT 0,
+  `server_id` varchar(50) NOT NULL DEFAULT '',
+  `meter_id` varchar(50) NOT NULL DEFAULT '',
+  `pelanggan_id` varchar(50) NOT NULL DEFAULT '',
+  `name` varchar(100) NOT NULL DEFAULT '',
+  `telephone` varchar(50) NOT NULL DEFAULT '',
+  `tarif` varchar(50) NOT NULL DEFAULT '',
+  `daya` varchar(50) NOT NULL DEFAULT '',
+  `no_ref` varchar(100) NOT NULL DEFAULT '',
+  `total` decimal(20,2) NOT NULL DEFAULT 0.00,
+  `materai` decimal(20,2) NOT NULL DEFAULT 0.00,
+  `ppn` decimal(20,2) NOT NULL DEFAULT 0.00,
+  `ppj` decimal(20,2) NOT NULL DEFAULT 0.00,
+  `angsuran` decimal(20,2) NOT NULL DEFAULT 0.00,
+  `harga` decimal(20,2) NOT NULL DEFAULT 0.00,
+  `kwh` decimal(20,2) NOT NULL DEFAULT 0.00,
+  `token` varchar(100) NOT NULL DEFAULT '',
+  `admin_bank` decimal(20,2) NOT NULL DEFAULT 0.00,
+  `operator` varchar(100) NOT NULL DEFAULT '',
+  `link_pingtel` text DEFAULT NULL,
+  `link_order` text DEFAULT NULL,
+  `description` text DEFAULT NULL,
+  PRIMARY KEY (`transaction_id`),
+  KEY `index_sts` (`transaction_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_purch_order`
+--
+
+DROP TABLE IF EXISTS `pos_purch_order`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_purch_order` (
+  `purch_order_id` bigint(20) NOT NULL DEFAULT 0,
+  `purch_date` datetime DEFAULT NULL,
+  `approval_1` bigint(20) DEFAULT 0,
+  `approval_2` bigint(20) DEFAULT 0,
+  `approval_3` bigint(20) DEFAULT 0,
+  `status` varchar(20) DEFAULT NULL,
+  `note` text DEFAULT NULL,
+  `include_tax` int(11) DEFAULT NULL,
+  `total_tax` decimal(25,2) DEFAULT 0.00,
+  `total_amount` decimal(25,2) DEFAULT 0.00,
+  `tax_percent` decimal(10,2) DEFAULT 0.00,
+  `discount_percent` decimal(10,2) DEFAULT 0.00,
+  `discount_total` decimal(25,2) DEFAULT 0.00,
+  `payment_type` varchar(20) DEFAULT NULL,
+  `location_id` bigint(20) DEFAULT 0,
+  `segment1_id` bigint(20) DEFAULT 0,
+  `user_id` bigint(20) DEFAULT 0,
+  `number` varchar(20) DEFAULT NULL,
+  `counter` int(11) DEFAULT 0,
+  `vendor_id` bigint(20) DEFAULT 0,
+  `currency_id` bigint(20) DEFAULT 0,
+  `prefix_number` varchar(45) DEFAULT NULL,
+  `closed_reason` varchar(220) DEFAULT NULL,
+  `approval_1_date` datetime DEFAULT NULL,
+  `approval_2_date` datetime DEFAULT NULL,
+  `approval_3_date` datetime DEFAULT NULL,
+  `company_id` bigint(20) DEFAULT 0,
+  `expired_date` datetime DEFAULT NULL,
+  `send_email` datetime DEFAULT NULL,
+  `email_address` varchar(120) DEFAULT NULL,
+  `document_date` datetime DEFAULT NULL,
+  `price_include_tax` int(4) DEFAULT 0,
+  `department_id` bigint(20) DEFAULT 0,
+  `purchase_request_id` bigint(20) DEFAULT 0,
+  `coa_discount_id` bigint(20) DEFAULT 0,
+  `coa_ppn_id` bigint(20) DEFAULT 0,
+  `total_other` decimal(22,2) DEFAULT 0.00,
+  `approved_status` int(2) DEFAULT 0,
+  PRIMARY KEY (`purch_order_id`),
+  UNIQUE KEY `XPKpos_purch_order` (`purch_order_id`),
+  KEY `check_order` (`location_id`,`status`,`purch_order_id`),
+  KEY `number` (`number`),
+  KEY `vendor` (`vendor_id`),
+  KEY `purch_date` (`purch_date`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_purch_order_cost`
+--
+
+DROP TABLE IF EXISTS `pos_purch_order_cost`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_purch_order_cost` (
+  `purch_order_cost_id` bigint(20) NOT NULL DEFAULT 0,
+  `purch_order_id` bigint(20) DEFAULT 0,
+  `coa_id` bigint(20) DEFAULT 0,
+  `amount` decimal(22,2) DEFAULT 0.00,
+  `note` varchar(200) DEFAULT '',
+  PRIMARY KEY (`purch_order_cost_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_purch_order_item`
+--
+
+DROP TABLE IF EXISTS `pos_purch_order_item`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_purch_order_item` (
+  `purch_order_id` bigint(20) DEFAULT NULL,
+  `purch_order_item_id` bigint(20) NOT NULL DEFAULT 0,
+  `item_master_id` bigint(20) DEFAULT 0,
+  `qty` decimal(10,2) DEFAULT 0.00,
+  `total_amount` decimal(22,2) DEFAULT 0.00,
+  `amount` decimal(22,2) DEFAULT 0.00,
+  `discount_amount` decimal(10,2) DEFAULT 0.00,
+  `delivery_date` datetime DEFAULT NULL,
+  `purchase_request_item_id` bigint(20) DEFAULT 0,
+  `uom_id` bigint(20) DEFAULT 0,
+  `status` varchar(45) DEFAULT 'OPEN',
+  `company_id` bigint(20) DEFAULT 0,
+  `last_dis_percent` decimal(22,2) DEFAULT 0.00,
+  `reg_dis_val` decimal(22,2) DEFAULT 0.00,
+  `reg_dis_percent` decimal(22,2) DEFAULT 0.00,
+  `qty_purchase` decimal(22,2) DEFAULT 0.00,
+  `uom_purchase_id` bigint(20) DEFAULT 0,
+  `item_vendor_code` varchar(35) DEFAULT NULL,
+  `is_bonus` int(4) DEFAULT 0,
+  `qty_order` decimal(22,2) DEFAULT 0.00,
+  `days_coverage` decimal(22,2) DEFAULT 0.00,
+  `note` varchar(240) DEFAULT NULL,
+  `dis_1_val` decimal(22,2) DEFAULT 0.00,
+  `dis_2_val` decimal(22,2) DEFAULT 0.00,
+  `dis_3_val` decimal(22,2) DEFAULT 0.00,
+  `dis_4_val` decimal(22,2) DEFAULT 0.00,
+  `dis_1_percent` decimal(22,2) DEFAULT 0.00,
+  `dis_2_percent` decimal(22,2) DEFAULT 0.00,
+  `dis_3_percent` decimal(22,2) DEFAULT 0.00,
+  `dis_4_percent` decimal(22,2) DEFAULT 0.00,
+  `coa_id` bigint(20) DEFAULT 0,
+  `type` int(2) unsigned zerofill DEFAULT 00,
+  `purch_request_id` bigint(20) DEFAULT 0,
+  `segment1_id` bigint(20) DEFAULT 0,
+  `department_id` bigint(20) DEFAULT 0,
+  PRIMARY KEY (`purch_order_item_id`),
+  UNIQUE KEY `XPKpos_purch_order_item` (`purch_order_item_id`),
+  KEY `check_order2` (`item_master_id`,`purch_order_id`),
+  KEY `list_purchase` (`purch_order_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_purch_receive`
+--
+
+DROP TABLE IF EXISTS `pos_purch_receive`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_purch_receive` (
+  `purch_receive_id` bigint(20) NOT NULL DEFAULT 0,
+  `date` datetime DEFAULT NULL,
+  `approval_1` bigint(20) DEFAULT 0,
+  `approval_2` bigint(20) DEFAULT 0,
+  `approval_3` bigint(20) DEFAULT 0,
+  `status` varchar(20) DEFAULT NULL,
+  `note` text DEFAULT NULL,
+  `include_tax` int(11) DEFAULT NULL,
+  `total_tax` decimal(25,2) DEFAULT 0.00,
+  `total_amount` decimal(25,2) DEFAULT 0.00,
+  `tax_percent` decimal(10,2) DEFAULT 0.00,
+  `discount_percent` decimal(10,2) DEFAULT 0.00,
+  `discount_total` decimal(25,2) DEFAULT 0.00,
+  `payment_type` varchar(20) DEFAULT NULL,
+  `location_id` bigint(20) DEFAULT 0,
+  `segment1_id` bigint(20) DEFAULT 0,
+  `user_id` bigint(20) DEFAULT 0,
+  `number` varchar(20) DEFAULT NULL,
+  `counter` int(11) DEFAULT 0,
+  `vendor_id` bigint(20) DEFAULT 0,
+  `currency_id` bigint(20) DEFAULT 0,
+  `prefix_number` varchar(45) DEFAULT NULL,
+  `closed_reason` varchar(220) DEFAULT NULL,
+  `approval_1_date` datetime DEFAULT NULL,
+  `approval_2_date` datetime DEFAULT NULL,
+  `approval_3_date` datetime DEFAULT NULL,
+  `company_id` bigint(20) DEFAULT 0,
+  `expired_date` datetime DEFAULT NULL,
+  `send_email` datetime DEFAULT NULL,
+  `email_address` varchar(120) DEFAULT NULL,
+  `document_date` datetime DEFAULT NULL,
+  `price_include_tax` int(4) DEFAULT 0,
+  `department_id` bigint(20) DEFAULT 0,
+  `purch_order_id` bigint(20) DEFAULT 0,
+  `coa_discount_id` bigint(20) DEFAULT 0,
+  `coa_ppn_id` bigint(20) DEFAULT 0,
+  `due_date` date DEFAULT NULL,
+  `do_number` varchar(120) DEFAULT NULL,
+  `invoice_number` varchar(120) DEFAULT NULL,
+  `total_other` decimal(22,2) DEFAULT 0.00,
+  `posted_status` int(2) DEFAULT 0,
+  `posted_by_id` bigint(20) DEFAULT 0,
+  `posted_date` datetime DEFAULT NULL,
+  PRIMARY KEY (`purch_receive_id`),
+  UNIQUE KEY `XPKpos_receive_order` (`purch_receive_id`),
+  KEY `check_order` (`location_id`,`status`,`purch_receive_id`),
+  KEY `number` (`number`),
+  KEY `vendor` (`vendor_id`),
+  KEY `date` (`date`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_purch_receive_cost`
+--
+
+DROP TABLE IF EXISTS `pos_purch_receive_cost`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_purch_receive_cost` (
+  `purch_receive_cost_id` bigint(20) NOT NULL DEFAULT 0,
+  `purch_receive_id` bigint(20) DEFAULT 0,
+  `coa_id` bigint(20) DEFAULT 0,
+  `amount` decimal(22,2) DEFAULT 0.00,
+  `note` varchar(120) DEFAULT '',
+  PRIMARY KEY (`purch_receive_cost_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_purch_receive_item`
+--
+
+DROP TABLE IF EXISTS `pos_purch_receive_item`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_purch_receive_item` (
+  `purch_receive_id` bigint(20) DEFAULT NULL,
+  `purch_receive_item_id` bigint(20) NOT NULL DEFAULT 0,
+  `item_master_id` bigint(20) DEFAULT 0,
+  `qty` decimal(10,2) DEFAULT 0.00,
+  `total_amount` decimal(22,2) DEFAULT 0.00,
+  `amount` decimal(22,2) DEFAULT 0.00,
+  `discount_amount` decimal(10,2) DEFAULT 0.00,
+  `delivery_date` datetime DEFAULT NULL,
+  `purchase_request_item_id` bigint(20) DEFAULT 0,
+  `uom_id` bigint(20) DEFAULT 0,
+  `status` varchar(45) DEFAULT 'OPEN',
+  `company_id` bigint(20) DEFAULT 0,
+  `last_dis_percent` decimal(22,2) DEFAULT 0.00,
+  `reg_dis_val` decimal(22,2) DEFAULT 0.00,
+  `reg_dis_percent` decimal(22,2) DEFAULT 0.00,
+  `qty_purchase` decimal(22,2) DEFAULT 0.00,
+  `uom_purchase_id` bigint(20) DEFAULT 0,
+  `item_vendor_code` varchar(35) DEFAULT NULL,
+  `is_bonus` int(4) DEFAULT 0,
+  `qty_order` decimal(22,2) DEFAULT 0.00,
+  `days_coverage` decimal(22,2) DEFAULT 0.00,
+  `note` varchar(240) DEFAULT NULL,
+  `dis_1_val` decimal(22,2) DEFAULT 0.00,
+  `dis_2_val` decimal(22,2) DEFAULT 0.00,
+  `dis_3_val` decimal(22,2) DEFAULT 0.00,
+  `dis_4_val` decimal(22,2) DEFAULT 0.00,
+  `dis_1_percent` decimal(22,2) DEFAULT 0.00,
+  `dis_2_percent` decimal(22,2) DEFAULT 0.00,
+  `dis_3_percent` decimal(22,2) DEFAULT 0.00,
+  `dis_4_percent` decimal(22,2) DEFAULT 0.00,
+  `coa_id` bigint(20) DEFAULT 0,
+  `exp_date` date DEFAULT NULL,
+  `purch_order_item_id` bigint(20) DEFAULT 0,
+  `type` int(2) DEFAULT 0,
+  `segment1_id` bigint(20) DEFAULT 0,
+  PRIMARY KEY (`purch_receive_item_id`),
+  UNIQUE KEY `XPKpos_purch_receive_item` (`purch_receive_item_id`),
+  KEY `check_order2` (`item_master_id`,`purch_receive_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_purch_request`
+--
+
+DROP TABLE IF EXISTS `pos_purch_request`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_purch_request` (
+  `purch_request_id` bigint(20) NOT NULL DEFAULT 0,
+  `date` datetime DEFAULT NULL,
+  `approval_1` bigint(20) DEFAULT 0,
+  `approval_2` bigint(20) DEFAULT 0,
+  `approval_3` bigint(20) DEFAULT 0,
+  `status` varchar(20) DEFAULT NULL,
+  `user_id` bigint(20) DEFAULT 0,
+  `note` text DEFAULT NULL,
+  `number` varchar(20) DEFAULT NULL,
+  `counter` int(11) DEFAULT NULL,
+  `department_id` bigint(20) DEFAULT 0,
+  `prefix_number` varchar(20) DEFAULT NULL,
+  `closed_reason` varchar(220) DEFAULT NULL,
+  `approval_1_date` datetime DEFAULT NULL,
+  `approval_2_date` datetime DEFAULT NULL,
+  `approval_3_date` datetime DEFAULT NULL,
+  `company_id` bigint(20) DEFAULT 0,
+  `location_id` bigint(20) DEFAULT 0,
+  `transaction_type` int(2) DEFAULT 0,
+  `segment1_id` bigint(20) DEFAULT 0,
+  `total_other` decimal(22,2) DEFAULT 0.00,
+  PRIMARY KEY (`purch_request_id`),
+  UNIQUE KEY `XPKpos_purch_request` (`purch_request_id`),
+  UNIQUE KEY `uniqNumber` (`number`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_purch_request_item`
+--
+
+DROP TABLE IF EXISTS `pos_purch_request_item`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_purch_request_item` (
+  `purch_request_item_id` bigint(20) NOT NULL DEFAULT 0,
+  `purch_request_id` bigint(20) DEFAULT 0,
+  `qty` decimal(22,2) DEFAULT 0.00,
+  `memo` varchar(120) DEFAULT NULL,
+  `uom_id` bigint(20) DEFAULT 0,
+  PRIMARY KEY (`purch_request_item_id`),
+  UNIQUE KEY `XPKpos_purch_request_item` (`purch_request_item_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_purchase`
+--
+
+DROP TABLE IF EXISTS `pos_purchase`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_purchase` (
+  `purchase_id` bigint(20) NOT NULL DEFAULT 0,
+  `purch_date` datetime DEFAULT NULL,
+  `approval_1` bigint(20) DEFAULT 0,
+  `approval_2` bigint(20) DEFAULT 0,
+  `approval_3` bigint(20) DEFAULT 0,
+  `status` varchar(20) DEFAULT NULL,
+  `note` text DEFAULT NULL,
+  `include_tax` int(11) DEFAULT NULL,
+  `total_tax` decimal(25,2) DEFAULT 0.00,
+  `total_amount` decimal(25,2) DEFAULT 0.00,
+  `tax_percent` decimal(10,2) DEFAULT 0.00,
+  `discount_percent` decimal(10,2) DEFAULT 0.00,
+  `discount_total` decimal(25,2) DEFAULT 0.00,
+  `payment_type` varchar(20) DEFAULT NULL,
+  `location_id` bigint(20) DEFAULT 0,
+  `user_id` bigint(20) DEFAULT 0,
+  `number` varchar(20) DEFAULT NULL,
+  `counter` int(11) DEFAULT 0,
+  `vendor_id` bigint(20) DEFAULT 0,
+  `currency_id` bigint(20) DEFAULT 0,
+  `prefix_number` varchar(45) DEFAULT NULL,
+  `closed_reason` varchar(220) DEFAULT NULL,
+  `approval_1_date` datetime DEFAULT NULL,
+  `approval_2_date` datetime DEFAULT NULL,
+  `approval_3_date` datetime DEFAULT NULL,
+  `company_id` bigint(20) DEFAULT 0,
+  `expired_date` datetime DEFAULT NULL,
+  `send_email` datetime DEFAULT NULL,
+  `email_address` varchar(120) DEFAULT NULL,
+  `document_date` datetime DEFAULT NULL,
+  `price_include_tax` int(4) DEFAULT 0,
+  `department_id` bigint(20) DEFAULT 0,
+  `purchase_request_id` bigint(20) DEFAULT 0,
+  `created_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`purchase_id`),
+  UNIQUE KEY `XPKpos_purchase` (`purchase_id`),
+  KEY `check_order` (`location_id`,`status`,`purchase_id`),
+  KEY `number` (`number`),
+  KEY `vendor` (`vendor_id`),
+  KEY `purch_date` (`purch_date`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_purchase_item`
+--
+
+DROP TABLE IF EXISTS `pos_purchase_item`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_purchase_item` (
+  `purchase_id` bigint(20) DEFAULT NULL,
+  `purchase_item_id` bigint(20) NOT NULL DEFAULT 0,
+  `item_master_id` bigint(20) DEFAULT 0,
+  `qty` decimal(10,2) DEFAULT 0.00,
+  `total_amount` decimal(22,2) DEFAULT 0.00,
+  `amount` decimal(22,2) DEFAULT 0.00,
+  `discount_amount` decimal(10,2) DEFAULT 0.00,
+  `delivery_date` datetime DEFAULT NULL,
+  `purchase_request_item_id` bigint(20) DEFAULT 0,
+  `uom_id` bigint(20) DEFAULT 0,
+  `status` varchar(45) DEFAULT 'OPEN',
+  `company_id` bigint(20) DEFAULT 0,
+  `last_dis_percent` decimal(22,2) DEFAULT 0.00,
+  `reg_dis_val` decimal(22,2) DEFAULT 0.00,
+  `reg_dis_percent` decimal(22,2) DEFAULT 0.00,
+  `qty_purchase` decimal(22,2) DEFAULT 0.00,
+  `uom_purchase_id` bigint(20) DEFAULT 0,
+  `item_vendor_code` varchar(35) DEFAULT NULL,
+  `is_bonus` int(4) DEFAULT 0,
+  `qty_order` decimal(22,2) DEFAULT 0.00,
+  `days_coverage` decimal(22,2) DEFAULT 0.00,
+  `note` varchar(240) DEFAULT NULL,
+  `dis_1_val` decimal(22,2) DEFAULT 0.00,
+  `dis_2_val` decimal(22,2) DEFAULT 0.00,
+  `dis_3_val` decimal(22,2) DEFAULT 0.00,
+  `dis_4_val` decimal(22,2) DEFAULT 0.00,
+  `dis_1_percent` decimal(22,2) DEFAULT 0.00,
+  `dis_2_percent` decimal(22,2) DEFAULT 0.00,
+  `dis_3_percent` decimal(22,2) DEFAULT 0.00,
+  `dis_4_percent` decimal(22,2) DEFAULT 0.00,
+  PRIMARY KEY (`purchase_item_id`),
+  UNIQUE KEY `XPKpos_purchase_item` (`purchase_item_id`),
+  KEY `check_order2` (`item_master_id`,`purchase_id`),
+  KEY `list_purchase` (`purchase_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_purchase_item_wip`
+--
+
+DROP TABLE IF EXISTS `pos_purchase_item_wip`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_purchase_item_wip` (
+  `purchase_id` bigint(20) DEFAULT NULL,
+  `purchase_item_wip_id` bigint(20) NOT NULL DEFAULT 0,
+  `item_master_id` bigint(20) DEFAULT 0,
+  `qty` decimal(10,2) DEFAULT 0.00,
+  `total_amount` decimal(22,2) DEFAULT 0.00,
+  `amount` decimal(22,2) DEFAULT 0.00,
+  `discount_amount` decimal(10,2) DEFAULT 0.00,
+  `delivery_date` datetime DEFAULT NULL,
+  `purchase_request_item_id` bigint(20) DEFAULT 0,
+  `uom_id` bigint(20) DEFAULT 0,
+  `status` varchar(45) DEFAULT 'OPEN',
+  `company_id` bigint(20) DEFAULT 0,
+  `last_dis_percent` decimal(22,2) DEFAULT 0.00,
+  `reg_dis_val` decimal(22,2) DEFAULT 0.00,
+  `reg_dis_percent` decimal(22,2) DEFAULT 0.00,
+  `qty_purchase` decimal(22,2) DEFAULT 0.00,
+  `uom_purchase_id` bigint(20) DEFAULT 0,
+  `item_vendor_code` varchar(35) DEFAULT NULL,
+  `is_bonus` int(4) DEFAULT 0,
+  `qty_order` decimal(22,2) DEFAULT 0.00,
+  `days_coverage` decimal(22,2) DEFAULT 0.00,
+  `note` varchar(240) DEFAULT NULL,
+  `dis_1_val` decimal(22,2) DEFAULT 0.00,
+  `dis_2_val` decimal(22,2) DEFAULT 0.00,
+  `dis_3_val` decimal(22,2) DEFAULT 0.00,
+  `dis_4_val` decimal(22,2) DEFAULT 0.00,
+  `dis_1_percent` decimal(22,2) DEFAULT 0.00,
+  `dis_2_percent` decimal(22,2) DEFAULT 0.00,
+  `dis_3_percent` decimal(22,2) DEFAULT 0.00,
+  `dis_4_percent` decimal(22,2) DEFAULT 0.00,
+  `cogs` decimal(22,2) DEFAULT 0.00,
+  PRIMARY KEY (`purchase_item_wip_id`),
+  UNIQUE KEY `XPKpos_purchase_item_wip` (`purchase_item_wip_id`),
+  KEY `check_order2` (`item_master_id`,`purchase_id`),
+  KEY `list_purchase` (`purchase_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_purchase_request`
+--
+
+DROP TABLE IF EXISTS `pos_purchase_request`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_purchase_request` (
+  `purchase_request_id` bigint(20) NOT NULL DEFAULT 0,
+  `date` datetime DEFAULT NULL,
+  `approval_1` bigint(20) DEFAULT 0,
+  `approval_2` bigint(20) DEFAULT 0,
+  `approval_3` bigint(20) DEFAULT 0,
+  `status` varchar(20) DEFAULT NULL,
+  `user_id` bigint(20) DEFAULT 0,
+  `note` text DEFAULT NULL,
+  `number` varchar(20) DEFAULT NULL,
+  `counter` int(11) DEFAULT NULL,
+  `department_id` bigint(20) DEFAULT 0,
+  `prefix_number` varchar(20) DEFAULT NULL,
+  `closed_reason` varchar(220) DEFAULT NULL,
+  `approval_1_date` datetime DEFAULT NULL,
+  `approval_2_date` datetime DEFAULT NULL,
+  `approval_3_date` datetime DEFAULT NULL,
+  `company_id` bigint(20) DEFAULT 0,
+  `location_id` bigint(20) DEFAULT 0,
+  `created_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`purchase_request_id`),
+  UNIQUE KEY `XPKpos_purchase_request` (`purchase_request_id`),
+  UNIQUE KEY `uniqNumber` (`number`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_purchase_request_item`
+--
+
+DROP TABLE IF EXISTS `pos_purchase_request_item`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_purchase_request_item` (
+  `purchase_request_item_id` bigint(20) NOT NULL DEFAULT 0,
+  `purchase_request_id` bigint(20) DEFAULT 0,
+  `item_master_id` bigint(20) DEFAULT 0,
+  `qty` decimal(22,2) DEFAULT 0.00,
+  `uom_id` bigint(20) DEFAULT 0,
+  `status` varchar(20) DEFAULT NULL,
+  `item_status` varchar(20) DEFAULT '0',
+  `process_qty` decimal(22,2) unsigned DEFAULT 0.00,
+  `company_id` bigint(20) DEFAULT 0,
+  `price` decimal(22,2) DEFAULT 0.00,
+  PRIMARY KEY (`purchase_request_item_id`),
+  UNIQUE KEY `XPKpos_purchase_request_item` (`purchase_request_item_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_receive`
+--
+
+DROP TABLE IF EXISTS `pos_receive`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_receive` (
+  `receive_id` bigint(20) NOT NULL DEFAULT 0,
+  `approval_1` bigint(20) DEFAULT NULL,
+  `approval_2` bigint(20) DEFAULT NULL,
+  `approval_3` bigint(20) DEFAULT NULL,
+  `status` varchar(20) DEFAULT NULL,
+  `note` text DEFAULT NULL,
+  `include_tax` int(11) DEFAULT NULL,
+  `total_tax` decimal(25,2) DEFAULT NULL,
+  `total_amount` decimal(25,2) DEFAULT NULL,
+  `tax_percent` decimal(10,2) DEFAULT NULL,
+  `discount_percent` decimal(10,2) DEFAULT NULL,
+  `discount_total` decimal(25,2) DEFAULT NULL,
+  `payment_type` varchar(20) DEFAULT NULL,
+  `location_id` bigint(20) DEFAULT NULL,
+  `user_id` bigint(20) DEFAULT NULL,
+  `number` varchar(20) DEFAULT NULL,
+  `counter` int(11) DEFAULT NULL,
+  `vendor_id` bigint(20) DEFAULT NULL,
+  `date` datetime DEFAULT NULL,
+  `currency_id` bigint(20) DEFAULT NULL,
+  `prefix_number` varchar(20) DEFAULT NULL,
+  `closed_reason` varchar(220) DEFAULT NULL,
+  `approval_1_date` datetime DEFAULT NULL,
+  `approval_2_date` datetime DEFAULT NULL,
+  `approval_3_date` datetime DEFAULT NULL,
+  `purchase_id` bigint(20) DEFAULT 0,
+  `due_date` date DEFAULT NULL,
+  `payment_amount` decimal(10,2) DEFAULT 0.00,
+  `invoice_number` varchar(45) DEFAULT NULL,
+  `do_number` varchar(45) DEFAULT NULL,
+  `payment_status` int(11) DEFAULT 0,
+  `unit_usaha_id` bigint(20) DEFAULT 0,
+  `type` int(10) unsigned NOT NULL DEFAULT 0,
+  `company_id` bigint(20) DEFAULT NULL,
+  `period_id` bigint(20) DEFAULT NULL,
+  `coa_id` bigint(20) DEFAULT 0,
+  `type_ap` int(11) DEFAULT 0,
+  `payment_status_posted` int(11) DEFAULT 0,
+  `no_pajak` varchar(45) NOT NULL DEFAULT '''',
+  `type_inc` int(11) NOT NULL DEFAULT 0,
+  `reference_id` bigint(20) unsigned NOT NULL DEFAULT 0,
+  `bank_vendor_id` bigint(20) DEFAULT 0,
+  `price_include_tax` int(4) DEFAULT 0,
+  `rate` decimal(22,2) DEFAULT 0.00,
+  `created_at` datetime DEFAULT NULL,
+  `ref_number` varchar(45) DEFAULT '',
+  `last_post_date` datetime DEFAULT NULL,
+  PRIMARY KEY (`receive_id`),
+  UNIQUE KEY `XPKpos_receive` (`receive_id`),
+  UNIQUE KEY `Index_6` (`number`),
+  KEY `payment_status_posted` (`payment_status_posted`),
+  KEY `type` (`type`),
+  KEY `location_id` (`location_id`),
+  KEY `DATE` (`date`),
+  KEY `vendor_id` (`vendor_id`),
+  KEY `STATUS` (`status`),
+  KEY `type_ap` (`type_ap`),
+  KEY `number` (`number`),
+  KEY `reference_id` (`reference_id`),
+  KEY `approval_1` (`approval_1`),
+  KEY `approval_2` (`approval_2`),
+  KEY `approval_3` (`approval_3`),
+  KEY `total_tax` (`total_tax`),
+  KEY `total_amount` (`total_amount`),
+  KEY `tax_percent` (`tax_percent`),
+  KEY `discount_percent` (`discount_percent`),
+  KEY `payment_type` (`payment_type`),
+  KEY `user_id` (`user_id`),
+  KEY `approval_1_date` (`approval_1_date`),
+  KEY `approval_2_date` (`approval_2_date`),
+  KEY `approval_3_date` (`approval_3_date`),
+  KEY `purchase_id` (`purchase_id`),
+  KEY `due_date` (`due_date`),
+  KEY `invoice_number` (`invoice_number`),
+  KEY `do_number` (`do_number`),
+  KEY `payment_status` (`payment_status`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_receive_item`
+--
+
+DROP TABLE IF EXISTS `pos_receive_item`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_receive_item` (
+  `receive_item_id` bigint(20) NOT NULL DEFAULT 0,
+  `item_master_id` bigint(20) DEFAULT 0,
+  `qty` decimal(10,2) DEFAULT 0.00,
+  `total_amount` decimal(25,2) DEFAULT 0.00,
+  `amount` decimal(25,2) DEFAULT 0.00,
+  `discount_amount` decimal(10,2) DEFAULT 0.00,
+  `delivery_date` datetime DEFAULT NULL,
+  `uom_id` bigint(20) DEFAULT 0,
+  `receive_id` bigint(20) DEFAULT 0,
+  `purchase_item_id` bigint(20) DEFAULT 0,
+  `expired_date` date DEFAULT NULL,
+  `status` varchar(45) DEFAULT 'DRAFT',
+  `ap_coa_id` bigint(20) DEFAULT 0,
+  `type` int(10) unsigned DEFAULT 0,
+  `company_id` bigint(20) DEFAULT 0,
+  `is_bonus` int(10) unsigned DEFAULT 0,
+  `memo` varchar(120) DEFAULT NULL,
+  `price_import` decimal(25,2) NOT NULL DEFAULT 0.00,
+  `transport` decimal(25,2) NOT NULL DEFAULT 0.00,
+  `bea` decimal(25,2) NOT NULL DEFAULT 0.00,
+  `komisi` decimal(25,2) NOT NULL DEFAULT 0.00,
+  `lain_lain` decimal(25,2) NOT NULL DEFAULT 0.00,
+  `segment1_id` bigint(20) NOT NULL DEFAULT 0,
+  `conv_unit` decimal(22,2) NOT NULL DEFAULT 1.00,
+  `dis_1_percent` decimal(22,2) NOT NULL DEFAULT 0.00,
+  `dis_1_val` decimal(22,2) NOT NULL DEFAULT 0.00,
+  `dis_2_percent` decimal(22,2) NOT NULL DEFAULT 0.00,
+  `dis_2_val` decimal(22,2) NOT NULL DEFAULT 0.00,
+  `dis_3_percent` decimal(22,2) NOT NULL DEFAULT 0.00,
+  `dis_3_val` decimal(22,2) NOT NULL DEFAULT 0.00,
+  `dis_4_percent` decimal(22,2) NOT NULL DEFAULT 0.00,
+  `dis_4_val` decimal(22,2) NOT NULL DEFAULT 0.00,
+  `uom_purchase_id` bigint(20) NOT NULL DEFAULT 0,
+  `qty_purchase` decimal(22,2) NOT NULL DEFAULT 0.00,
+  `expired_check_status` int(2) DEFAULT 0,
+  `expired_check_id` bigint(20) DEFAULT 0,
+  `expired_check_date` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`receive_item_id`),
+  UNIQUE KEY `XPKpos_receive_item` (`receive_item_id`),
+  KEY `segment1_id` (`segment1_id`),
+  KEY `receive_id` (`receive_id`),
+  KEY `item_master_id` (`item_master_id`),
+  KEY `uom_id` (`uom_id`),
+  KEY `is_bonus` (`is_bonus`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_receive_item_wip`
+--
+
+DROP TABLE IF EXISTS `pos_receive_item_wip`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_receive_item_wip` (
+  `receive_item_wip_id` bigint(20) NOT NULL DEFAULT 0,
+  `item_master_id` bigint(20) DEFAULT 0,
+  `qty` decimal(10,2) DEFAULT 0.00,
+  `total_amount` decimal(25,2) DEFAULT 0.00,
+  `amount` decimal(25,2) DEFAULT 0.00,
+  `discount_amount` decimal(10,2) DEFAULT 0.00,
+  `delivery_date` datetime DEFAULT NULL,
+  `uom_id` bigint(20) DEFAULT 0,
+  `receive_id` bigint(20) DEFAULT 0,
+  `purchase_item_wip_id` bigint(20) DEFAULT 0,
+  `expired_date` date DEFAULT NULL,
+  `status` varchar(45) DEFAULT 'DRAFT',
+  `ap_coa_id` bigint(20) DEFAULT 0,
+  `type` int(10) unsigned DEFAULT 0,
+  `company_id` bigint(20) DEFAULT 0,
+  `is_bonus` int(10) unsigned DEFAULT 0,
+  `memo` varchar(120) DEFAULT NULL,
+  `price_import` decimal(25,2) NOT NULL DEFAULT 0.00,
+  `transport` decimal(25,2) NOT NULL DEFAULT 0.00,
+  `bea` decimal(25,2) NOT NULL DEFAULT 0.00,
+  `komisi` decimal(25,2) NOT NULL DEFAULT 0.00,
+  `lain_lain` decimal(25,2) NOT NULL DEFAULT 0.00,
+  `segment1_id` bigint(20) NOT NULL DEFAULT 0,
+  `conv_unit` decimal(22,2) NOT NULL DEFAULT 1.00,
+  `dis_1_percent` decimal(22,2) NOT NULL DEFAULT 0.00,
+  `dis_1_val` decimal(22,2) NOT NULL DEFAULT 0.00,
+  `dis_2_percent` decimal(22,2) NOT NULL DEFAULT 0.00,
+  `dis_2_val` decimal(22,2) NOT NULL DEFAULT 0.00,
+  `dis_3_percent` decimal(22,2) NOT NULL DEFAULT 0.00,
+  `dis_3_val` decimal(22,2) NOT NULL DEFAULT 0.00,
+  `dis_4_percent` decimal(22,2) NOT NULL DEFAULT 0.00,
+  `dis_4_val` decimal(22,2) NOT NULL DEFAULT 0.00,
+  `uom_purchase_id` bigint(20) NOT NULL DEFAULT 0,
+  `qty_purchase` decimal(22,2) NOT NULL DEFAULT 0.00,
+  `cogs` decimal(22,2) NOT NULL DEFAULT 0.00,
+  PRIMARY KEY (`receive_item_wip_id`),
+  UNIQUE KEY `XPKpos_receive_item_wip` (`receive_item_wip_id`),
+  KEY `segment1_id` (`segment1_id`),
+  KEY `receive_id` (`receive_id`),
+  KEY `item_master_id` (`item_master_id`),
+  KEY `uom_id` (`uom_id`),
+  KEY `is_bonus` (`is_bonus`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_recipe`
+--
+
+DROP TABLE IF EXISTS `pos_recipe`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_recipe` (
+  `recipe_id` bigint(20) NOT NULL DEFAULT 0,
+  `item_master_id` bigint(20) DEFAULT 0,
+  `item_recipe_id` bigint(20) DEFAULT 0,
+  `qty` decimal(22,3) DEFAULT 0.000,
+  `uom_id` bigint(20) DEFAULT 0,
+  `cost` decimal(22,2) DEFAULT 0.00,
+  `type` varchar(100) DEFAULT NULL,
+  `last_update` datetime DEFAULT NULL,
+  `description` varchar(150) DEFAULT NULL,
+  `company_id` bigint(20) DEFAULT 0,
+  `uom_recipe_id` bigint(20) DEFAULT 0,
+  `conversi_recipe_qty` decimal(22,3) DEFAULT 0.000,
+  `qty_recipe` decimal(22,3) DEFAULT 0.000,
+  `last_update_by_id` bigint(20) DEFAULT 0,
+  PRIMARY KEY (`recipe_id`),
+  UNIQUE KEY `uniwKey` (`item_master_id`,`item_recipe_id`),
+  KEY `item_master_id` (`item_master_id`),
+  KEY `item_recipe_id` (`item_recipe_id`),
+  CONSTRAINT `FKdx32xoskytirs4esd4g9r2t7k` FOREIGN KEY (`item_master_id`) REFERENCES `pos_item_master` (`item_master_id`),
+  CONSTRAINT `FKlnn5wr1lqimguwi48indh2jci` FOREIGN KEY (`item_recipe_id`) REFERENCES `pos_item_master` (`item_master_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_registrasi`
+--
+
+DROP TABLE IF EXISTS `pos_registrasi`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_registrasi` (
+  `reg_id` bigint(20) NOT NULL,
+  `number` varchar(15) DEFAULT NULL,
+  `customer_id` bigint(20) DEFAULT NULL,
+  `reg_date` datetime DEFAULT NULL,
+  `type_rujukan` varchar(10) DEFAULT NULL,
+  `tempat_rujukan` varchar(20) DEFAULT NULL,
+  `keterangan_rujukan` varchar(250) DEFAULT NULL,
+  `fisioterapi_id` bigint(20) DEFAULT NULL,
+  `keluhan_utama` varchar(250) DEFAULT NULL,
+  `riwayat_sekarang` varchar(250) DEFAULT NULL,
+  `riwayat_dahulu` varchar(250) DEFAULT NULL,
+  `penyakit_id` bigint(20) DEFAULT NULL,
+  `pemeriksaan_fisik` varchar(250) DEFAULT NULL,
+  `penilaian_nyeri` varchar(150) DEFAULT NULL,
+  `pemeriksaan_khusus` varchar(250) DEFAULT NULL,
+  `pengukuran_khusus` varchar(250) DEFAULT NULL,
+  `data_penunjang` varchar(250) DEFAULT NULL,
+  `kemampuan_fungsional` varchar(250) DEFAULT NULL,
+  `resiko_jatuh` varchar(250) DEFAULT NULL,
+  `diagnosis_fisioterapi` varchar(250) DEFAULT NULL,
+  `rencana_fisioterapi` varchar(250) DEFAULT NULL,
+  `counter` int(11) DEFAULT NULL,
+  `number_prefix` varchar(120) DEFAULT NULL,
+  `status` varchar(20) DEFAULT NULL,
+  `perawat_id` bigint(20) DEFAULT 0,
+  PRIMARY KEY (`reg_id`),
+  KEY `number` (`number`),
+  KEY `customer_id` (`customer_id`),
+  KEY `fisioterapi_id` (`fisioterapi_id`),
+  KEY `penyakit_id` (`penyakit_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_repack`
+--
+
+DROP TABLE IF EXISTS `pos_repack`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_repack` (
+  `repack_id` bigint(20) NOT NULL DEFAULT 0,
+  `date` datetime DEFAULT NULL,
+  `counter` int(11) DEFAULT NULL,
+  `number` varchar(45) DEFAULT NULL,
+  `note` text DEFAULT NULL,
+  `approval_1` bigint(20) DEFAULT NULL,
+  `approval_2` bigint(20) DEFAULT NULL,
+  `approval_3` bigint(20) DEFAULT NULL,
+  `status` varchar(45) DEFAULT NULL,
+  `location_id` bigint(20) DEFAULT NULL,
+  `user_id` bigint(20) DEFAULT NULL,
+  `prefix_number` varchar(20) DEFAULT NULL,
+  `posted_status` int(11) DEFAULT 0,
+  `posted_by_id` bigint(20) DEFAULT 0,
+  `posted_date` date DEFAULT NULL,
+  `effective_date` datetime DEFAULT NULL,
+  `cancel_date` datetime DEFAULT NULL,
+  `create_date` datetime DEFAULT NULL,
+  PRIMARY KEY (`repack_id`),
+  UNIQUE KEY `uniq_number` (`number`),
+  KEY `location_id` (`location_id`),
+  KEY `STATUS` (`status`),
+  KEY `DATE` (`date`),
+  KEY `number` (`number`),
+  KEY `approval_1` (`approval_1`),
+  KEY `approval_2` (`approval_2`),
+  KEY `approval_3` (`approval_3`),
+  KEY `user_id` (`user_id`),
+  KEY `effective_date` (`effective_date`),
+  KEY `posted_status` (`posted_status`),
+  KEY `posted_by_id` (`posted_by_id`),
+  KEY `posted_date` (`posted_date`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_repack_composition`
+--
+
+DROP TABLE IF EXISTS `pos_repack_composition`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_repack_composition` (
+  `repack_composition_id` bigint(20) NOT NULL DEFAULT 0,
+  `item_master_id` bigint(20) DEFAULT 0,
+  `item_master_repack_id` bigint(20) DEFAULT 0,
+  `qty` decimal(22,3) DEFAULT 0.000,
+  `uom_id` bigint(20) DEFAULT 0,
+  `description` varchar(150) DEFAULT NULL,
+  `last_update` datetime DEFAULT NULL,
+  `user_id` bigint(20) DEFAULT 0,
+  `repack_composition_main_id` bigint(20) DEFAULT 0,
+  `conversi_recipe_qty` decimal(22,3) DEFAULT 0.000,
+  `uom_recipe_id` bigint(20) DEFAULT 0,
+  `qty_recipe` decimal(22,3) DEFAULT 0.000,
+  PRIMARY KEY (`repack_composition_id`),
+  UNIQUE KEY `uniqKey` (`item_master_id`,`item_master_repack_id`),
+  KEY `itemMasterId` (`item_master_id`),
+  KEY `itemRepackId` (`item_master_repack_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_repack_composition_main`
+--
+
+DROP TABLE IF EXISTS `pos_repack_composition_main`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_repack_composition_main` (
+  `repack_composition_main_id` bigint(20) NOT NULL DEFAULT 0,
+  `item_master_id` bigint(20) DEFAULT 0,
+  `qty` decimal(22,3) DEFAULT 0.000,
+  PRIMARY KEY (`repack_composition_main_id`),
+  UNIQUE KEY `uniqKey` (`item_master_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_repack_item`
+--
+
+DROP TABLE IF EXISTS `pos_repack_item`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_repack_item` (
+  `repack_item_id` bigint(20) NOT NULL DEFAULT 0,
+  `repack_id` bigint(20) DEFAULT 0,
+  `item_master_id` bigint(20) DEFAULT 0,
+  `qty` decimal(20,3) DEFAULT 0.000,
+  `type` int(11) DEFAULT 0,
+  `cogs` decimal(20,5) DEFAULT 0.00000,
+  `qty_stock` decimal(22,3) DEFAULT 0.000,
+  `percent_cogs` decimal(22,2) DEFAULT 0.00,
+  PRIMARY KEY (`repack_item_id`),
+  KEY `repack_id` (`repack_id`),
+  KEY `item_master_id` (`item_master_id`),
+  KEY `TYPE` (`type`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_retur`
+--
+
+DROP TABLE IF EXISTS `pos_retur`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_retur` (
+  `retur_id` bigint(20) NOT NULL DEFAULT 0,
+  `approval_1` bigint(20) DEFAULT 0,
+  `approval_2` bigint(20) DEFAULT 0,
+  `approval_3` bigint(20) DEFAULT 0,
+  `status` varchar(20) DEFAULT NULL,
+  `note` text DEFAULT NULL,
+  `include_tax` int(11) DEFAULT 0,
+  `total_tax` decimal(22,2) DEFAULT 0.00,
+  `total_amount` decimal(22,2) DEFAULT 0.00,
+  `tax_percent` decimal(22,2) DEFAULT 0.00,
+  `discount_percent` decimal(22,2) DEFAULT 0.00,
+  `discount_total` decimal(22,2) DEFAULT 0.00,
+  `payment_type` varchar(20) DEFAULT '0',
+  `location_id` bigint(20) DEFAULT 0,
+  `user_id` bigint(20) DEFAULT 0,
+  `number` varchar(20) DEFAULT NULL,
+  `counter` int(11) DEFAULT 0,
+  `vendor_id` bigint(20) DEFAULT 0,
+  `date` datetime DEFAULT NULL,
+  `currency_id` bigint(20) DEFAULT 0,
+  `prefix_number` varchar(20) DEFAULT NULL,
+  `closed_reason` varchar(220) DEFAULT NULL,
+  `approval_1_date` datetime DEFAULT NULL,
+  `approval_2_date` datetime DEFAULT NULL,
+  `approval_3_date` datetime DEFAULT NULL,
+  `purchase_id` bigint(20) DEFAULT 0,
+  `due_date` date DEFAULT NULL,
+  `payment_amount` decimal(10,2) DEFAULT 0.00,
+  `invoice_number` varchar(45) DEFAULT NULL,
+  `do_number` varchar(45) DEFAULT NULL,
+  `receive_id` bigint(20) unsigned DEFAULT 0,
+  `type` int(10) unsigned DEFAULT 0,
+  `company_id` bigint(20) DEFAULT 0,
+  `price_include_tax` int(4) DEFAULT 0,
+  `rate` decimal(10,2) DEFAULT 0.00,
+  `created_at` datetime DEFAULT NULL,
+  `ref_number` varchar(45) DEFAULT '',
+  `last_post_date` datetime DEFAULT NULL,
+  PRIMARY KEY (`retur_id`),
+  UNIQUE KEY `XPKpos_retur` (`retur_id`),
+  UNIQUE KEY `unik` (`number`),
+  KEY `cek_retur` (`status`,`date`),
+  KEY `get` (`location_id`,`status`,`retur_id`),
+  KEY `locid` (`location_id`),
+  KEY `sts` (`status`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_retur_item`
+--
+
+DROP TABLE IF EXISTS `pos_retur_item`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_retur_item` (
+  `retur_item_id` bigint(20) NOT NULL DEFAULT 0,
+  `item_master_id` bigint(20) DEFAULT 0,
+  `qty` decimal(22,2) DEFAULT 0.00,
+  `total_amount` decimal(22,2) DEFAULT 0.00,
+  `amount` decimal(22,2) DEFAULT 0.00,
+  `discount_amount` decimal(10,2) DEFAULT 0.00,
+  `delivery_date` datetime DEFAULT NULL,
+  `uom_id` bigint(20) DEFAULT 0,
+  `retur_id` bigint(20) DEFAULT 0,
+  `purchase_item_id` bigint(20) DEFAULT 0,
+  `expired_date` date DEFAULT NULL,
+  `status` varchar(45) DEFAULT 'DRAFT',
+  `receive_item_id` bigint(20) unsigned DEFAULT 0,
+  `company_id` bigint(20) DEFAULT 0,
+  `conv_unit` decimal(22,2) DEFAULT 1.00,
+  `dis_1_percent` decimal(22,2) DEFAULT 0.00,
+  `dis_1_val` decimal(22,2) DEFAULT 0.00,
+  `dis_2_percent` decimal(22,2) DEFAULT 0.00,
+  `dis_2_val` decimal(22,2) DEFAULT 0.00,
+  `dis_3_percent` decimal(22,2) DEFAULT 0.00,
+  `dis_3_val` decimal(22,2) DEFAULT 0.00,
+  `dis_4_percent` decimal(22,2) DEFAULT 0.00,
+  `dis_4_val` decimal(22,2) DEFAULT 0.00,
+  `uom_purchase_id` bigint(20) DEFAULT 0,
+  `qty_purchase` decimal(22,2) DEFAULT 0.00,
+  PRIMARY KEY (`retur_item_id`),
+  UNIQUE KEY `XPKpos_retur_item` (`retur_item_id`),
+  KEY `get` (`retur_id`),
+  KEY `get2` (`retur_id`,`item_master_id`),
+  KEY `rtid` (`retur_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_return_payment`
+--
+
+DROP TABLE IF EXISTS `pos_return_payment`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_return_payment` (
+  `RETURN_PAYMENT_ID` bigint(20) NOT NULL DEFAULT 0,
+  `SALES_ID` bigint(20) DEFAULT NULL,
+  `CURRENCY_ID` bigint(20) DEFAULT NULL,
+  `AMOUNT` double DEFAULT NULL,
+  `COMPANY_ID` bigint(20) DEFAULT NULL,
+  `type` int(3) DEFAULT 0,
+  PRIMARY KEY (`RETURN_PAYMENT_ID`),
+  KEY `SALES_ID` (`SALES_ID`),
+  KEY `CURRENCY_ID` (`CURRENCY_ID`),
+  CONSTRAINT `FKkann2h953o2wsfpa8esbrbe49` FOREIGN KEY (`SALES_ID`) REFERENCES `pos_sales` (`sales_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_return_payment_transaction`
+--
+
+DROP TABLE IF EXISTS `pos_return_payment_transaction`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_return_payment_transaction` (
+  `RETURN_PAYMENT_TRANSACTION_ID` bigint(20) NOT NULL DEFAULT 0,
+  `SALES_TRANSACTION_ID` bigint(20) DEFAULT NULL,
+  `CURRENCY_ID` bigint(20) DEFAULT NULL,
+  `AMOUNT` double DEFAULT NULL,
+  `COMPANY_ID` bigint(20) DEFAULT NULL,
+  `TYPE` int(3) DEFAULT 0,
+  `STS_UPLOAD` int(4) DEFAULT 0,
+  PRIMARY KEY (`RETURN_PAYMENT_TRANSACTION_ID`),
+  KEY `SALES_TRANSACTION_ID` (`SALES_TRANSACTION_ID`),
+  KEY `CURRENCY_ID` (`CURRENCY_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_sales`
+--
+
+DROP TABLE IF EXISTS `pos_sales`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_sales` (
+  `sales_id` bigint(20) NOT NULL DEFAULT 0,
+  `date` datetime DEFAULT NULL,
+  `number` varchar(120) DEFAULT NULL,
+  `number_prefix` varchar(20) DEFAULT NULL,
+  `counter` int(11) DEFAULT NULL,
+  `name` varchar(220) DEFAULT NULL,
+  `customer_id` bigint(20) DEFAULT NULL,
+  `customer_pic` varchar(120) DEFAULT NULL,
+  `customer_pic_phone` varchar(30) DEFAULT NULL,
+  `customer_address` varchar(220) DEFAULT NULL,
+  `start_date` date DEFAULT NULL,
+  `end_date` date DEFAULT NULL,
+  `customer_pic_position` varchar(220) DEFAULT NULL,
+  `employee_id` bigint(20) DEFAULT NULL,
+  `user_id` bigint(20) DEFAULT NULL,
+  `employee_hp` varchar(30) DEFAULT NULL,
+  `description` text DEFAULT NULL,
+  `status` int(11) DEFAULT 0,
+  `amount` decimal(25,2) DEFAULT 0.00,
+  `currency_id` bigint(20) DEFAULT 0,
+  `company_id` bigint(20) DEFAULT 0,
+  `category_id` bigint(20) DEFAULT 0,
+  `discount_percent` double DEFAULT 0,
+  `discount_amount` double DEFAULT 0,
+  `vat` int(11) DEFAULT 0,
+  `discount` int(11) DEFAULT 0,
+  `warranty_status` int(11) DEFAULT 0,
+  `warranty_date` date DEFAULT NULL,
+  `warranty_receive` varchar(100) DEFAULT NULL,
+  `manual_status` int(11) DEFAULT 0,
+  `manual_date` date DEFAULT NULL,
+  `manual_receive` varchar(100) DEFAULT NULL,
+  `note_closing` text DEFAULT NULL,
+  `booking_rate` double(25,2) DEFAULT 0.00,
+  `exchange_amount` double(25,2) DEFAULT 0.00,
+  `proposal_id` bigint(20) DEFAULT 0,
+  `unit_usaha_id` bigint(20) DEFAULT 0,
+  `vat_percent` decimal(10,2) DEFAULT 0.00,
+  `vat_amount` decimal(25,2) DEFAULT 0.00,
+  `type` int(11) DEFAULT 0,
+  `pph_type` int(11) DEFAULT 0,
+  `pph_percent` decimal(10,2) DEFAULT 0.00,
+  `pph_amount` decimal(25,2) DEFAULT 0.00,
+  `marketing_id` bigint(20) unsigned DEFAULT NULL,
+  `payment_status` int(11) DEFAULT NULL,
+  `sales_type` int(10) unsigned DEFAULT NULL,
+  `location_id` bigint(20) DEFAULT NULL,
+  `cash_cashier_id` bigint(20) DEFAULT NULL,
+  `shift_id` bigint(20) DEFAULT NULL,
+  `cash_master_id` bigint(20) DEFAULT NULL,
+  `posted_status` int(11) DEFAULT 0,
+  `posted_by_id` bigint(20) DEFAULT 0,
+  `posted_date` datetime DEFAULT NULL,
+  `effective_date` date DEFAULT NULL,
+  `status_stock` int(11) DEFAULT NULL,
+  `sales_retur_id` bigint(20) DEFAULT 0,
+  `global_diskon` decimal(10,2) NOT NULL DEFAULT 0.00,
+  `global_diskon_percent` decimal(10,2) NOT NULL DEFAULT 0.00,
+  `diskon_kartu` double(22,2) DEFAULT 0.00,
+  `biaya_kartu` decimal(22,2) NOT NULL DEFAULT 0.00,
+  `service_amount` decimal(22,2) DEFAULT 0.00,
+  `service_percent` decimal(22,2) DEFAULT 0.00,
+  `spg_id` bigint(20) DEFAULT 0,
+  `sopir_id` bigint(20) DEFAULT 0,
+  `helper_id` bigint(20) DEFAULT 0,
+  `table_id` bigint(20) DEFAULT 0,
+  `waitress_id` bigint(20) DEFAULT 0,
+  `jumlah_orang` int(10) DEFAULT 0,
+  `system_doc_number_id` bigint(20) DEFAULT 0,
+  `cancelled_by` bigint(20) DEFAULT 0,
+  `spliter` int(11) DEFAULT 0,
+  `guide_payment_id` bigint(20) DEFAULT 0,
+  `reg_entering_id` bigint(20) DEFAULT 0,
+  `compliment` int(3) DEFAULT 0,
+  `status_open` int(3) DEFAULT 0,
+  `order_status` int(3) DEFAULT 0,
+  `ref_split` bigint(20) DEFAULT 0,
+  `nomer_kendaraan` text DEFAULT NULL,
+  `jatuh_tempo` date DEFAULT NULL,
+  `teknisi_id` bigint(20) DEFAULT 0,
+  `driver_id` bigint(20) DEFAULT 0,
+  `uploaded_date` datetime DEFAULT NULL,
+  `ref_number` varchar(120) DEFAULT '',
+  `rounding` decimal(22,2) DEFAULT 0.00,
+  `country_id` bigint(20) DEFAULT 0,
+  `source_id` bigint(20) DEFAULT 0,
+  PRIMARY KEY (`sales_id`),
+  UNIQUE KEY `numberUniq` (`number`),
+  KEY `DATE` (`date`),
+  KEY `number` (`number`),
+  KEY `customer_id` (`customer_id`),
+  KEY `user_id` (`user_id`),
+  KEY `TYPE` (`type`),
+  KEY `marketing_id` (`marketing_id`),
+  KEY `payment_status` (`payment_status`),
+  KEY `location_id` (`location_id`),
+  KEY `cash_cashier_id` (`cash_cashier_id`),
+  KEY `shift_id` (`shift_id`),
+  KEY `cash_master_id` (`cash_master_id`),
+  KEY `posted_status` (`posted_status`),
+  KEY `posted_by_id` (`posted_by_id`),
+  KEY `posted_date` (`posted_date`),
+  KEY `sales_retur_id` (`sales_retur_id`),
+  KEY `system_doc_number_id` (`system_doc_number_id`),
+  KEY `cancelled_by` (`cancelled_by`),
+  CONSTRAINT `FKb8aefy9js9kc3mfunrfu2tjsn` FOREIGN KEY (`sales_retur_id`) REFERENCES `pos_sales` (`sales_id`),
+  CONSTRAINT `FKowgkmskgu0sr0puihy44o78rb` FOREIGN KEY (`location_id`) REFERENCES `pos_location` (`location_id`),
+  CONSTRAINT `FKqta82m9nk8igjlkx809vfvyf3` FOREIGN KEY (`user_id`) REFERENCES `sysuser` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_sales_cancel`
+--
+
+DROP TABLE IF EXISTS `pos_sales_cancel`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_sales_cancel` (
+  `sales_id` bigint(20) NOT NULL DEFAULT 0,
+  `date` datetime DEFAULT NULL,
+  `number` varchar(120) DEFAULT NULL,
+  `number_prefix` varchar(20) DEFAULT NULL,
+  `counter` int(11) DEFAULT NULL,
+  `name` varchar(220) DEFAULT NULL,
+  `customer_id` bigint(20) DEFAULT NULL,
+  `customer_pic` varchar(120) DEFAULT NULL,
+  `customer_pic_phone` varchar(30) DEFAULT NULL,
+  `customer_address` varchar(220) DEFAULT NULL,
+  `start_date` date DEFAULT NULL,
+  `end_date` date DEFAULT NULL,
+  `customer_pic_position` varchar(220) DEFAULT NULL,
+  `employee_id` bigint(20) DEFAULT NULL,
+  `user_id` bigint(20) DEFAULT NULL,
+  `employee_hp` varchar(30) DEFAULT NULL,
+  `description` text DEFAULT NULL,
+  `status` int(11) DEFAULT 0,
+  `amount` decimal(25,2) DEFAULT 0.00,
+  `currency_id` bigint(20) DEFAULT 0,
+  `company_id` bigint(20) DEFAULT 0,
+  `category_id` bigint(20) DEFAULT 0,
+  `discount_percent` double DEFAULT 0,
+  `discount_amount` double DEFAULT 0,
+  `vat` int(11) DEFAULT 0,
+  `discount` int(11) DEFAULT 0,
+  `warranty_status` int(11) DEFAULT 0,
+  `warranty_date` date DEFAULT NULL,
+  `warranty_receive` varchar(100) DEFAULT NULL,
+  `manual_status` int(11) DEFAULT 0,
+  `manual_date` date DEFAULT NULL,
+  `manual_receive` varchar(100) DEFAULT NULL,
+  `note_closing` text DEFAULT NULL,
+  `booking_rate` double(25,2) DEFAULT 0.00,
+  `exchange_amount` double(25,2) DEFAULT 0.00,
+  `proposal_id` bigint(20) DEFAULT 0,
+  `unit_usaha_id` bigint(20) DEFAULT 0,
+  `vat_percent` decimal(10,2) DEFAULT 0.00,
+  `vat_amount` decimal(25,2) DEFAULT 0.00,
+  `type` int(11) DEFAULT 0,
+  `pph_type` int(11) DEFAULT 0,
+  `pph_percent` decimal(10,2) DEFAULT 0.00,
+  `pph_amount` decimal(25,2) DEFAULT 0.00,
+  `marketing_id` bigint(20) unsigned DEFAULT NULL,
+  `payment_status` int(11) DEFAULT NULL,
+  `sales_type` int(10) unsigned DEFAULT NULL,
+  `location_id` bigint(20) DEFAULT NULL,
+  `cash_cashier_id` bigint(20) DEFAULT NULL,
+  `shift_id` bigint(20) DEFAULT NULL,
+  `cash_master_id` bigint(20) DEFAULT NULL,
+  `posted_status` int(11) DEFAULT 0,
+  `posted_by_id` bigint(20) DEFAULT 0,
+  `posted_date` date DEFAULT NULL,
+  `effective_date` date DEFAULT NULL,
+  `status_stock` int(11) DEFAULT NULL,
+  `sales_retur_id` bigint(20) DEFAULT 0,
+  `global_diskon` decimal(10,2) NOT NULL DEFAULT 0.00,
+  `global_diskon_percent` decimal(10,2) NOT NULL DEFAULT 0.00,
+  `diskon_kartu` double(22,2) DEFAULT 0.00,
+  `biaya_kartu` decimal(22,2) NOT NULL DEFAULT 0.00,
+  `service_amount` decimal(22,2) DEFAULT 0.00,
+  `service_percent` decimal(22,2) DEFAULT 0.00,
+  `spg_id` bigint(20) DEFAULT 0,
+  `sopir_id` bigint(20) DEFAULT 0,
+  `helper_id` bigint(20) DEFAULT 0,
+  `table_id` bigint(20) DEFAULT 0,
+  `waitress_id` bigint(20) DEFAULT 0,
+  `jumlah_orang` int(10) DEFAULT 0,
+  `system_doc_number_id` bigint(20) DEFAULT 0,
+  `cancelled_by` bigint(20) DEFAULT 0,
+  `spliter` int(11) DEFAULT 0,
+  `guide_payment_id` bigint(20) DEFAULT 0,
+  `compliment` int(3) DEFAULT 0,
+  `status_open` int(3) DEFAULT 0,
+  `order_status` int(3) DEFAULT 0,
+  `ref_split` bigint(20) DEFAULT 0,
+  `nomer_kendaraan` text DEFAULT NULL,
+  `jatuh_tempo` date DEFAULT NULL,
+  `teknisi_id` bigint(20) DEFAULT 0,
+  `driver_id` bigint(20) DEFAULT 0,
+  `STS_UPLOAD` int(2) DEFAULT 0,
+  `country_id` bigint(20) DEFAULT NULL,
+  `source_id` bigint(20) DEFAULT NULL,
+  `reg_entering_id` bigint(20) DEFAULT 0,
+  PRIMARY KEY (`sales_id`),
+  UNIQUE KEY `numberUniq` (`number`),
+  KEY `DATE` (`date`),
+  KEY `number` (`number`),
+  KEY `customer_id` (`customer_id`),
+  KEY `user_id` (`user_id`),
+  KEY `TYPE` (`type`),
+  KEY `marketing_id` (`marketing_id`),
+  KEY `payment_status` (`payment_status`),
+  KEY `location_id` (`location_id`),
+  KEY `cash_cashier_id` (`cash_cashier_id`),
+  KEY `shift_id` (`shift_id`),
+  KEY `cash_master_id` (`cash_master_id`),
+  KEY `posted_status` (`posted_status`),
+  KEY `posted_by_id` (`posted_by_id`),
+  KEY `posted_date` (`posted_date`),
+  KEY `sales_retur_id` (`sales_retur_id`),
+  KEY `system_doc_number_id` (`system_doc_number_id`),
+  KEY `cancelled_by` (`cancelled_by`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_sales_detail`
+--
+
+DROP TABLE IF EXISTS `pos_sales_detail`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_sales_detail` (
+  `sales_detail_id` bigint(20) NOT NULL DEFAULT 0,
+  `sales_id` bigint(20) NOT NULL DEFAULT 0,
+  `product_master_id` bigint(20) DEFAULT 0,
+  `squence` int(11) DEFAULT 0,
+  `cogs` decimal(20,2) NOT NULL DEFAULT 0.00,
+  `selling_price` decimal(20,2) DEFAULT 0.00,
+  `status` int(11) DEFAULT 0,
+  `currency_id` bigint(20) DEFAULT 0,
+  `company_id` bigint(20) DEFAULT 0,
+  `qty` decimal(12,3) DEFAULT 0.000,
+  `total` decimal(20,2) NOT NULL DEFAULT 0.00,
+  `discount_percent` decimal(22,2) NOT NULL DEFAULT 0.00,
+  `discount_amount` decimal(22,2) NOT NULL DEFAULT 0.00,
+  `proposal_id` bigint(20) DEFAULT 0,
+  `sales_type` int(10) unsigned DEFAULT 0,
+  `serial_number` varchar(100) DEFAULT NULL,
+  `qty_retur` decimal(22,2) NOT NULL DEFAULT 0.00,
+  `status_komisi` int(10) unsigned NOT NULL DEFAULT 0,
+  `cancelled_by` bigint(20) DEFAULT 0,
+  `order_status` int(4) NOT NULL DEFAULT 0,
+  `uom_id` bigint(20) DEFAULT 0,
+  `conv_qty` decimal(10,2) DEFAULT 0.00,
+  `note` text DEFAULT NULL,
+  `description` varchar(220) DEFAULT NULL,
+  `description_id` bigint(20) NOT NULL DEFAULT 0,
+  `discount_item` decimal(22,2) NOT NULL DEFAULT 0.00,
+  `discount_promo` decimal(22,2) NOT NULL DEFAULT 0.00,
+  `discount_global` decimal(22,2) NOT NULL DEFAULT 0.00,
+  `stockable` int(4) NOT NULL DEFAULT 0,
+  `bom` int(4) NOT NULL DEFAULT 0,
+  `type_order` int(3) DEFAULT 0,
+  `waitress_id` bigint(20) DEFAULT 0,
+  `notif_status` int(3) DEFAULT 0,
+  `dis_1_percent` decimal(12,2) DEFAULT 0.00,
+  `dis_1_val` decimal(12,2) DEFAULT 0.00,
+  `dis_2_percent` decimal(12,2) DEFAULT 0.00,
+  `dis_2_val` decimal(12,2) DEFAULT 0.00,
+  `dis_3_percent` decimal(12,2) DEFAULT 0.00,
+  `dis_3_val` decimal(12,2) DEFAULT 0.00,
+  `short_name` varchar(150) DEFAULT NULL,
+  `tax` decimal(4,2) DEFAULT 0.00,
+  `uom_stock_id` bigint(20) DEFAULT 0,
+  `item_description` varchar(220) DEFAULT '',
+  `STS_UPLOAD` int(1) DEFAULT 0,
+  `rounding` decimal(22,2) DEFAULT 0.00,
+  `sales_detail_retur_id` bigint(20) DEFAULT 0,
+  `is_taxservice` int(2) DEFAULT 0,
+  `service` decimal(22,2) DEFAULT 0.00,
+  PRIMARY KEY (`sales_detail_id`),
+  KEY `sales_id` (`sales_id`),
+  KEY `product_master_id` (`product_master_id`),
+  KEY `company_id` (`company_id`),
+  KEY `status_komisi` (`status_komisi`),
+  KEY `cancelled_by` (`cancelled_by`),
+  KEY `sales_type` (`sales_type`),
+  KEY `FKjj2otyuph5crnj70k33hku5bp` (`sales_detail_retur_id`),
+  CONSTRAINT `FKeobcljultej3qnpl0xedx5lew` FOREIGN KEY (`product_master_id`) REFERENCES `pos_item_master` (`item_master_id`),
+  CONSTRAINT `FKjj2otyuph5crnj70k33hku5bp` FOREIGN KEY (`sales_detail_retur_id`) REFERENCES `pos_sales_detail` (`sales_detail_id`),
+  CONSTRAINT `FKnlgx6c0g82d3jgfhvjrjcxh7t` FOREIGN KEY (`sales_id`) REFERENCES `pos_sales` (`sales_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_sales_detail_cancel`
+--
+
+DROP TABLE IF EXISTS `pos_sales_detail_cancel`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_sales_detail_cancel` (
+  `sales_detail_id` bigint(20) NOT NULL DEFAULT 0,
+  `sales_id` bigint(20) NOT NULL DEFAULT 0,
+  `product_master_id` bigint(20) DEFAULT 0,
+  `squence` int(11) DEFAULT 0,
+  `cogs` decimal(20,2) NOT NULL DEFAULT 0.00,
+  `selling_price` decimal(20,2) DEFAULT 0.00,
+  `status` int(11) DEFAULT 0,
+  `currency_id` bigint(20) DEFAULT 0,
+  `company_id` bigint(20) DEFAULT 0,
+  `qty` decimal(12,3) DEFAULT 0.000,
+  `total` decimal(20,2) NOT NULL DEFAULT 0.00,
+  `discount_percent` decimal(22,2) NOT NULL DEFAULT 0.00,
+  `discount_amount` decimal(22,2) NOT NULL DEFAULT 0.00,
+  `proposal_id` bigint(20) DEFAULT 0,
+  `sales_type` int(10) unsigned DEFAULT 0,
+  `serial_number` varchar(100) DEFAULT NULL,
+  `qty_retur` decimal(22,2) NOT NULL DEFAULT 0.00,
+  `status_komisi` int(10) unsigned NOT NULL DEFAULT 0,
+  `cancelled_by` bigint(20) DEFAULT 0,
+  `order_status` int(4) NOT NULL DEFAULT 0,
+  `uom_id` bigint(20) DEFAULT 0,
+  `conv_qty` decimal(10,2) DEFAULT 0.00,
+  `note` text DEFAULT NULL,
+  `description` varchar(220) DEFAULT NULL,
+  `description_id` bigint(20) NOT NULL DEFAULT 0,
+  `discount_item` decimal(22,2) NOT NULL DEFAULT 0.00,
+  `discount_promo` decimal(22,2) NOT NULL DEFAULT 0.00,
+  `discount_global` decimal(22,2) NOT NULL DEFAULT 0.00,
+  `stockable` int(4) NOT NULL DEFAULT 0,
+  `bom` int(4) NOT NULL DEFAULT 0,
+  `type_order` int(3) DEFAULT 0,
+  `waitress_id` bigint(20) DEFAULT 0,
+  `notif_status` int(3) DEFAULT 0,
+  `dis_1_percent` decimal(12,2) DEFAULT 0.00,
+  `dis_1_val` decimal(12,2) DEFAULT 0.00,
+  `dis_2_percent` decimal(12,2) DEFAULT 0.00,
+  `dis_2_val` decimal(12,2) DEFAULT 0.00,
+  `dis_3_percent` decimal(12,2) DEFAULT 0.00,
+  `dis_3_val` decimal(12,2) DEFAULT 0.00,
+  `short_name` varchar(150) DEFAULT NULL,
+  `tax` decimal(4,2) DEFAULT 0.00,
+  `uom_stock_id` bigint(20) DEFAULT 0,
+  `item_description` varchar(220) DEFAULT '',
+  `STS_UPLOAD` int(2) DEFAULT 0,
+  `rounding` decimal(22,2) DEFAULT 0.00,
+  PRIMARY KEY (`sales_detail_id`),
+  KEY `sales_id` (`sales_id`),
+  KEY `product_master_id` (`product_master_id`),
+  KEY `company_id` (`company_id`),
+  KEY `status_komisi` (`status_komisi`),
+  KEY `cancelled_by` (`cancelled_by`),
+  KEY `sales_type` (`sales_type`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_sales_detail_description`
+--
+
+DROP TABLE IF EXISTS `pos_sales_detail_description`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_sales_detail_description` (
+  `sales_detail_description_id` bigint(20) NOT NULL DEFAULT 0,
+  `sales_id` bigint(20) DEFAULT 0,
+  `sales_detail_id` bigint(20) DEFAULT 0,
+  `item_master_id` bigint(20) DEFAULT 0,
+  `item_description_id` bigint(20) DEFAULT 0,
+  `item_description_type` int(4) DEFAULT 0,
+  `note` tinytext DEFAULT NULL,
+  PRIMARY KEY (`sales_detail_description_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_sales_detail_konsinyasi`
+--
+
+DROP TABLE IF EXISTS `pos_sales_detail_konsinyasi`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_sales_detail_konsinyasi` (
+  `sales_detail_konsinyasi_id` bigint(20) NOT NULL,
+  `sales_id` bigint(20) DEFAULT 0,
+  `sales_detail_id` bigint(20) DEFAULT 0,
+  `vendor_id` bigint(20) DEFAULT 0,
+  `create_date` datetime DEFAULT NULL,
+  `create_id` bigint(20) DEFAULT 0,
+  `referensi_id` bigint(20) DEFAULT 0,
+  PRIMARY KEY (`sales_detail_konsinyasi_id`),
+  UNIQUE KEY `sales_detail_id` (`sales_detail_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_sales_detail_promotion`
+--
+
+DROP TABLE IF EXISTS `pos_sales_detail_promotion`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_sales_detail_promotion` (
+  `sales_detail_promotion_id` bigint(20) NOT NULL DEFAULT 0,
+  `sales_detail_id` bigint(20) DEFAULT 0,
+  `promotion_id` bigint(20) DEFAULT 0,
+  `type` int(4) DEFAULT 0,
+  `discount_percent` decimal(22,2) DEFAULT 0.00,
+  `discount_amount` decimal(22,2) DEFAULT 0.00,
+  `claim_percent` decimal(22,2) DEFAULT 0.00,
+  `claim_amount` decimal(22,2) DEFAULT 0.00,
+  `vendor_id` bigint(20) DEFAULT 0,
+  PRIMARY KEY (`sales_detail_promotion_id`),
+  KEY `sales_detail_id` (`sales_detail_id`),
+  KEY `promotion_id` (`promotion_id`),
+  KEY `type` (`type`),
+  KEY `vendor_id` (`vendor_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_sales_detail_recipe`
+--
+
+DROP TABLE IF EXISTS `pos_sales_detail_recipe`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_sales_detail_recipe` (
+  `sales_detail_recipe_id` bigint(20) NOT NULL DEFAULT 0,
+  `sales_id` bigint(20) NOT NULL DEFAULT 0,
+  `sales_detail_id` bigint(20) NOT NULL DEFAULT 0,
+  `item_master_id` bigint(20) NOT NULL DEFAULT 0,
+  `item_recipe_id` bigint(20) NOT NULL DEFAULT 0,
+  `code` varchar(20) NOT NULL DEFAULT '',
+  `barcode` varchar(20) NOT NULL DEFAULT '',
+  `name` varchar(120) NOT NULL DEFAULT '',
+  `cogs` decimal(20,2) NOT NULL DEFAULT 0.00,
+  `qty` decimal(20,3) NOT NULL DEFAULT 0.000,
+  `uom_id` bigint(20) NOT NULL DEFAULT 0,
+  `query_string` text DEFAULT NULL,
+  `sts_upload` int(11) DEFAULT 0,
+  PRIMARY KEY (`sales_detail_recipe_id`),
+  KEY `sales_id` (`sales_id`),
+  KEY `sales_detail_id` (`sales_detail_id`),
+  KEY `item_master_id` (`item_master_id`),
+  KEY `item_recipe_id` (`item_recipe_id`),
+  KEY `code` (`code`),
+  KEY `barcode` (`barcode`),
+  KEY `name` (`name`),
+  KEY `cogs` (`cogs`),
+  KEY `qty` (`qty`),
+  KEY `uom_id` (`uom_id`),
+  KEY `sts_upload` (`sts_upload`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_sales_detail_therapist`
+--
+
+DROP TABLE IF EXISTS `pos_sales_detail_therapist`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_sales_detail_therapist` (
+  `sales_detail_therapist_id` bigint(20) NOT NULL,
+  `sales_id` bigint(20) DEFAULT NULL,
+  `sales_detail_id` bigint(20) DEFAULT NULL,
+  `therapist_id` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`sales_detail_therapist_id`),
+  KEY `sales_id` (`sales_id`),
+  KEY `sales_detail_id` (`sales_detail_id`),
+  KEY `therapist_id` (`therapist_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_sales_detail_transaction`
+--
+
+DROP TABLE IF EXISTS `pos_sales_detail_transaction`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_sales_detail_transaction` (
+  `sales_detail_transaction_id` bigint(20) NOT NULL DEFAULT 0,
+  `sales_transaction_id` bigint(20) NOT NULL DEFAULT 0,
+  `product_master_id` bigint(20) DEFAULT 0,
+  `squence` int(11) DEFAULT 0,
+  `cogs` decimal(20,2) NOT NULL DEFAULT 0.00,
+  `selling_price_dpp` decimal(20,2) DEFAULT 0.00,
+  `selling_price_tax` decimal(20,2) DEFAULT 0.00,
+  `selling_price` decimal(20,2) DEFAULT 0.00,
+  `status` int(11) DEFAULT 0,
+  `currency_id` bigint(20) DEFAULT 0,
+  `company_id` bigint(20) DEFAULT 0,
+  `qty` decimal(12,3) DEFAULT 0.000,
+  `total` decimal(20,2) NOT NULL DEFAULT 0.00,
+  `discount_percent` decimal(22,2) NOT NULL DEFAULT 0.00,
+  `discount_amount` decimal(22,2) NOT NULL DEFAULT 0.00,
+  `proposal_id` bigint(20) DEFAULT 0,
+  `sales_type` int(10) unsigned DEFAULT 0,
+  `serial_number` varchar(100) DEFAULT NULL,
+  `qty_retur` decimal(22,2) NOT NULL DEFAULT 0.00,
+  `status_komisi` int(10) unsigned NOT NULL DEFAULT 0,
+  `cancelled_by` bigint(20) DEFAULT 0,
+  `order_status` int(4) NOT NULL DEFAULT 0,
+  `uom_id` bigint(20) DEFAULT 0,
+  `conv_qty` decimal(10,2) DEFAULT 0.00,
+  `note` text DEFAULT NULL,
+  `description` varchar(220) DEFAULT NULL,
+  `description_id` bigint(20) NOT NULL DEFAULT 0,
+  `discount_item` decimal(22,2) NOT NULL DEFAULT 0.00,
+  `discount_promo` decimal(22,2) NOT NULL DEFAULT 0.00,
+  `discount_global` decimal(22,2) NOT NULL DEFAULT 0.00,
+  `stockable` int(4) NOT NULL DEFAULT 0,
+  `bom` int(4) NOT NULL DEFAULT 0,
+  `type_order` int(3) DEFAULT 0,
+  `waitress_id` bigint(20) DEFAULT 0,
+  `notif_status` int(3) DEFAULT 0,
+  `tax` decimal(4,2) DEFAULT 0.00,
+  `sales_detail_retur_id` bigint(20) DEFAULT 0,
+  PRIMARY KEY (`sales_detail_transaction_id`),
+  KEY `sales_transaction_id` (`sales_transaction_id`),
+  KEY `product_master_id` (`product_master_id`),
+  KEY `company_id` (`company_id`),
+  KEY `status_komisi` (`status_komisi`),
+  KEY `cancelled_by` (`cancelled_by`),
+  KEY `sales_type` (`sales_type`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_sales_grab`
+--
+
+DROP TABLE IF EXISTS `pos_sales_grab`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_sales_grab` (
+  `sales_grab_id` bigint(20) NOT NULL,
+  `amount` double DEFAULT NULL,
+  `date` datetime(6) DEFAULT NULL,
+  `number` varchar(70) DEFAULT NULL,
+  `status` varchar(255) DEFAULT NULL,
+  `customer_id` bigint(20) DEFAULT NULL,
+  `location_id` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`sales_grab_id`),
+  UNIQUE KEY `UK_e7x1g2rl1fmx54dkc4vt23h9` (`number`),
+  KEY `idx_location_date_number` (`location_id`,`date`,`number`),
+  CONSTRAINT `FKt1w2ytx88567r2r8bl9686gfr` FOREIGN KEY (`location_id`) REFERENCES `pos_location` (`location_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_sales_grab_detail`
+--
+
+DROP TABLE IF EXISTS `pos_sales_grab_detail`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_sales_grab_detail` (
+  `sales_grab_detail_id` bigint(20) NOT NULL,
+  `is_verified` int(11) DEFAULT NULL,
+  `qty` double DEFAULT NULL,
+  `selling_price` double DEFAULT NULL,
+  `total` decimal(19,2) DEFAULT NULL,
+  `verified_qty` double DEFAULT NULL,
+  `product_master_id` bigint(20) DEFAULT NULL,
+  `sales_grab_id` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`sales_grab_detail_id`),
+  KEY `FKchjhfio3oluml6vbj6y6e7u76` (`product_master_id`),
+  KEY `FKgrldkaas9k8ltfmtwgdugr2gg` (`sales_grab_id`),
+  CONSTRAINT `FKchjhfio3oluml6vbj6y6e7u76` FOREIGN KEY (`product_master_id`) REFERENCES `pos_item_master` (`item_master_id`),
+  CONSTRAINT `FKgrldkaas9k8ltfmtwgdugr2gg` FOREIGN KEY (`sales_grab_id`) REFERENCES `pos_sales_grab` (`sales_grab_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_sales_order`
+--
+
+DROP TABLE IF EXISTS `pos_sales_order`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_sales_order` (
+  `sales_order_id` bigint(20) NOT NULL DEFAULT 0,
+  `sales_quotation_id` bigint(20) DEFAULT 0,
+  `location_id` bigint(20) DEFAULT 0,
+  `type` int(4) DEFAULT NULL,
+  `number` varchar(120) DEFAULT NULL,
+  `customer_po_number` varchar(120) DEFAULT NULL,
+  `counter` int(11) DEFAULT NULL,
+  `prefix_number` varchar(20) DEFAULT NULL,
+  `customer_id` bigint(20) DEFAULT 0,
+  `trans_date` datetime DEFAULT NULL,
+  `due_date` date DEFAULT NULL,
+  `note` text DEFAULT NULL,
+  `amount` decimal(22,2) DEFAULT 0.00,
+  `price_include_tax` int(4) DEFAULT NULL,
+  `tax_percent` decimal(10,2) DEFAULT 0.00,
+  `tax_value` decimal(22,2) DEFAULT 0.00,
+  `discount_percent` decimal(10,2) DEFAULT 0.00,
+  `discount_value` decimal(22,2) DEFAULT 0.00,
+  `status` varchar(15) DEFAULT '0',
+  `user_id` bigint(20) DEFAULT 0,
+  `approval_1` bigint(20) DEFAULT 0,
+  `approval_2` bigint(20) DEFAULT 0,
+  `approval_3` bigint(20) DEFAULT 0,
+  `approval_1_date` datetime DEFAULT NULL,
+  `approval_2_date` datetime DEFAULT NULL,
+  `approval_3_date` datetime DEFAULT NULL,
+  `expired_date` datetime DEFAULT NULL,
+  `marketing_id` bigint(20) DEFAULT 0,
+  PRIMARY KEY (`sales_order_id`),
+  UNIQUE KEY `number` (`number`),
+  KEY `quotation_id` (`sales_quotation_id`),
+  KEY `type` (`type`),
+  KEY `prefix_number` (`prefix_number`),
+  KEY `customer_id` (`customer_id`),
+  KEY `trans_date` (`trans_date`),
+  KEY `due_date` (`due_date`),
+  KEY `price_include_tax` (`price_include_tax`),
+  KEY `status` (`status`),
+  KEY `user_id` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_sales_order_detail`
+--
+
+DROP TABLE IF EXISTS `pos_sales_order_detail`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_sales_order_detail` (
+  `sales_order_detail_id` bigint(20) NOT NULL DEFAULT 0,
+  `sales_order_id` bigint(20) DEFAULT 0,
+  `item_master_id` bigint(20) DEFAULT 0,
+  `is_bkp` int(1) DEFAULT 0,
+  `selling_price` decimal(22,2) DEFAULT 0.00,
+  `qty` decimal(12,2) DEFAULT 0.00,
+  `discount_percent` decimal(10,2) DEFAULT 0.00,
+  `discount_amount` decimal(22,2) DEFAULT 0.00,
+  `total_amount` decimal(22,2) DEFAULT 0.00,
+  `uom_order_id` bigint(20) DEFAULT 0,
+  `uom_stock_id` bigint(20) DEFAULT 0,
+  `conv_qty` decimal(12,2) DEFAULT 0.00,
+  `tax` decimal(4,2) DEFAULT 0.00,
+  PRIMARY KEY (`sales_order_detail_id`),
+  KEY `sales_order_id` (`sales_order_id`),
+  KEY `item_master_id` (`item_master_id`),
+  KEY `is_bkp` (`is_bkp`),
+  KEY `uom_order_id` (`uom_order_id`),
+  KEY `uom_stock_id` (`uom_stock_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_sales_recipe`
+--
+
+DROP TABLE IF EXISTS `pos_sales_recipe`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_sales_recipe` (
+  `sales_recipe_id` bigint(20) NOT NULL DEFAULT 0,
+  `item_master_id` bigint(20) DEFAULT NULL,
+  `item_recipe_id` bigint(20) DEFAULT NULL,
+  `qty` double DEFAULT NULL,
+  `uom_id` bigint(20) DEFAULT NULL,
+  `cost` double DEFAULT NULL,
+  `type` varchar(100) DEFAULT NULL,
+  `last_update` date DEFAULT NULL,
+  `description` varchar(150) DEFAULT NULL,
+  `company_id` bigint(20) DEFAULT NULL,
+  `sales_detail_id` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`sales_recipe_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_sales_taking`
+--
+
+DROP TABLE IF EXISTS `pos_sales_taking`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_sales_taking` (
+  `id` bigint(20) NOT NULL,
+  `number` varchar(255) DEFAULT NULL,
+  `number_prefix` varchar(255) DEFAULT NULL,
+  `amount` decimal(25,2) DEFAULT NULL,
+  `cash_cashier_id` bigint(20) DEFAULT NULL,
+  `counter` int(11) DEFAULT NULL,
+  `date` datetime DEFAULT NULL,
+  `description` text DEFAULT NULL,
+  `discount` int(11) DEFAULT NULL,
+  `discount_amount` decimal(22,2) DEFAULT NULL,
+  `discount_percent` decimal(22,2) DEFAULT NULL,
+  `doc_status` varchar(255) NOT NULL,
+  `employee_id` bigint(20) DEFAULT NULL,
+  `global_diskon` decimal(10,2) DEFAULT NULL,
+  `global_diskon_percent` decimal(10,2) DEFAULT NULL,
+  `marketing_id` bigint(20) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `payment_status` int(11) DEFAULT NULL,
+  `status` int(11) DEFAULT NULL,
+  `type` int(11) DEFAULT NULL,
+  `user_id` bigint(20) DEFAULT NULL,
+  `vat` int(11) DEFAULT NULL,
+  `vat_amount` decimal(25,2) DEFAULT NULL,
+  `vat_percent` double DEFAULT NULL,
+  `customer_id` bigint(20) DEFAULT NULL,
+  `location_id` bigint(20) DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `sales_retur_id` bigint(20) DEFAULT NULL,
+  `return_counter` int(10) DEFAULT 0,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UK_a3jfpppu5dr9kttwqmrywj19q` (`number`),
+  KEY `FK7inxa5px0vm0oia8cqkjajxqe` (`customer_id`),
+  KEY `FK977u1o9h95odxpjrfa8x3g9te` (`location_id`),
+  KEY `FKh8nun8bdeafbsdf4tg88mgjqw` (`sales_retur_id`),
+  CONSTRAINT `FK977u1o9h95odxpjrfa8x3g9te` FOREIGN KEY (`location_id`) REFERENCES `pos_location` (`location_id`),
+  CONSTRAINT `FKh8nun8bdeafbsdf4tg88mgjqw` FOREIGN KEY (`sales_retur_id`) REFERENCES `pos_sales_taking` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_sales_taking_detail`
+--
+
+DROP TABLE IF EXISTS `pos_sales_taking_detail`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_sales_taking_detail` (
+  `id` bigint(20) NOT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `cogs` decimal(20,2) DEFAULT NULL,
+  `company_id` bigint(20) DEFAULT NULL,
+  `conv_qty` decimal(10,2) DEFAULT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `discount_amount` decimal(22,2) DEFAULT NULL,
+  `discount_global` decimal(22,2) DEFAULT NULL,
+  `discount_item` decimal(22,2) DEFAULT NULL,
+  `discount_item_percent` decimal(22,2) DEFAULT NULL,
+  `discount_percent` decimal(22,2) DEFAULT NULL,
+  `discount_promo` decimal(22,2) DEFAULT NULL,
+  `note` text DEFAULT NULL,
+  `qty` decimal(12,2) DEFAULT NULL,
+  `qty_retur` decimal(25,2) DEFAULT NULL,
+  `selling_price` decimal(20,2) DEFAULT NULL,
+  `short_name` varchar(255) DEFAULT NULL,
+  `squence` int(11) DEFAULT NULL,
+  `status` int(11) DEFAULT NULL,
+  `tax` decimal(4,2) DEFAULT NULL,
+  `total` decimal(20,2) DEFAULT NULL,
+  `unit` varchar(255) DEFAULT NULL,
+  `uom_id` bigint(20) DEFAULT NULL,
+  `product_master_id` bigint(20) DEFAULT NULL,
+  `sales_id` bigint(20) DEFAULT NULL,
+  `sales_detail_retur_id` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FKc8fxk8o4890rlhkhi6gxf8bv3` (`product_master_id`),
+  KEY `FKq60pl4yg3skxrvnci8gd890w2` (`sales_id`),
+  KEY `FKk15taw4jkbydipctag7hhjo6m` (`sales_detail_retur_id`),
+  CONSTRAINT `FKc8fxk8o4890rlhkhi6gxf8bv3` FOREIGN KEY (`product_master_id`) REFERENCES `pos_item_master` (`item_master_id`),
+  CONSTRAINT `FKk15taw4jkbydipctag7hhjo6m` FOREIGN KEY (`sales_detail_retur_id`) REFERENCES `pos_sales_taking_detail` (`id`),
+  CONSTRAINT `FKq60pl4yg3skxrvnci8gd890w2` FOREIGN KEY (`sales_id`) REFERENCES `pos_sales_taking` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_sales_transaction`
+--
+
+DROP TABLE IF EXISTS `pos_sales_transaction`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_sales_transaction` (
+  `sales_transaction_id` bigint(20) NOT NULL DEFAULT 0,
+  `date` datetime DEFAULT NULL,
+  `number` varchar(120) DEFAULT NULL,
+  `number_prefix` varchar(20) DEFAULT NULL,
+  `counter` int(11) DEFAULT NULL,
+  `name` varchar(220) DEFAULT NULL,
+  `customer_id` bigint(20) DEFAULT NULL,
+  `customer_pic` varchar(120) DEFAULT NULL,
+  `customer_pic_phone` varchar(30) DEFAULT NULL,
+  `customer_address` varchar(220) DEFAULT NULL,
+  `start_date` date DEFAULT NULL,
+  `end_date` date DEFAULT NULL,
+  `customer_pic_position` varchar(220) DEFAULT NULL,
+  `employee_id` bigint(20) DEFAULT NULL,
+  `user_id` bigint(20) DEFAULT NULL,
+  `employee_hp` varchar(30) DEFAULT NULL,
+  `description` text DEFAULT NULL,
+  `status` int(11) DEFAULT 0,
+  `amount` decimal(25,2) DEFAULT 0.00,
+  `currency_id` bigint(20) DEFAULT 0,
+  `company_id` bigint(20) DEFAULT 0,
+  `category_id` bigint(20) DEFAULT 0,
+  `discount_percent` double DEFAULT 0,
+  `discount_amount` double DEFAULT 0,
+  `vat` int(11) DEFAULT 0,
+  `discount` int(11) DEFAULT 0,
+  `warranty_status` int(11) DEFAULT 0,
+  `warranty_date` date DEFAULT NULL,
+  `warranty_receive` varchar(100) DEFAULT NULL,
+  `manual_status` int(11) DEFAULT 0,
+  `manual_date` date DEFAULT NULL,
+  `manual_receive` varchar(100) DEFAULT NULL,
+  `note_closing` text DEFAULT NULL,
+  `booking_rate` double(25,2) DEFAULT 0.00,
+  `exchange_amount` double(25,2) DEFAULT 0.00,
+  `proposal_id` bigint(20) DEFAULT 0,
+  `unit_usaha_id` bigint(20) DEFAULT 0,
+  `vat_percent` decimal(10,2) DEFAULT 0.00,
+  `vat_amount` decimal(25,2) DEFAULT 0.00,
+  `type` int(11) DEFAULT 0,
+  `pph_type` int(11) DEFAULT 0,
+  `pph_percent` decimal(10,2) DEFAULT 0.00,
+  `pph_amount` decimal(25,2) DEFAULT 0.00,
+  `marketing_id` bigint(20) unsigned DEFAULT NULL,
+  `payment_status` int(11) DEFAULT NULL,
+  `sales_type` int(10) unsigned DEFAULT NULL,
+  `location_id` bigint(20) DEFAULT NULL,
+  `cash_cashier_id` bigint(20) DEFAULT NULL,
+  `shift_id` bigint(20) DEFAULT NULL,
+  `cash_master_id` bigint(20) DEFAULT NULL,
+  `posted_status` int(11) DEFAULT 0,
+  `posted_by_id` bigint(20) DEFAULT 0,
+  `posted_date` date DEFAULT NULL,
+  `effective_date` date DEFAULT NULL,
+  `status_stock` int(11) DEFAULT NULL,
+  `sales_retur_id` bigint(20) DEFAULT 0,
+  `global_diskon` decimal(10,2) NOT NULL DEFAULT 0.00,
+  `global_diskon_percent` decimal(10,2) NOT NULL DEFAULT 0.00,
+  `diskon_kartu` double(22,2) DEFAULT 0.00,
+  `biaya_kartu` decimal(22,2) NOT NULL DEFAULT 0.00,
+  `service_amount` decimal(22,2) DEFAULT 0.00,
+  `service_percent` decimal(22,2) DEFAULT 0.00,
+  `spg_id` bigint(20) DEFAULT 0,
+  `sopir_id` bigint(20) DEFAULT 0,
+  `helper_id` bigint(20) DEFAULT 0,
+  `table_id` bigint(20) DEFAULT 0,
+  `waitress_id` bigint(20) DEFAULT 0,
+  `jumlah_orang` int(10) DEFAULT 0,
+  `system_doc_number_id` bigint(20) DEFAULT 0,
+  `cancelled_by` bigint(20) DEFAULT 0,
+  `spliter` int(11) DEFAULT 0,
+  `guide_payment_id` bigint(20) DEFAULT 0,
+  `compliment` int(3) DEFAULT 0,
+  `status_open` int(3) DEFAULT 0,
+  `order_status` int(3) DEFAULT 0,
+  `ref_split` bigint(20) DEFAULT 0,
+  `nomer_kendaraan` text DEFAULT NULL,
+  `jatuh_tempo` date DEFAULT NULL,
+  `include_tax` int(1) DEFAULT 0,
+  `doc_type` int(2) DEFAULT 0,
+  `doc_status` varchar(15) DEFAULT '',
+  `approval_1` bigint(20) DEFAULT 0,
+  `approval_2` bigint(20) DEFAULT 0,
+  `approval_3` bigint(20) DEFAULT 0,
+  `approval_1_date` timestamp NULL DEFAULT NULL,
+  `approval_2_date` timestamp NULL DEFAULT NULL,
+  `approval_3_date` timestamp NULL DEFAULT NULL,
+  `delivery_order_id` bigint(20) DEFAULT 0,
+  `coa_do_ar_id` bigint(20) DEFAULT 0,
+  `coa_do_revenue_id` bigint(20) DEFAULT 0,
+  `customer_po_number` varchar(150) DEFAULT '',
+  `type_order` varchar(100) DEFAULT '',
+  `sent_date` datetime DEFAULT NULL,
+  `nomer_faktur` varchar(100) DEFAULT '',
+  PRIMARY KEY (`sales_transaction_id`),
+  UNIQUE KEY `numberUniq` (`number`),
+  KEY `DATE` (`date`),
+  KEY `number` (`number`),
+  KEY `customer_id` (`customer_id`),
+  KEY `user_id` (`user_id`),
+  KEY `TYPE` (`type`),
+  KEY `marketing_id` (`marketing_id`),
+  KEY `payment_status` (`payment_status`),
+  KEY `location_id` (`location_id`),
+  KEY `cash_cashier_id` (`cash_cashier_id`),
+  KEY `shift_id` (`shift_id`),
+  KEY `cash_master_id` (`cash_master_id`),
+  KEY `posted_status` (`posted_status`),
+  KEY `posted_by_id` (`posted_by_id`),
+  KEY `posted_date` (`posted_date`),
+  KEY `sales_retur_id` (`sales_retur_id`),
+  KEY `system_doc_number_id` (`system_doc_number_id`),
+  KEY `cancelled_by` (`cancelled_by`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_shift`
+--
+
+DROP TABLE IF EXISTS `pos_shift`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_shift` (
+  `SHIFT_ID` bigint(20) NOT NULL DEFAULT 0,
+  `NAME` varchar(20) DEFAULT NULL,
+  `END_TIME` date DEFAULT '0000-00-00',
+  `START_TIME` date DEFAULT '0000-00-00',
+  `START_HOURS` int(11) DEFAULT NULL,
+  `START_MINUTES` int(11) DEFAULT NULL,
+  `END_HOURS` int(11) DEFAULT NULL,
+  `END_MINUTES` int(11) DEFAULT NULL,
+  `COMPANY_ID` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`SHIFT_ID`),
+  UNIQUE KEY `XPKSHIFT` (`SHIFT_ID`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `insert_shift` AFTER INSERT ON `pos_shift` FOR EACH ROW BEGIN
+	INSERT INTO `android_logs` (
+	logs_id,table_name,reff_id,old_id,sts_loc1,sts_loc2,sts_loc3,sts_loc4,sts_loc5,sts_loc6,sts_loc7,sts_loc8,sts_loc9,sts_loc10,
+	sts_loc11,sts_loc12,sts_loc13,sts_loc14,sts_loc15,sts_loc16,sts_loc17,sts_loc18,sts_loc19,sts_loc20,
+	sts_loc21,sts_loc22,sts_loc23,sts_loc24,sts_loc25,sts_loc26,sts_loc27,sts_loc28,sts_loc29,sts_loc30,
+	action_handle) VALUE (
+	  UUID(),
+	  "pos_shift",
+	  new.shift_id,
+	  0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  "insert"
+	  );
+    END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `update_shift` AFTER UPDATE ON `pos_shift` FOR EACH ROW BEGIN
+	INSERT INTO `android_logs` (logs_id,table_name,reff_id,old_id,sts_loc1,sts_loc2,sts_loc3,sts_loc4,sts_loc5,sts_loc6,sts_loc7,sts_loc8,sts_loc9,sts_loc10,
+	sts_loc11,sts_loc12,sts_loc13,sts_loc14,sts_loc15,sts_loc16,sts_loc17,sts_loc18,sts_loc19,sts_loc20,
+	sts_loc21,sts_loc22,sts_loc23,sts_loc24,sts_loc25,sts_loc26,sts_loc27,sts_loc28,sts_loc29,sts_loc30,action_handle) VALUE (
+	  UUID(),
+	  "pos_shift",
+	  new.shift_id,
+	  old.shift_id,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	   "update"
+	);
+    END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `delete_shift` BEFORE DELETE ON `pos_shift` FOR EACH ROW BEGIN
+	INSERT INTO `android_logs` (
+	logs_id,table_name,reff_id,old_id,sts_loc1,sts_loc2,sts_loc3,sts_loc4,sts_loc5,sts_loc6,sts_loc7,sts_loc8,sts_loc9,sts_loc10,
+	sts_loc11,sts_loc12,sts_loc13,sts_loc14,sts_loc15,sts_loc16,sts_loc17,sts_loc18,sts_loc19,sts_loc20,
+	sts_loc21,sts_loc22,sts_loc23,sts_loc24,sts_loc25,sts_loc26,sts_loc27,sts_loc28,sts_loc29,sts_loc30,
+	action_handle) VALUE (
+	  UUID(),
+	  "pos_shift",
+	  old.shift_id,
+	  0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  "delete"
+	);
+    END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+
+--
+-- Table structure for table `pos_size`
+--
+
+DROP TABLE IF EXISTS `pos_size`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_size` (
+  `size_id` bigint(22) NOT NULL DEFAULT 0,
+  `name` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`size_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_sizenum`
+--
+
+DROP TABLE IF EXISTS `pos_sizenum`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_sizenum` (
+  `sizenum_id` bigint(22) NOT NULL DEFAULT 0,
+  `size_id` bigint(22) NOT NULL DEFAULT 0,
+  `name` varchar(100) DEFAULT NULL,
+  `code` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`sizenum_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_stock`
+--
+
+DROP TABLE IF EXISTS `pos_stock`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_stock` (
+  `stock_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `location_id` bigint(20) unsigned DEFAULT 0,
+  `type` int(10) unsigned DEFAULT 0,
+  `qty` decimal(22,3) DEFAULT 0.000,
+  `price` decimal(25,2) DEFAULT 0.00,
+  `total` decimal(25,2) DEFAULT 0.00,
+  `item_master_id` bigint(20) unsigned DEFAULT 0,
+  `item_code` varchar(45) DEFAULT NULL,
+  `item_barcode` varchar(45) DEFAULT NULL,
+  `item_name` text DEFAULT NULL,
+  `unit_id` bigint(20) unsigned DEFAULT 0,
+  `unit` varchar(45) DEFAULT NULL,
+  `in_out` int(11) DEFAULT 0,
+  `date` datetime DEFAULT NULL,
+  `user_id` bigint(20) unsigned DEFAULT 0,
+  `no_faktur` varchar(45) DEFAULT NULL,
+  `incoming_id` bigint(20) unsigned DEFAULT 0,
+  `retur_id` bigint(20) unsigned DEFAULT 0,
+  `transfer_id` bigint(20) unsigned DEFAULT 0,
+  `transfer_in_id` bigint(20) unsigned DEFAULT 0,
+  `adjustment_id` bigint(20) unsigned DEFAULT 0,
+  `opname_id` bigint(20) unsigned DEFAULT 0,
+  `sales_detail_id` bigint(20) DEFAULT 0,
+  `type_item` int(10) unsigned DEFAULT 0,
+  `receive_item_id` bigint(20) DEFAULT 0,
+  `retur_item_id` bigint(20) DEFAULT 0,
+  `transfer_item_id` bigint(20) DEFAULT 0,
+  `adjustment_item_id` bigint(20) DEFAULT 0,
+  `company_id` bigint(20) DEFAULT 0,
+  `costing_id` bigint(20) DEFAULT 0,
+  `costing_item_id` bigint(20) DEFAULT 0,
+  `repack_id` bigint(20) DEFAULT 0,
+  `repack_item_id` bigint(20) DEFAULT 0,
+  `lot_number` varchar(45) DEFAULT NULL,
+  `expired_date` datetime DEFAULT NULL,
+  `status` varchar(20) NOT NULL DEFAULT 'APPROVED',
+  `owner_id` bigint(20) DEFAULT 0,
+  `owner_detail_id` bigint(20) DEFAULT 0,
+  PRIMARY KEY (`stock_id`),
+  KEY `location_id` (`location_id`),
+  KEY `TYPE` (`type`),
+  KEY `item_master_id` (`item_master_id`),
+  KEY `unit_id` (`unit_id`),
+  KEY `in_out` (`in_out`),
+  KEY `DATE` (`date`),
+  KEY `user_id` (`user_id`),
+  KEY `incoming_id` (`incoming_id`),
+  KEY `retur_id` (`retur_id`),
+  KEY `transfer_id` (`transfer_id`),
+  KEY `adjustment_id` (`adjustment_id`),
+  KEY `opname_id` (`opname_id`),
+  KEY `sales_detail_id` (`sales_detail_id`),
+  KEY `receive_item_id` (`receive_item_id`),
+  KEY `retur_item_id` (`retur_item_id`),
+  KEY `transfer_item_id` (`transfer_item_id`),
+  KEY `adjustment_item_id` (`adjustment_item_id`),
+  KEY `costing_id` (`costing_id`),
+  KEY `costing_item_id` (`costing_item_id`),
+  KEY `repack_id` (`repack_id`),
+  KEY `repack_item_id` (`repack_item_id`),
+  KEY `STATUS` (`status`),
+  KEY `ownerId` (`owner_id`),
+  KEY `ownerDetailId` (`owner_detail_id`),
+  CONSTRAINT `FKnp6v5dn0ojgj5nw2btys8168k` FOREIGN KEY (`sales_detail_id`) REFERENCES `pos_sales_detail` (`sales_detail_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=17754908149447100 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci ROW_FORMAT=DYNAMIC;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_stock_close`
+--
+
+DROP TABLE IF EXISTS `pos_stock_close`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_stock_close` (
+  `stock_close_id` bigint(20) NOT NULL,
+  `item_master_id` bigint(20) NOT NULL,
+  `location_id` bigint(20) NOT NULL,
+  `close_date` date NOT NULL,
+  `qty` decimal(12,2) NOT NULL,
+  PRIMARY KEY (`stock_close_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_stock_closing`
+--
+
+DROP TABLE IF EXISTS `pos_stock_closing`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_stock_closing` (
+  `stock_closing_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `stock_closing_periode_id` bigint(20) DEFAULT NULL,
+  `location_id` bigint(20) unsigned DEFAULT 0,
+  `type` int(10) unsigned DEFAULT 0,
+  `qty` decimal(22,3) DEFAULT 0.000,
+  `price` decimal(25,2) DEFAULT 0.00,
+  `total` decimal(25,2) DEFAULT 0.00,
+  `item_master_id` bigint(20) unsigned DEFAULT 0,
+  `unit_id` bigint(20) unsigned DEFAULT 0,
+  `in_out` int(11) DEFAULT 0,
+  `date` datetime DEFAULT NULL,
+  `user_id` bigint(20) unsigned DEFAULT 0,
+  `status` varchar(20) NOT NULL DEFAULT 'APPROVED',
+  PRIMARY KEY (`stock_closing_id`),
+  UNIQUE KEY `stock_closing_unique` (`stock_closing_periode_id`,`location_id`,`item_master_id`),
+  KEY `location_id` (`location_id`),
+  KEY `TYPE` (`type`),
+  KEY `item_master_id` (`item_master_id`),
+  KEY `unit_id` (`unit_id`),
+  KEY `in_out` (`in_out`),
+  KEY `DATE` (`date`),
+  KEY `user_id` (`user_id`),
+  KEY `STATUS` (`status`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci ROW_FORMAT=DYNAMIC;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_stock_closing_periode`
+--
+
+DROP TABLE IF EXISTS `pos_stock_closing_periode`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_stock_closing_periode` (
+  `stock_closing_periode_id` bigint(20) NOT NULL DEFAULT 0,
+  `date` datetime DEFAULT NULL,
+  `status` int(2) DEFAULT 0,
+  `user_id` bigint(20) DEFAULT 0,
+  `created_date` datetime DEFAULT NULL,
+  `active_date` datetime DEFAULT NULL,
+  `process_date` datetime DEFAULT NULL,
+  `process_status` int(2) DEFAULT 0,
+  PRIMARY KEY (`stock_closing_periode_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_stock_code`
+--
+
+DROP TABLE IF EXISTS `pos_stock_code`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_stock_code` (
+  `stock_code_id` bigint(20) NOT NULL DEFAULT 0,
+  `code` varchar(50) DEFAULT NULL,
+  `location_id` bigint(20) DEFAULT NULL,
+  `item_master_id` bigint(20) DEFAULT NULL,
+  `in_out` int(11) DEFAULT NULL,
+  `type` int(11) DEFAULT NULL,
+  `receive_id` bigint(20) DEFAULT NULL,
+  `retur_id` bigint(20) DEFAULT NULL,
+  `transfer_id` bigint(20) DEFAULT NULL,
+  `qty` double DEFAULT NULL,
+  `status` int(11) DEFAULT NULL,
+  `receive_item_id` bigint(20) DEFAULT NULL,
+  `retur_item_id` bigint(20) DEFAULT NULL,
+  `transfer_item_id` bigint(20) DEFAULT NULL,
+  `type_item` int(10) unsigned DEFAULT NULL,
+  `sales_id` bigint(20) DEFAULT NULL,
+  `sales_detail_id` bigint(20) DEFAULT NULL,
+  `company_id` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`stock_code_id`),
+  UNIQUE KEY `code` (`code`,`stock_code_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_stock_days`
+--
+
+DROP TABLE IF EXISTS `pos_stock_days`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_stock_days` (
+  `stock_days_id` bigint(20) NOT NULL DEFAULT 0,
+  `location_id` bigint(20) NOT NULL DEFAULT 0,
+  `month` int(4) DEFAULT 0,
+  `year` int(4) DEFAULT 0,
+  `user_id` bigint(20) DEFAULT 0,
+  `update_date` datetime DEFAULT NULL,
+  `stock_days_eod` decimal(22,2) DEFAULT 0.00,
+  `days` int(4) DEFAULT 0,
+  `daya_beli` decimal(22,2) DEFAULT 0.00,
+  `item_group_id` bigint(20) DEFAULT 0,
+  PRIMARY KEY (`stock_days_id`),
+  UNIQUE KEY `location_id` (`location_id`,`month`,`year`,`item_group_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_stock_history`
+--
+
+DROP TABLE IF EXISTS `pos_stock_history`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_stock_history` (
+  `stock_history_id` bigint(20) NOT NULL DEFAULT 0,
+  `stock_id` bigint(20) DEFAULT 0,
+  `location_id` bigint(20) DEFAULT 0,
+  `item_master_id` bigint(20) DEFAULT 0,
+  `qty` decimal(22,2) DEFAULT 0.00,
+  `price` decimal(22,2) DEFAULT 0.00,
+  `total` decimal(22,2) DEFAULT 0.00,
+  `item_code` varchar(45) DEFAULT NULL,
+  `item_barcode` varchar(45) DEFAULT NULL,
+  `item_name` text DEFAULT NULL,
+  `unit_id` bigint(20) DEFAULT 0,
+  `unit` varchar(45) DEFAULT NULL,
+  `date` datetime DEFAULT NULL,
+  `user_id` bigint(20) DEFAULT 0,
+  PRIMARY KEY (`stock_history_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Temporary table structure for view `pos_stock_item_view`
+--
+
+DROP TABLE IF EXISTS `pos_stock_item_view`;
+/*!50001 DROP VIEW IF EXISTS `pos_stock_item_view`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `pos_stock_item_view` AS SELECT
+ 1 AS `item_master_id`,
+  1 AS `code`,
+  1 AS `barcode`,
+  1 AS `name`,
+  1 AS `qtystock` */;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Table structure for table `pos_stock_max`
+--
+
+DROP TABLE IF EXISTS `pos_stock_max`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_stock_max` (
+  `stock_max_id` bigint(20) unsigned NOT NULL DEFAULT 0,
+  `location_id` bigint(20) unsigned DEFAULT NULL,
+  `item_master_id` bigint(20) unsigned DEFAULT NULL,
+  `item_name` varchar(200) DEFAULT NULL,
+  `code` varchar(200) DEFAULT NULL,
+  `barcode` varchar(200) DEFAULT NULL,
+  `max_stock` decimal(10,2) DEFAULT NULL,
+  PRIMARY KEY (`stock_max_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_stock_min`
+--
+
+DROP TABLE IF EXISTS `pos_stock_min`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_stock_min` (
+  `stock_min_id` bigint(20) unsigned NOT NULL DEFAULT 0,
+  `location_id` bigint(20) unsigned DEFAULT NULL,
+  `item_master_id` bigint(20) unsigned DEFAULT NULL,
+  `item_name` varchar(200) DEFAULT NULL,
+  `code` varchar(200) DEFAULT NULL,
+  `barcode` varchar(200) DEFAULT NULL,
+  `min_stock` decimal(10,2) DEFAULT NULL,
+  `delivery_unit` decimal(10,2) DEFAULT NULL,
+  `standard_display` decimal(10,2) DEFAULT 0.00,
+  `lead_time` decimal(10,2) DEFAULT 0.00,
+  PRIMARY KEY (`stock_min_id`),
+  UNIQUE KEY `item_master_id` (`location_id`,`item_master_id`),
+  KEY `location_id` (`location_id`),
+  KEY `item_master` (`item_master_id`),
+  KEY `min_stock` (`min_stock`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_stock_ratio`
+--
+
+DROP TABLE IF EXISTS `pos_stock_ratio`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_stock_ratio` (
+  `stock_ratio_id` bigint(20) DEFAULT 0,
+  `name` varchar(100) DEFAULT NULL,
+  `qty_from` decimal(22,2) DEFAULT 0.00,
+  `qty_to` decimal(22,2) DEFAULT 0.00,
+  `ratio_formula` decimal(22,2) DEFAULT 0.00,
+  `max_stock` decimal(22,2) DEFAULT 0.00
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Temporary table structure for view `pos_stock_view`
+--
+
+DROP TABLE IF EXISTS `pos_stock_view`;
+/*!50001 DROP VIEW IF EXISTS `pos_stock_view`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `pos_stock_view` AS SELECT
+ 1 AS `item_master_id`,
+  1 AS `location_id`,
+  1 AS `qty` */;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Table structure for table `pos_struk_kasir`
+--
+
+DROP TABLE IF EXISTS `pos_struk_kasir`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_struk_kasir` (
+  `struk_kasir_id` bigint(20) NOT NULL DEFAULT 0,
+  `location_id` bigint(20) NOT NULL DEFAULT 0,
+  `date` date DEFAULT NULL,
+  `user_id` bigint(20) NOT NULL DEFAULT 0,
+  `header` text NOT NULL,
+  `footer` text NOT NULL,
+  `footer_1` text NOT NULL,
+  `footer_2` text NOT NULL,
+  `grab_merchant_id` varchar(255) DEFAULT '',
+  `grab_food_merchant_id` varchar(255) DEFAULT '',
+  `api_key` varchar(255) DEFAULT '',
+  PRIMARY KEY (`struk_kasir_id`),
+  UNIQUE KEY `location_id` (`location_id`),
+  KEY `index_sts` (`struk_kasir_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `insert_struk_kasir` AFTER INSERT ON `pos_struk_kasir` FOR EACH ROW BEGIN
+	INSERT INTO `android_logs` (
+	logs_id,table_name,reff_id,old_id,sts_loc1,sts_loc2,sts_loc3,sts_loc4,sts_loc5,sts_loc6,sts_loc7,sts_loc8,sts_loc9,sts_loc10,
+	sts_loc11,sts_loc12,sts_loc13,sts_loc14,sts_loc15,sts_loc16,sts_loc17,sts_loc18,sts_loc19,sts_loc20,
+	sts_loc21,sts_loc22,sts_loc23,sts_loc24,sts_loc25,sts_loc26,sts_loc27,sts_loc28,sts_loc29,sts_loc30,
+	action_handle) VALUE (
+	  UUID(),
+	  "pos_struk_kasir",
+	  new.struk_kasir_id,
+	  0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  "insert"
+	  );
+    END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `update_struk_kasir` AFTER UPDATE ON `pos_struk_kasir` FOR EACH ROW BEGIN
+	INSERT INTO `android_logs` (
+	logs_id,table_name,reff_id,old_id,sts_loc1,sts_loc2,sts_loc3,sts_loc4,sts_loc5,sts_loc6,sts_loc7,sts_loc8,sts_loc9,sts_loc10,
+	sts_loc11,sts_loc12,sts_loc13,sts_loc14,sts_loc15,sts_loc16,sts_loc17,sts_loc18,sts_loc19,sts_loc20,
+	sts_loc21,sts_loc22,sts_loc23,sts_loc24,sts_loc25,sts_loc26,sts_loc27,sts_loc28,sts_loc29,sts_loc30,
+	action_handle) VALUE (
+	  UUID(),
+	  "pos_struk_kasir",
+	  new.struk_kasir_id,
+	  old.struk_kasir_id,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  "update"
+	);
+    END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `delete_struk_kasir` BEFORE DELETE ON `pos_struk_kasir` FOR EACH ROW BEGIN
+	INSERT INTO `android_logs` (
+	logs_id,table_name,reff_id,old_id,sts_loc1,sts_loc2,sts_loc3,sts_loc4,sts_loc5,sts_loc6,sts_loc7,sts_loc8,sts_loc9,sts_loc10,
+	sts_loc11,sts_loc12,sts_loc13,sts_loc14,sts_loc15,sts_loc16,sts_loc17,sts_loc18,sts_loc19,sts_loc20,
+	sts_loc21,sts_loc22,sts_loc23,sts_loc24,sts_loc25,sts_loc26,sts_loc27,sts_loc28,sts_loc29,sts_loc30,
+	action_handle) VALUE (
+	  UUID(),
+	  "pos_struk_kasir",
+	  old.struk_kasir_id,
+	  0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  "delete"
+	);
+    END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+
+--
+-- Table structure for table `pos_style`
+--
+
+DROP TABLE IF EXISTS `pos_style`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_style` (
+  `style_id` bigint(22) NOT NULL DEFAULT 0,
+  `name` varchar(100) DEFAULT NULL,
+  `code` varchar(5) DEFAULT '',
+  PRIMARY KEY (`style_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_sub_location`
+--
+
+DROP TABLE IF EXISTS `pos_sub_location`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_sub_location` (
+  `sub_location_id` bigint(20) unsigned NOT NULL DEFAULT 0,
+  `location_id` bigint(20) unsigned DEFAULT NULL,
+  `name` varchar(45) DEFAULT NULL,
+  `description` text DEFAULT NULL,
+  PRIMARY KEY (`sub_location_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_transfer`
+--
+
+DROP TABLE IF EXISTS `pos_transfer`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_transfer` (
+  `transfer_id` bigint(20) NOT NULL DEFAULT 0,
+  `date` datetime DEFAULT NULL,
+  `status` varchar(20) DEFAULT NULL,
+  `from_location_id` bigint(20) DEFAULT NULL,
+  `to_location_id` bigint(20) DEFAULT NULL,
+  `note` text DEFAULT NULL,
+  `counter` int(11) DEFAULT NULL,
+  `number` varchar(20) DEFAULT NULL,
+  `approval_1` bigint(20) DEFAULT 0,
+  `approval_2` bigint(20) DEFAULT 0,
+  `approval_3` bigint(20) DEFAULT 0,
+  `approval_4` bigint(20) DEFAULT 0,
+  `user_id` bigint(20) DEFAULT NULL,
+  `prefix_number` varchar(20) DEFAULT NULL,
+  `approval_1_date` datetime DEFAULT NULL,
+  `approval_2_date` datetime DEFAULT NULL,
+  `approval_3_date` datetime DEFAULT NULL,
+  `approval_4_date` datetime DEFAULT NULL,
+  `type` int(10) unsigned DEFAULT NULL,
+  `company_id` bigint(20) DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `posted_status` int(2) DEFAULT 0,
+  `posted_by_id` bigint(20) DEFAULT 0,
+  `posted_date` datetime DEFAULT NULL,
+  PRIMARY KEY (`transfer_id`),
+  UNIQUE KEY `Index_3` (`number`),
+  KEY `from_location_id` (`from_location_id`),
+  KEY `to_location_id` (`to_location_id`),
+  KEY `DATE` (`date`),
+  KEY `STATUS` (`status`),
+  KEY `transfer_id` (`transfer_id`),
+  KEY `number` (`number`),
+  KEY `approval_1` (`approval_1`),
+  KEY `approval_2` (`approval_2`),
+  KEY `approval_3` (`approval_3`),
+  KEY `user_id` (`user_id`),
+  KEY `approval_1_date` (`approval_1_date`),
+  KEY `approval_2_date` (`approval_2_date`),
+  KEY `approval_3_date` (`approval_3_date`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_transfer_item`
+--
+
+DROP TABLE IF EXISTS `pos_transfer_item`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_transfer_item` (
+  `transfer_item_id` bigint(20) NOT NULL DEFAULT 0,
+  `transfer_id` bigint(20) DEFAULT NULL,
+  `item_master_id` bigint(20) DEFAULT NULL,
+  `qty` decimal(10,3) DEFAULT 0.000,
+  `price` decimal(10,2) DEFAULT 0.00,
+  `amount` decimal(25,2) DEFAULT 0.00,
+  `note` char(18) DEFAULT NULL,
+  `exp_date` date DEFAULT NULL,
+  `type` int(10) unsigned DEFAULT NULL,
+  `company_id` bigint(20) DEFAULT NULL,
+  `qty_request` decimal(10,2) DEFAULT 0.00,
+  `item_barcode` varchar(45) DEFAULT NULL,
+  `qty_stock` decimal(10,2) NOT NULL DEFAULT 0.00,
+  `qty_order` decimal(10,2) DEFAULT 0.00,
+  `qty_approve` decimal(10,2) DEFAULT 0.00,
+  `qty_checked` decimal(10,2) DEFAULT 0.00,
+  PRIMARY KEY (`transfer_item_id`),
+  KEY `transfer_id` (`transfer_id`),
+  KEY `item_master_id` (`item_master_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_transfer_receive`
+--
+
+DROP TABLE IF EXISTS `pos_transfer_receive`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_transfer_receive` (
+  `transfer_receive_id` bigint(22) NOT NULL,
+  `transfer_id` bigint(22) DEFAULT 0,
+  `note` varchar(30) DEFAULT '',
+  `date` datetime DEFAULT NULL,
+  PRIMARY KEY (`transfer_receive_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_transfer_request`
+--
+
+DROP TABLE IF EXISTS `pos_transfer_request`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_transfer_request` (
+  `transfer_request_id` bigint(20) NOT NULL DEFAULT 0,
+  `date` datetime DEFAULT NULL,
+  `status` varchar(20) DEFAULT NULL,
+  `from_location_id` bigint(20) DEFAULT 0,
+  `to_location_id` bigint(20) DEFAULT 0,
+  `note` text DEFAULT NULL,
+  `counter` int(11) DEFAULT 0,
+  `number` varchar(20) DEFAULT NULL,
+  `approval_1` bigint(20) DEFAULT 0,
+  `user_id` bigint(20) DEFAULT 0,
+  `prefix_number` varchar(20) DEFAULT NULL,
+  `approval_1_date` datetime DEFAULT NULL,
+  `gen_id` bigint(20) DEFAULT 0,
+  `create_date` datetime DEFAULT NULL,
+  PRIMARY KEY (`transfer_request_id`),
+  UNIQUE KEY `number` (`number`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_transfer_request_item`
+--
+
+DROP TABLE IF EXISTS `pos_transfer_request_item`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_transfer_request_item` (
+  `transfer_request_item_id` bigint(20) NOT NULL DEFAULT 0,
+  `transfer_request_id` bigint(20) DEFAULT NULL,
+  `item_master_id` bigint(20) DEFAULT NULL,
+  `qty` decimal(10,3) DEFAULT NULL,
+  `user_id` bigint(20) DEFAULT NULL,
+  `date` date DEFAULT NULL,
+  `item_barcode` varchar(120) DEFAULT NULL,
+  `qty_approve` decimal(10,2) DEFAULT 0.00,
+  PRIMARY KEY (`transfer_request_item_id`),
+  UNIQUE KEY `transfer_request_id` (`transfer_request_id`,`item_master_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_treatment`
+--
+
+DROP TABLE IF EXISTS `pos_treatment`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_treatment` (
+  `treatment_id` bigint(20) NOT NULL,
+  `date` datetime DEFAULT NULL,
+  `progress_notes` varchar(250) DEFAULT NULL,
+  `fisioterapis_id` bigint(20) DEFAULT NULL,
+  `reg_id` bigint(20) DEFAULT NULL,
+  `customer_id` bigint(20) DEFAULT NULL,
+  `item_master_id` bigint(20) DEFAULT NULL,
+  `type` int(2) DEFAULT 0,
+  `next_visit` datetime DEFAULT NULL,
+  PRIMARY KEY (`treatment_id`),
+  KEY `fisioterapis_id` (`fisioterapis_id`),
+  KEY `item_master_id` (`item_master_id`),
+  KEY `customer_id` (`customer_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_unit`
+--
+
+DROP TABLE IF EXISTS `pos_unit`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_unit` (
+  `uom_id` bigint(20) NOT NULL DEFAULT 0,
+  `unit` varchar(20) DEFAULT NULL,
+  `company_id` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`uom_id`),
+  UNIQUE KEY `XPKuom` (`uom_id`),
+  UNIQUE KEY `Index_3` (`unit`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci ROW_FORMAT=DYNAMIC;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `insert_pos_unit` AFTER INSERT ON `pos_unit` FOR EACH ROW BEGIN
+	    INSERT INTO `android_logs` (logs_id,table_name,reff_id,old_id,sts_loc1,sts_loc2,sts_loc3,sts_loc4,sts_loc5,sts_loc6,sts_loc7,sts_loc8,sts_loc9,sts_loc10,
+	sts_loc11,sts_loc12,sts_loc13,sts_loc14,sts_loc15,sts_loc16,sts_loc17,sts_loc18,sts_loc19,sts_loc20,
+	sts_loc21,sts_loc22,sts_loc23,sts_loc24,sts_loc25,sts_loc26,sts_loc27,sts_loc28,sts_loc29,sts_loc30,action_handle) VALUE (
+	  UUID(),
+	  "pos_item_unit",
+	  new.uom_id,
+	  0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  "insert"
+	);
+    END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `update_pos_unit` AFTER UPDATE ON `pos_unit` FOR EACH ROW BEGIN
+	INSERT INTO `android_logs` (logs_id,table_name,reff_id,old_id,sts_loc1,sts_loc2,sts_loc3,sts_loc4,sts_loc5,sts_loc6,sts_loc7,sts_loc8,sts_loc9,sts_loc10,
+	sts_loc11,sts_loc12,sts_loc13,sts_loc14,sts_loc15,sts_loc16,sts_loc17,sts_loc18,sts_loc19,sts_loc20,
+	sts_loc21,sts_loc22,sts_loc23,sts_loc24,sts_loc25,sts_loc26,sts_loc27,sts_loc28,sts_loc29,sts_loc30,action_handle) VALUE (
+	  UUID(),
+	  "pos_unit",
+	  new.uom_id,
+	  old.uom_id,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	   "update"
+	);
+    END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `delete_pos_unit` BEFORE DELETE ON `pos_unit` FOR EACH ROW BEGIN
+	INSERT INTO `android_logs` (logs_id,table_name,reff_id,old_id,sts_loc1,sts_loc2,sts_loc3,sts_loc4,sts_loc5,sts_loc6,sts_loc7,sts_loc8,sts_loc9,sts_loc10,
+	sts_loc11,sts_loc12,sts_loc13,sts_loc14,sts_loc15,sts_loc16,sts_loc17,sts_loc18,sts_loc19,sts_loc20,
+	sts_loc21,sts_loc22,sts_loc23,sts_loc24,sts_loc25,sts_loc26,sts_loc27,sts_loc28,sts_loc29,sts_loc30,action_handle) VALUE (
+	  UUID(),
+	  "pos_unit",
+	  old.uom_id,
+	  0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	   "delete"
+	);	
+    END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+
+--
+-- Table structure for table `pos_vendor_item`
+--
+
+DROP TABLE IF EXISTS `pos_vendor_item`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_vendor_item` (
+  `vendor_item_id` bigint(20) NOT NULL DEFAULT 0,
+  `item_master_id` bigint(20) DEFAULT 0,
+  `vendor_id` bigint(20) DEFAULT 0,
+  `last_price` decimal(25,2) DEFAULT 0.00,
+  `last_discount` decimal(25,2) DEFAULT 0.00,
+  `update_date` datetime DEFAULT NULL,
+  `company_id` bigint(20) DEFAULT 0,
+  `real_price` decimal(22,2) DEFAULT 0.00,
+  `margin_price` decimal(22,2) DEFAULT 0.00,
+  `last_disc_val` decimal(22,2) DEFAULT 0.00,
+  `last_dis_val` decimal(22,2) DEFAULT 0.00,
+  `reg_dis_val` decimal(22,2) DEFAULT 0.00,
+  `reg_dis_percent` decimal(22,2) DEFAULT 0.00,
+  `item_vendor_code` varchar(60) DEFAULT NULL,
+  `uom_purchase` bigint(20) DEFAULT 0,
+  `delivery_unit` int(4) DEFAULT 0,
+  `conv_qty` decimal(22,2) DEFAULT 0.00,
+  `dis_3_percent` decimal(22,2) DEFAULT 0.00,
+  `dis_3_val` decimal(22,2) DEFAULT 0.00,
+  `dis_4_percent` decimal(22,2) DEFAULT 0.00,
+  `dis_4_val` decimal(22,2) DEFAULT 0.00,
+  PRIMARY KEY (`vendor_item_id`),
+  UNIQUE KEY `uniqKey` (`item_master_id`,`vendor_id`,`conv_qty`),
+  KEY `item_master_id` (`item_master_id`),
+  KEY `vendor_id` (`vendor_id`),
+  CONSTRAINT `FK5jk9n1mkk9xvjwkfjvopq39fn` FOREIGN KEY (`item_master_id`) REFERENCES `pos_item_master` (`item_master_id`),
+  CONSTRAINT `FKtldx9f4uhuny1m49pg2chb7mm` FOREIGN KEY (`vendor_id`) REFERENCES `vendor` (`vendor_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pos_vendor_item_change`
+--
+
+DROP TABLE IF EXISTS `pos_vendor_item_change`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pos_vendor_item_change` (
+  `vendor_item_change_id` bigint(20) NOT NULL DEFAULT 0,
+  `item_master_id` bigint(20) DEFAULT NULL,
+  `vendor_id` bigint(20) DEFAULT NULL,
+  `last_price` decimal(25,2) DEFAULT 0.00,
+  `last_discount` decimal(25,2) DEFAULT NULL,
+  `update_date` datetime DEFAULT NULL,
+  `company_id` bigint(20) DEFAULT NULL,
+  `real_price` double DEFAULT 0,
+  `margin_price` double DEFAULT 0,
+  `last_disc_val` double DEFAULT 0,
+  `last_dis_val` double DEFAULT 0,
+  `reg_dis_val` double DEFAULT 0,
+  `reg_dis_percent` double DEFAULT 0,
+  `active_date` datetime DEFAULT NULL,
+  `date` datetime DEFAULT NULL,
+  `user_id` bigint(20) DEFAULT 0,
+  `vendor_item_id` bigint(20) DEFAULT 0,
+  `status` int(11) DEFAULT 0,
+  `last_price_ori` double DEFAULT 0,
+  `ref_number` varchar(40) DEFAULT '',
+  `counter` int(11) DEFAULT 0,
+  `prefix_number` varchar(10) DEFAULT NULL,
+  PRIMARY KEY (`vendor_item_change_id`),
+  UNIQUE KEY `XPKvendor_item` (`vendor_item_change_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pv_payment_monitor`
+--
+
+DROP TABLE IF EXISTS `pv_payment_monitor`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pv_payment_monitor` (
+  `id` bigint(25) NOT NULL,
+  `bankpo_payment_id` bigint(25) DEFAULT 0,
+  `receive_id` bigint(20) DEFAULT 0,
+  `mcm_reff_no` varchar(255) DEFAULT NULL,
+  `mcm_date` date DEFAULT NULL,
+  `payment_date` date DEFAULT NULL,
+  `cash_out_date` date DEFAULT NULL,
+  `other_bank_no` varchar(255) DEFAULT NULL,
+  `bank_reff` varchar(255) DEFAULT NULL,
+  `bank_date` date DEFAULT NULL,
+  `memo` text DEFAULT NULL,
+  `status` varchar(255) DEFAULT NULL,
+  `rate` int(10) DEFAULT 0,
+  `term` int(10) DEFAULT 0,
+  PRIMARY KEY (`id`),
+  KEY `bankpo_payment_id` (`bankpo_payment_id`),
+  KEY `receive_id` (`receive_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pv_penagihan`
+--
+
+DROP TABLE IF EXISTS `pv_penagihan`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pv_penagihan` (
+  `id` bigint(25) DEFAULT NULL,
+  `no_request` varchar(75) DEFAULT NULL,
+  `tipe_penagihan` varchar(60) DEFAULT NULL,
+  `tipe_pengiriman` int(2) DEFAULT NULL,
+  `nomer_po` varchar(60) DEFAULT NULL,
+  `tanggal_po` date DEFAULT NULL,
+  `nomer_do` text DEFAULT NULL,
+  `delivery_area` varchar(300) DEFAULT NULL,
+  `start_date_periode` date DEFAULT NULL,
+  `end_date_periode` date DEFAULT NULL,
+  `is_pajak` int(11) DEFAULT NULL,
+  `po_file` text DEFAULT NULL,
+  `do_file` text DEFAULT NULL,
+  `kwitansi_file` text DEFAULT NULL,
+  `note_file` text DEFAULT NULL,
+  `resi_file` text DEFAULT NULL,
+  `scan_report_sales_file` text DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `status` varchar(60) DEFAULT NULL,
+  `reason` text DEFAULT NULL,
+  `note` text DEFAULT NULL,
+  `vendor_id` bigint(20) DEFAULT NULL,
+  `doc_receive_id` bigint(20) DEFAULT 0,
+  `doc_receive_number` varchar(20) DEFAULT '',
+  `due_date` date DEFAULT NULL,
+  `user_id` bigint(25) DEFAULT 0,
+  `penagihan_cons_type` varchar(55) DEFAULT '',
+  KEY `doc_receive_id` (`doc_receive_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pv_penagihan_detail`
+--
+
+DROP TABLE IF EXISTS `pv_penagihan_detail`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pv_penagihan_detail` (
+  `id` bigint(20) NOT NULL DEFAULT 0,
+  `penagihan_id` bigint(20) DEFAULT 0,
+  `nomor_invoice` varchar(50) DEFAULT '',
+  `tanggal_invoice` date DEFAULT NULL,
+  `nilai_invoice` decimal(22,2) DEFAULT 0.00,
+  `nomor_seri_pajak` varchar(100) DEFAULT '',
+  `invoice_file` longtext DEFAULT NULL,
+  `faktur_pajak_file` longtext DEFAULT NULL,
+  `nomor_po` varchar(55) DEFAULT '',
+  `date_po` date DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `penagihan_id` (`penagihan_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pv_user`
+--
+
+DROP TABLE IF EXISTS `pv_user`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pv_user` (
+  `id` bigint(25) NOT NULL DEFAULT 0,
+  `email` varchar(255) DEFAULT NULL,
+  `username` varchar(255) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL,
+  `vendor_id` bigint(25) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `vendor_id` (`vendor_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pv_vendor`
+--
+
+DROP TABLE IF EXISTS `pv_vendor`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pv_vendor` (
+  `id` bigint(25) NOT NULL DEFAULT 0,
+  `nama` varchar(255) DEFAULT NULL,
+  `kode` varchar(255) DEFAULT NULL,
+  `tipe_perusahaan` varchar(255) DEFAULT NULL,
+  `tipe_perusahaan_lainnya` varchar(255) DEFAULT NULL,
+  `alamat` varchar(255) DEFAULT NULL,
+  `provinsi` varchar(255) DEFAULT NULL,
+  `kota` varchar(50) DEFAULT NULL,
+  `kode_pos` varchar(50) DEFAULT NULL,
+  `tipe_pembelian` varchar(50) DEFAULT NULL,
+  `status_pajak` varchar(50) DEFAULT NULL,
+  `npwp` varchar(50) DEFAULT NULL,
+  `website` varchar(255) DEFAULT NULL,
+  `nama_pemilik` varchar(255) DEFAULT NULL,
+  `nama_penanggung_jawab` varchar(255) DEFAULT NULL,
+  `jabatan_penanggung_jawab` varchar(255) DEFAULT NULL,
+  `no_telp_kantor` varchar(50) DEFAULT NULL,
+  `no_wa_purchase_order` varchar(50) DEFAULT NULL,
+  `email_korespondensi` varchar(255) DEFAULT NULL,
+  `nama_kontak` varchar(255) DEFAULT NULL,
+  `jabatan_kontak` varchar(50) DEFAULT NULL,
+  `no_wa_keuangan` varchar(50) DEFAULT NULL,
+  `email_korespondensi_keuangan` varchar(255) DEFAULT NULL,
+  `nama_kontak_keuangan` varchar(255) DEFAULT NULL,
+  `jabatan_keuangan` varchar(50) DEFAULT NULL,
+  `term_pembayaran` int(10) DEFAULT NULL,
+  `pengembalian_barang` int(10) DEFAULT NULL,
+  `bank` varchar(255) DEFAULT NULL,
+  `no_rekening_bank` varchar(255) DEFAULT NULL,
+  `nama_rekening_bank` varchar(255) DEFAULT NULL,
+  `kantor_cabang_bank` varchar(255) DEFAULT NULL,
+  `metode_pengiriman` varchar(50) DEFAULT NULL,
+  `rebate` double(22,2) DEFAULT NULL,
+  `marketing_fee` double(22,2) DEFAULT NULL,
+  `listing_fee` double(22,2) DEFAULT NULL,
+  `promotion_fund` double(33,2) DEFAULT NULL,
+  `file_npwp` longtext DEFAULT NULL,
+  `file_ktp_pemilik` longtext DEFAULT NULL,
+  `file_ktp_penanggung_jawab` longtext DEFAULT NULL,
+  `file_spkp` longtext DEFAULT NULL,
+  `file_nib` longtext DEFAULT NULL,
+  `file_screenshot_rekening` longtext DEFAULT NULL,
+  `file_sertikasi_bpom` longtext DEFAULT NULL,
+  `status` varchar(50) DEFAULT NULL,
+  `reason` text DEFAULT NULL,
+  `vendor_id` bigint(25) DEFAULT NULL,
+  `file_dokumen_lainnya` longtext DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `vendor_id` (`vendor_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `refresh_token`
+--
+
+DROP TABLE IF EXISTS `refresh_token`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `refresh_token` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `expiry_date` datetime(6) NOT NULL,
+  `revoked` bit(1) NOT NULL,
+  `token_hash` varchar(64) NOT NULL,
+  `user_id` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UK_kdj16cltjxdksuyiosdhliveg` (`token_hash`),
+  KEY `FKajcmd839bavll21gf9pjlbt2f` (`user_id`),
+  CONSTRAINT `FKajcmd839bavll21gf9pjlbt2f` FOREIGN KEY (`user_id`) REFERENCES `sysuser` (`user_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1354 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `report_budget`
+--
+
+DROP TABLE IF EXISTS `report_budget`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `report_budget` (
+  `report_budget_id` bigint(20) NOT NULL DEFAULT 0,
+  `employee_id` bigint(20) DEFAULT 0,
+  `user_id` bigint(20) DEFAULT 0,
+  `full_name` varchar(200) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
+  `date` datetime DEFAULT NULL,
+  `pkp` int(4) DEFAULT 0,
+  `create_date` datetime DEFAULT NULL,
+  `vendor_id` bigint(20) DEFAULT 0,
+  `non_pkp` int(4) DEFAULT 0,
+  `ignored` int(6) DEFAULT 0,
+  `date_end` datetime DEFAULT NULL,
+  `non` int(4) DEFAULT 0,
+  `konsinyasi` int(4) DEFAULT 0,
+  `komisi` int(4) DEFAULT 0,
+  PRIMARY KEY (`report_budget_id`),
+  KEY `ignore` (`ignored`),
+  KEY `date` (`date`),
+  KEY `create_date` (`create_date`),
+  KEY `pkp` (`pkp`),
+  KEY `vendor_id` (`vendor_id`),
+  KEY `non_pkp` (`non_pkp`),
+  KEY `ignored` (`ignored`),
+  KEY `date_end` (`date_end`),
+  KEY `konsinyasi` (`konsinyasi`),
+  KEY `komisi` (`komisi`),
+  KEY `non` (`non`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `report_budget_detail`
+--
+
+DROP TABLE IF EXISTS `report_budget_detail`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `report_budget_detail` (
+  `report_budget_detail_id` bigint(20) NOT NULL DEFAULT 0,
+  `report_budget_id` bigint(20) DEFAULT 0,
+  `vendor_id` bigint(20) DEFAULT 0,
+  `sequence` int(4) DEFAULT 0,
+  PRIMARY KEY (`report_budget_detail_id`),
+  KEY `report_budget_id` (`report_budget_id`),
+  KEY `sequence` (`sequence`),
+  KEY `vendor_id` (`vendor_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `report_template`
+--
+
+DROP TABLE IF EXISTS `report_template`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `report_template` (
+  `report_template_id` bigint(20) NOT NULL DEFAULT 0,
+  `report_type` int(3) DEFAULT 0,
+  `report_name` varchar(200) DEFAULT NULL,
+  `report_url` varchar(200) DEFAULT NULL,
+  `is_default` int(1) DEFAULT 0,
+  PRIMARY KEY (`report_template_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `sales_airport_history`
+--
+
+DROP TABLE IF EXISTS `sales_airport_history`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `sales_airport_history` (
+  `sales_airport_history_id` bigint(20) NOT NULL DEFAULT 0,
+  `sales_id` bigint(20) DEFAULT 0,
+  `location_id` bigint(20) DEFAULT 0,
+  `date` datetime DEFAULT NULL,
+  `type` int(2) DEFAULT 0,
+  PRIMARY KEY (`sales_airport_history_id`),
+  UNIQUE KEY `airport_history_uniq` (`sales_id`,`location_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Temporary table structure for view `sales_cost_card`
+--
+
+DROP TABLE IF EXISTS `sales_cost_card`;
+/*!50001 DROP VIEW IF EXISTS `sales_cost_card`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `sales_cost_card` AS SELECT
+ 1 AS `sales_id`,
+  1 AS `cost_card` */;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Table structure for table `sales_history`
+--
+
+DROP TABLE IF EXISTS `sales_history`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `sales_history` (
+  `sales_history_id` bigint(20) NOT NULL DEFAULT 0,
+  `cash_cashier_id` bigint(20) DEFAULT 0,
+  `date` datetime DEFAULT NULL,
+  `gl_id` bigint(20) DEFAULT 0,
+  `journal_number` varchar(120) DEFAULT NULL,
+  PRIMARY KEY (`sales_history_id`),
+  UNIQUE KEY `cash_cashier_id` (`cash_cashier_id`),
+  KEY `gl_id` (`gl_id`),
+  KEY `jurnal_number` (`journal_number`),
+  KEY `cashCashierId` (`cash_cashier_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Temporary table structure for view `sales_pending_view`
+--
+
+DROP TABLE IF EXISTS `sales_pending_view`;
+/*!50001 DROP VIEW IF EXISTS `sales_pending_view`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `sales_pending_view` AS SELECT
+ 1 AS `item_master_id`,
+  1 AS `code`,
+  1 AS `name`,
+  1 AS `location_id`,
+  1 AS `qty` */;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Table structure for table `section`
+--
+
+DROP TABLE IF EXISTS `section`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `section` (
+  `section_id` bigint(20) NOT NULL DEFAULT 0,
+  `department_id` bigint(20) DEFAULT NULL,
+  `name` varchar(64) DEFAULT NULL,
+  `description` varchar(120) DEFAULT NULL,
+  PRIMARY KEY (`section_id`),
+  UNIQUE KEY `XPKsection` (`section_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `segment`
+--
+
+DROP TABLE IF EXISTS `segment`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `segment` (
+  `segment_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(65) DEFAULT '""',
+  `type` varchar(45) DEFAULT '""',
+  `function` varchar(45) DEFAULT '""',
+  `column_name` varchar(65) DEFAULT '""',
+  `count` int(11) DEFAULT 0,
+  PRIMARY KEY (`segment_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=504404474074185238 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `segment_detail`
+--
+
+DROP TABLE IF EXISTS `segment_detail`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `segment_detail` (
+  `segment_detail_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `segment_id` bigint(20) DEFAULT 0,
+  `name` varchar(145) DEFAULT NULL,
+  `ref_id` bigint(20) DEFAULT 0,
+  `code` varchar(20) DEFAULT NULL,
+  `level` int(11) DEFAULT 0,
+  `type` varchar(45) DEFAULT NULL,
+  `location_id` bigint(20) DEFAULT 0,
+  `type_sales_report` int(11) DEFAULT 0,
+  `ref_segment_detail_id` bigint(20) DEFAULT 0,
+  `status` int(4) DEFAULT 0,
+  `business_type` int(4) DEFAULT 0,
+  PRIMARY KEY (`segment_detail_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5044049299963280068 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `segment_user`
+--
+
+DROP TABLE IF EXISTS `segment_user`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `segment_user` (
+  `segment_user_id` bigint(20) NOT NULL DEFAULT 0,
+  `user_id` bigint(20) DEFAULT 0,
+  `segment_detail_id` bigint(20) DEFAULT 0,
+  `location_id` bigint(20) DEFAULT 0,
+  PRIMARY KEY (`segment_user_id`),
+  UNIQUE KEY `uniqKey` (`user_id`,`segment_detail_id`,`location_id`),
+  KEY `userId` (`user_id`),
+  KEY `segmentDetailId` (`segment_detail_id`),
+  KEY `locationId` (`location_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `sessions`
+--
+
+DROP TABLE IF EXISTS `sessions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `sessions` (
+  `uid` int(10) unsigned NOT NULL DEFAULT 0,
+  `sid` varchar(64) NOT NULL DEFAULT '',
+  `hostname` varchar(128) NOT NULL DEFAULT '',
+  `timestamp` int(11) NOT NULL DEFAULT 0,
+  `cache` int(11) NOT NULL DEFAULT 0,
+  `session` longtext DEFAULT NULL,
+  PRIMARY KEY (`sid`),
+  KEY `uid` (`uid`),
+  KEY `timestamp` (`timestamp`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `setoran_kasir`
+--
+
+DROP TABLE IF EXISTS `setoran_kasir`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `setoran_kasir` (
+  `setoran_kasir_id` bigint(20) NOT NULL DEFAULT 0,
+  `coa_id` bigint(20) DEFAULT 0,
+  `journal_number` varchar(60) DEFAULT NULL,
+  `journal_counter` int(25) DEFAULT 0,
+  `location_id` bigint(20) DEFAULT 0,
+  `journal_prefix` varchar(20) DEFAULT NULL,
+  `date` datetime DEFAULT NULL,
+  `trans_date` datetime DEFAULT NULL,
+  `memo` text DEFAULT NULL,
+  `operator_id` bigint(20) DEFAULT 0,
+  `amount` decimal(22,2) DEFAULT 0.00,
+  `posted_status` int(11) DEFAULT 0,
+  `posted_by_id` bigint(20) DEFAULT 0,
+  `posted_date` datetime DEFAULT NULL,
+  `effective_date` datetime DEFAULT NULL,
+  `periode_id` bigint(20) DEFAULT 0,
+  `segment1_id` bigint(20) DEFAULT 0,
+  PRIMARY KEY (`setoran_kasir_id`),
+  UNIQUE KEY `journal_number` (`journal_number`),
+  KEY `coa_id` (`coa_id`),
+  KEY `jurnalnumber` (`journal_number`),
+  KEY `location_id` (`location_id`),
+  KEY `date` (`date`),
+  KEY `trans_date` (`trans_date`),
+  KEY `posted_status` (`posted_status`),
+  KEY `periode_id` (`periode_id`),
+  KEY `segment1_id` (`segment1_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `setoran_kasir_detail`
+--
+
+DROP TABLE IF EXISTS `setoran_kasir_detail`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `setoran_kasir_detail` (
+  `setoran_kasir_detail_id` bigint(20) NOT NULL DEFAULT 0,
+  `setoran_kasir_id` bigint(20) NOT NULL DEFAULT 0,
+  `tanggal` datetime DEFAULT NULL,
+  `cash` decimal(22,2) DEFAULT 0.00,
+  `card` decimal(22,2) NOT NULL DEFAULT 0.00,
+  `cash_back` decimal(22,2) DEFAULT 0.00,
+  `setoran_toko` decimal(22,2) DEFAULT 0.00,
+  `selisih` decimal(22,2) DEFAULT 0.00,
+  `coa_id` bigint(20) DEFAULT 0,
+  `system` decimal(22,2) DEFAULT 0.00,
+  `other` decimal(22,2) DEFAULT 0.00,
+  `account_receivable` decimal(22,2) DEFAULT 0.00,
+  PRIMARY KEY (`setoran_kasir_detail_id`),
+  UNIQUE KEY `uniq_tanggal` (`setoran_kasir_id`,`tanggal`),
+  KEY `setoran_kasir_id` (`setoran_kasir_id`),
+  KEY `tanggal` (`tanggal`),
+  KEY `coa_id` (`coa_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `setoran_kasir_detail_payment`
+--
+
+DROP TABLE IF EXISTS `setoran_kasir_detail_payment`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `setoran_kasir_detail_payment` (
+  `setoran_kasir_detail_payment_id` bigint(20) NOT NULL DEFAULT 0,
+  `setoran_kasir_detail_id` bigint(20) DEFAULT 0,
+  `payment_method_id` bigint(20) DEFAULT 0,
+  `currency_id` bigint(20) DEFAULT 0,
+  `amount` decimal(22,2) DEFAULT 0.00,
+  PRIMARY KEY (`setoran_kasir_detail_payment_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `source`
+--
+
+DROP TABLE IF EXISTS `source`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `source` (
+  `source_id` bigint(20) NOT NULL,
+  `code` varchar(25) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`source_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `system_doc_code`
+--
+
+DROP TABLE IF EXISTS `system_doc_code`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `system_doc_code` (
+  `system_doc_code_id` bigint(20) NOT NULL DEFAULT 0,
+  `code` varchar(45) DEFAULT NULL,
+  `type` varchar(45) DEFAULT NULL,
+  `code_format` varchar(45) DEFAULT NULL,
+  `doc_separator` varchar(45) DEFAULT NULL,
+  `digit_counter` int(11) DEFAULT NULL,
+  `posisi_after_code` int(11) DEFAULT NULL,
+  `year_digit` int(11) DEFAULT NULL,
+  `month_digit` int(11) DEFAULT NULL,
+  `month_type` int(11) DEFAULT NULL,
+  PRIMARY KEY (`system_doc_code_id`),
+  UNIQUE KEY `NewIndex1` (`type`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `system_doc_number`
+--
+
+DROP TABLE IF EXISTS `system_doc_number`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `system_doc_number` (
+  `system_doc_number_id` bigint(20) NOT NULL DEFAULT 0,
+  `type` varchar(64) CHARACTER SET latin1 COLLATE latin1_bin DEFAULT NULL COMMENT 'INVOICE, PAYMENT, PO, PR',
+  `counter` int(11) DEFAULT NULL,
+  `prefix_number` varchar(45) DEFAULT NULL,
+  `year` int(11) DEFAULT NULL,
+  `date` datetime DEFAULT NULL,
+  `user_id` bigint(20) DEFAULT NULL,
+  `doc_number` varchar(64) DEFAULT NULL,
+  PRIMARY KEY (`system_doc_number_id`),
+  UNIQUE KEY `uniqKey1` (`type`,`doc_number`),
+  KEY `prefix_number` (`prefix_number`),
+  KEY `type` (`type`),
+  KEY `year` (`year`),
+  KEY `counter` (`counter`),
+  KEY `doc_number` (`doc_number`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `system_main`
+--
+
+DROP TABLE IF EXISTS `system_main`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `system_main` (
+  `sysmain_id` bigint(20) NOT NULL DEFAULT 0,
+  `name` varchar(64) DEFAULT NULL,
+  `valueprop` text DEFAULT NULL,
+  `valtype` varchar(64) DEFAULT NULL,
+  `distype` varchar(64) DEFAULT NULL,
+  `groupprop` varchar(64) DEFAULT NULL,
+  `note` varchar(120) DEFAULT NULL,
+  `company_id` bigint(20) DEFAULT 0,
+  `active` tinyint(4) DEFAULT 0,
+  PRIMARY KEY (`sysmain_id`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `insert_system_main` AFTER INSERT ON `system_main` FOR EACH ROW BEGIN
+	INSERT INTO `android_logs` (
+	logs_id,table_name,reff_id,old_id,sts_loc1,sts_loc2,sts_loc3,sts_loc4,sts_loc5,sts_loc6,sts_loc7,sts_loc8,sts_loc9,sts_loc10,
+	sts_loc11,sts_loc12,sts_loc13,sts_loc14,sts_loc15,sts_loc16,sts_loc17,sts_loc18,sts_loc19,sts_loc20,
+	sts_loc21,sts_loc22,sts_loc23,sts_loc24,sts_loc25,sts_loc26,sts_loc27,sts_loc28,sts_loc29,sts_loc30,
+	action_handle) VALUE (
+	  UUID(),
+	  "system_main",
+	  new.sysmain_id,
+	  0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  "insert"
+	  );
+    END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `update_system_main` AFTER UPDATE ON `system_main` FOR EACH ROW BEGIN
+	INSERT INTO `android_logs` (
+	logs_id,table_name,reff_id,old_id,sts_loc1,sts_loc2,sts_loc3,sts_loc4,sts_loc5,sts_loc6,sts_loc7,sts_loc8,sts_loc9,sts_loc10,
+	sts_loc11,sts_loc12,sts_loc13,sts_loc14,sts_loc15,sts_loc16,sts_loc17,sts_loc18,sts_loc19,sts_loc20,
+	sts_loc21,sts_loc22,sts_loc23,sts_loc24,sts_loc25,sts_loc26,sts_loc27,sts_loc28,sts_loc29,sts_loc30,
+	action_handle) VALUE (
+	  UUID(),
+	  "system_main",
+	  new.sysmain_id,
+	  old.sysmain_id,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  "update"
+	);
+    END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `delete_system_main` BEFORE DELETE ON `system_main` FOR EACH ROW BEGIN
+	INSERT INTO `android_logs` (
+	logs_id,table_name,reff_id,old_id,sts_loc1,sts_loc2,sts_loc3,sts_loc4,sts_loc5,sts_loc6,sts_loc7,sts_loc8,sts_loc9,sts_loc10,
+	sts_loc11,sts_loc12,sts_loc13,sts_loc14,sts_loc15,sts_loc16,sts_loc17,sts_loc18,sts_loc19,sts_loc20,
+	sts_loc21,sts_loc22,sts_loc23,sts_loc24,sts_loc25,sts_loc26,sts_loc27,sts_loc28,sts_loc29,sts_loc30,
+	action_handle) VALUE (
+	  UUID(),
+	  "system_main",
+	  old.sysmain_id,
+	  0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  "delete"
+	);
+    END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+
+--
+-- Table structure for table `sysuser`
+--
+
+DROP TABLE IF EXISTS `sysuser`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `sysuser` (
+  `user_id` bigint(20) NOT NULL DEFAULT 0,
+  `login_id` varchar(20) DEFAULT NULL,
+  `password` varchar(32) DEFAULT NULL,
+  `full_name` varchar(64) DEFAULT NULL,
+  `email` varchar(64) DEFAULT NULL,
+  `description` varchar(120) DEFAULT NULL,
+  `reg_date` date DEFAULT NULL,
+  `update_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `user_status` int(11) DEFAULT NULL,
+  `last_login_date` datetime DEFAULT NULL,
+  `last_login_ip` varchar(20) DEFAULT NULL,
+  `employee_id` bigint(20) DEFAULT NULL,
+  `employee_num` varchar(20) DEFAULT NULL,
+  `user_level` int(11) DEFAULT NULL,
+  `company_id` bigint(20) unsigned NOT NULL DEFAULT 0,
+  `last_login_date1` datetime DEFAULT NULL,
+  `segment1_id` bigint(20) DEFAULT NULL,
+  `segment2_id` bigint(20) DEFAULT NULL,
+  `segment3_id` bigint(20) DEFAULT NULL,
+  `segment4_id` bigint(20) DEFAULT NULL,
+  `segment5_id` bigint(20) DEFAULT NULL,
+  `segment6_id` bigint(20) DEFAULT NULL,
+  `segment7_id` bigint(20) DEFAULT NULL,
+  `segment8_id` bigint(20) DEFAULT NULL,
+  `segment9_id` bigint(20) DEFAULT NULL,
+  `segment10_id` bigint(20) DEFAULT NULL,
+  `segment11_id` bigint(20) DEFAULT NULL,
+  `segment12_id` bigint(20) DEFAULT NULL,
+  `segment13_id` bigint(20) DEFAULT NULL,
+  `segment14_id` bigint(20) DEFAULT NULL,
+  `segment15_id` bigint(20) DEFAULT NULL,
+  `user_key` varchar(145) DEFAULT NULL,
+  `reset_password` tinyint(4) DEFAULT 0,
+  `tipe_sales` int(11) NOT NULL DEFAULT 1,
+  `group_id` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`user_id`),
+  UNIQUE KEY `XPKsysuser` (`user_id`),
+  KEY `FKbgik636v4w9ml1p9i9gj382gh` (`group_id`),
+  CONSTRAINT `FKbgik636v4w9ml1p9i9gj382gh` FOREIGN KEY (`group_id`) REFERENCES `grp` (`group_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `insert_user` AFTER INSERT ON `sysuser` FOR EACH ROW BEGIN
+	INSERT INTO `android_logs` (
+	logs_id,table_name,reff_id,old_id,sts_loc1,sts_loc2,sts_loc3,sts_loc4,sts_loc5,sts_loc6,sts_loc7,sts_loc8,sts_loc9,sts_loc10,
+	sts_loc11,sts_loc12,sts_loc13,sts_loc14,sts_loc15,sts_loc16,sts_loc17,sts_loc18,sts_loc19,sts_loc20,
+	sts_loc21,sts_loc22,sts_loc23,sts_loc24,sts_loc25,sts_loc26,sts_loc27,sts_loc28,sts_loc29,sts_loc30,
+	action_handle) VALUE (
+	  UUID(),
+	  "sysuser",
+	  new.user_id,
+	  0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  "insert"
+	  );
+    END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `update_user` AFTER UPDATE ON `sysuser` FOR EACH ROW BEGIN
+	INSERT INTO `android_logs` (logs_id,table_name,reff_id,old_id,sts_loc1,sts_loc2,sts_loc3,sts_loc4,sts_loc5,sts_loc6,sts_loc7,sts_loc8,sts_loc9,sts_loc10,
+	sts_loc11,sts_loc12,sts_loc13,sts_loc14,sts_loc15,sts_loc16,sts_loc17,sts_loc18,sts_loc19,sts_loc20,
+	sts_loc21,sts_loc22,sts_loc23,sts_loc24,sts_loc25,sts_loc26,sts_loc27,sts_loc28,sts_loc29,sts_loc30,action_handle) VALUE (
+	  UUID(),
+	  "sysuser",
+	  new.user_id,
+	  old.user_id,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	   "update"
+	);
+    END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `delete_user` BEFORE DELETE ON `sysuser` FOR EACH ROW BEGIN
+	INSERT INTO `android_logs` (
+	logs_id,table_name,reff_id,old_id,sts_loc1,sts_loc2,sts_loc3,sts_loc4,sts_loc5,sts_loc6,sts_loc7,sts_loc8,sts_loc9,sts_loc10,
+	sts_loc11,sts_loc12,sts_loc13,sts_loc14,sts_loc15,sts_loc16,sts_loc17,sts_loc18,sts_loc19,sts_loc20,
+	sts_loc21,sts_loc22,sts_loc23,sts_loc24,sts_loc25,sts_loc26,sts_loc27,sts_loc28,sts_loc29,sts_loc30,
+	action_handle) VALUE (
+	  UUID(),
+	  "sysuser",
+	  old.user_id,
+	  0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,
+	  "delete"
+	);
+    END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+
+--
+-- Table structure for table `table_number`
+--
+
+DROP TABLE IF EXISTS `table_number`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `table_number` (
+  `table_id` bigint(20) DEFAULT NULL,
+  `table_number` char(10) DEFAULT NULL,
+  `description` varchar(50) DEFAULT NULL,
+  `posx` int(11) NOT NULL DEFAULT 0,
+  `posy` int(11) NOT NULL DEFAULT 0,
+  `PAX` char(3) DEFAULT NULL,
+  `pos_x` int(11) DEFAULT 0,
+  `pos_y` int(11) DEFAULT 0,
+  `status_open` int(11) DEFAULT 0,
+  `type` int(11) NOT NULL DEFAULT 0,
+  KEY `table_id` (`table_id`),
+  KEY `table_number` (`table_number`),
+  KEY `description` (`description`),
+  KEY `pos_x` (`pos_x`),
+  KEY `pos_y` (`pos_y`),
+  KEY `status_open` (`status_open`),
+  KEY `type` (`type`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `tanda_terima_bg`
+--
+
+DROP TABLE IF EXISTS `tanda_terima_bg`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tanda_terima_bg` (
+  `tanda_terima_bg_id` bigint(20) NOT NULL DEFAULT 0,
+  `bankpo_payment_id` bigint(20) DEFAULT 0,
+  `vendor_id` bigint(20) DEFAULT 0,
+  `supplier_name` varchar(255) DEFAULT NULL,
+  `trans_date` date DEFAULT NULL,
+  `amount` decimal(22,2) DEFAULT 0.00,
+  `tanda_terima_bg_main_id` bigint(20) DEFAULT 0,
+  PRIMARY KEY (`tanda_terima_bg_id`),
+  UNIQUE KEY `bankpo_payment_id` (`bankpo_payment_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `tanda_terima_bg_main`
+--
+
+DROP TABLE IF EXISTS `tanda_terima_bg_main`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tanda_terima_bg_main` (
+  `tanda_terima_bg_main_id` bigint(20) NOT NULL DEFAULT 0,
+  `number` varchar(60) DEFAULT NULL,
+  `counter` int(25) DEFAULT NULL,
+  `prefix` varchar(20) DEFAULT NULL,
+  `vendor_id` bigint(20) DEFAULT 0,
+  `trans_date` date DEFAULT NULL,
+  `create_date` date DEFAULT NULL,
+  `vendor` varchar(225) DEFAULT NULL,
+  PRIMARY KEY (`tanda_terima_bg_main_id`),
+  UNIQUE KEY `number` (`number`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `tax_number`
+--
+
+DROP TABLE IF EXISTS `tax_number`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tax_number` (
+  `tax_number_id` bigint(20) NOT NULL DEFAULT 0,
+  `tax_number` varchar(50) NOT NULL DEFAULT '',
+  `user_id` bigint(20) DEFAULT 0,
+  `date` datetime DEFAULT NULL,
+  PRIMARY KEY (`tax_number_id`),
+  UNIQUE KEY `tax_number` (`tax_number`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `term_of_payment`
+--
+
+DROP TABLE IF EXISTS `term_of_payment`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `term_of_payment` (
+  `term_of_payment_id` bigint(20) NOT NULL DEFAULT 0,
+  `description` varchar(120) DEFAULT NULL,
+  `due` int(11) DEFAULT NULL,
+  `qty_disc` int(11) DEFAULT NULL,
+  `disc_percent` int(11) DEFAULT NULL,
+  PRIMARY KEY (`term_of_payment_id`),
+  UNIQUE KEY `XPKterm_of_payment` (`term_of_payment_id`),
+  UNIQUE KEY `Index_3` (`description`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `tmp_fixing_sales_recipe`
+--
+
+DROP TABLE IF EXISTS `tmp_fixing_sales_recipe`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tmp_fixing_sales_recipe` (
+  `sales_id` bigint(20) NOT NULL DEFAULT 0,
+  `number` varchar(45) DEFAULT NULL,
+  `location_id` bigint(20) DEFAULT 0,
+  `date` datetime DEFAULT NULL,
+  `type` int(4) DEFAULT 0,
+  `sales_detail_id` bigint(20) DEFAULT 0,
+  `product_master_id` bigint(20) DEFAULT 0,
+  `qty` decimal(22,3) DEFAULT 0.000,
+  `status` int(4) DEFAULT 0,
+  PRIMARY KEY (`sales_id`),
+  UNIQUE KEY `uniq` (`sales_detail_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `tmp_recipe`
+--
+
+DROP TABLE IF EXISTS `tmp_recipe`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tmp_recipe` (
+  `tmp_recipe_id` bigint(20) NOT NULL DEFAULT 0,
+  `item_master_id` bigint(20) DEFAULT 0,
+  `item_recipe_id` bigint(20) DEFAULT 0,
+  `qty` decimal(22,3) DEFAULT 0.000,
+  `cogs` decimal(20,2) DEFAULT 0.00,
+  PRIMARY KEY (`tmp_recipe_id`),
+  UNIQUE KEY `uniq` (`item_master_id`,`item_recipe_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `transaction_activity_detail`
+--
+
+DROP TABLE IF EXISTS `transaction_activity_detail`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `transaction_activity_detail` (
+  `transaction_activity_detail_id` bigint(20) NOT NULL DEFAULT 0,
+  `percent` decimal(25,2) DEFAULT NULL,
+  `amount` decimal(25,2) DEFAULT NULL,
+  `transaction_id` bigint(20) DEFAULT NULL,
+  `is_direct` int(11) DEFAULT NULL,
+  `coa_id` bigint(20) DEFAULT NULL,
+  `type` int(11) DEFAULT NULL,
+  `module_id` bigint(20) DEFAULT NULL,
+  `donor_id` bigint(20) NOT NULL DEFAULT 0,
+  `memo` text NOT NULL,
+  `coa_expense_category_id` bigint(20) unsigned NOT NULL DEFAULT 0,
+  `coa_nature_expense_category_id` bigint(20) unsigned NOT NULL DEFAULT 0,
+  `activity_period_id` bigint(20) unsigned DEFAULT 0,
+  `trans_date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`transaction_activity_detail_id`),
+  UNIQUE KEY `XPKactivity_detail` (`transaction_activity_detail_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `transfer_analysis_log`
+--
+
+DROP TABLE IF EXISTS `transfer_analysis_log`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `transfer_analysis_log` (
+  `transfer_analysis_log_id` bigint(20) NOT NULL DEFAULT 0,
+  `start_date` datetime NOT NULL,
+  `end_date` datetime DEFAULT NULL,
+  `status` int(2) DEFAULT 0,
+  PRIMARY KEY (`transfer_analysis_log_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `uniq_key`
+--
+
+DROP TABLE IF EXISTS `uniq_key`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `uniq_key` (
+  `uniq_key_id` bigint(20) NOT NULL DEFAULT 0,
+  `type` int(11) DEFAULT 0,
+  `ref_id` bigint(20) DEFAULT 0,
+  `uniq_id` bigint(20) DEFAULT 0,
+  PRIMARY KEY (`uniq_key_id`),
+  KEY `ref_id` (`ref_id`),
+  KEY `uniq_id` (`uniq_id`),
+  KEY `type` (`type`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `uniq_key_detail`
+--
+
+DROP TABLE IF EXISTS `uniq_key_detail`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `uniq_key_detail` (
+  `uniq_key_detail_id` bigint(20) NOT NULL DEFAULT 0,
+  `uniq_key_id` bigint(20) NOT NULL DEFAULT 0,
+  `uniq_detail_id` bigint(20) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`uniq_key_detail_id`),
+  KEY `uniq_key_id` (`uniq_key_id`),
+  KEY `uniq_detail_id` (`uniq_detail_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `unit_usaha`
+--
+
+DROP TABLE IF EXISTS `unit_usaha`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `unit_usaha` (
+  `unit_usaha_id` bigint(20) NOT NULL DEFAULT 0,
+  `code` varchar(20) DEFAULT NULL,
+  `name` varchar(120) DEFAULT NULL,
+  `coa_ar_id` bigint(20) DEFAULT NULL,
+  `coa_ap_id` bigint(20) DEFAULT NULL,
+  `coa_ppn_id` bigint(20) DEFAULT NULL,
+  `coa_pph_id` bigint(20) DEFAULT NULL,
+  `coa_discount_id` bigint(20) DEFAULT NULL,
+  `location_id` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`unit_usaha_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `user_group`
+--
+
+DROP TABLE IF EXISTS `user_group`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `user_group` (
+  `group_id` bigint(20) NOT NULL DEFAULT 0,
+  `user_id` bigint(20) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`user_id`),
+  UNIQUE KEY `XPKuser_group` (`group_id`,`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `user_priv`
+--
+
+DROP TABLE IF EXISTS `user_priv`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `user_priv` (
+  `priv_id` bigint(20) NOT NULL DEFAULT 0,
+  `mn_1` int(11) DEFAULT NULL,
+  `mn_2` int(11) DEFAULT NULL,
+  `cmd_add` int(11) DEFAULT NULL,
+  `cmd_edit` int(11) DEFAULT NULL,
+  `cmd_view` int(11) DEFAULT NULL,
+  `cmd_delete` int(11) DEFAULT NULL,
+  `group_id` bigint(20) DEFAULT 0,
+  `user_id` bigint(20) DEFAULT 0,
+  `menu_id` bigint(20) DEFAULT 0,
+  `cmd_print` int(11) DEFAULT 0,
+  `cmd_posting` int(11) DEFAULT 0,
+  PRIMARY KEY (`priv_id`),
+  UNIQUE KEY `XPKuser_priv` (`priv_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `vendor`
+--
+
+DROP TABLE IF EXISTS `vendor`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `vendor` (
+  `name` varchar(500) DEFAULT NULL,
+  `vendor_id` bigint(20) NOT NULL DEFAULT 0,
+  `code` varchar(20) DEFAULT NULL,
+  `address` varchar(240) DEFAULT NULL,
+  `city` varchar(60) DEFAULT NULL,
+  `state` varchar(60) DEFAULT NULL,
+  `phone` varchar(40) DEFAULT NULL,
+  `hp` varchar(20) DEFAULT NULL,
+  `fax` varchar(20) DEFAULT NULL,
+  `due_date` int(11) DEFAULT NULL,
+  `cperson` varchar(64) DEFAULT NULL,
+  `country_name` varchar(64) DEFAULT NULL,
+  `country_id` bigint(20) DEFAULT 0,
+  `vendor_type` varchar(64) DEFAULT NULL,
+  `company_id` bigint(20) DEFAULT 0,
+  `type` int(11) DEFAULT 0,
+  `telp` varchar(45) DEFAULT NULL,
+  `jtempo` int(11) DEFAULT 0,
+  `account_code` varchar(45) DEFAULT NULL,
+  `npwp` varchar(45) DEFAULT NULL,
+  `email` varchar(45) DEFAULT NULL,
+  `wpage` varchar(45) DEFAULT NULL,
+  `disc` decimal(10,2) DEFAULT 0.00,
+  `hawal` decimal(10,2) DEFAULT 0.00,
+  `prev_liability` decimal(10,2) DEFAULT 0.00,
+  `direct_receive` int(11) NOT NULL DEFAULT 0,
+  `is_konsinyasi` int(10) unsigned NOT NULL DEFAULT 0,
+  `is_pkp` int(10) unsigned NOT NULL DEFAULT 0,
+  `include_ppn` int(10) unsigned NOT NULL DEFAULT 0,
+  `komisi_percent` decimal(10,2) DEFAULT 0.00,
+  `percent_margin` decimal(10,2) DEFAULT 0.00,
+  `percent_promosi` decimal(10,2) DEFAULT 0.00,
+  `percent_barcode` decimal(10,2) DEFAULT 0.00,
+  `system` int(11) DEFAULT 0,
+  `komisi_margin` decimal(10,2) DEFAULT 0.00,
+  `komisi_promosi` decimal(10,2) DEFAULT 0.00,
+  `komisi_barcode` decimal(10,2) DEFAULT 0.00,
+  `is_komisi` int(11) DEFAULT 0,
+  `odr_senin` int(11) NOT NULL DEFAULT 0,
+  `odr_selasa` int(11) NOT NULL DEFAULT 0,
+  `odr_rabu` int(11) NOT NULL DEFAULT 0,
+  `odr_kamis` int(11) NOT NULL DEFAULT 0,
+  `odr_jumat` int(11) NOT NULL DEFAULT 0,
+  `odr_sabtu` int(11) NOT NULL DEFAULT 0,
+  `odr_minggu` int(11) NOT NULL DEFAULT 0,
+  `pending_one_po` int(11) NOT NULL DEFAULT 0,
+  `type_loc_incoming` varchar(30) DEFAULT NULL,
+  `no_rek` varchar(120) DEFAULT NULL,
+  `bank_id` bigint(20) DEFAULT 0,
+  `payment_type` tinyint(4) DEFAULT 0,
+  `pic` varchar(240) DEFAULT NULL,
+  `liabilities_type` tinyint(4) DEFAULT 0,
+  `led_time` int(10) unsigned NOT NULL DEFAULT 0,
+  `order_period` int(10) unsigned NOT NULL DEFAULT 0,
+  `coa_ap_id` bigint(20) DEFAULT 0,
+  `coa_ap_non_trade_id` bigint(20) DEFAULT 0,
+  `position_pic` varchar(240) DEFAULT NULL,
+  `transaction_type` varchar(60) DEFAULT NULL,
+  `user_id` bigint(20) DEFAULT 0,
+  `last_update` datetime DEFAULT NULL,
+  `ap_coa_id` bigint(20) DEFAULT 0,
+  `ap_clereance_coa_id` bigint(20) DEFAULT 0,
+  `no_npwp` int(20) DEFAULT 0,
+  `nama_npwp` varchar(240) DEFAULT NULL,
+  `alamat_npwp` varchar(240) DEFAULT NULL,
+  `nama_bank` varchar(240) DEFAULT NULL,
+  `nomor_rekening` varchar(100) DEFAULT '',
+  PRIMARY KEY (`vendor_id`),
+  UNIQUE KEY `XPKvendor` (`vendor_id`),
+  UNIQUE KEY `Index_3` (`code`),
+  UNIQUE KEY `name` (`name`),
+  KEY `TYPE` (`type`),
+  KEY `account_code` (`account_code`),
+  KEY `is_konsinyasi` (`is_konsinyasi`),
+  KEY `is_pkp` (`is_pkp`),
+  KEY `include_ppn` (`include_ppn`),
+  KEY `is_komisi` (`is_komisi`),
+  KEY `bank_id` (`bank_id`),
+  KEY `payment_type` (`payment_type`),
+  KEY `CODE` (`code`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `vendor_commision`
+--
+
+DROP TABLE IF EXISTS `vendor_commision`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `vendor_commision` (
+  `vendor_commision_id` bigint(20) NOT NULL,
+  `vendor_id` bigint(20) DEFAULT NULL,
+  `location_id` bigint(20) DEFAULT NULL,
+  `commision` decimal(22,2) DEFAULT 0.00,
+  PRIMARY KEY (`vendor_commision_id`),
+  KEY `FK12xo6w67io9kcq9nfmd7sybfd` (`location_id`),
+  KEY `FK5lafggthol5uqlk0hn1bknudr` (`vendor_id`),
+  CONSTRAINT `FK12xo6w67io9kcq9nfmd7sybfd` FOREIGN KEY (`location_id`) REFERENCES `pos_location` (`location_id`),
+  CONSTRAINT `FK5lafggthol5uqlk0hn1bknudr` FOREIGN KEY (`vendor_id`) REFERENCES `vendor` (`vendor_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `vendor_group`
+--
+
+DROP TABLE IF EXISTS `vendor_group`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `vendor_group` (
+  `vendor_group_id` bigint(20) NOT NULL DEFAULT 0,
+  `group_name` varchar(120) DEFAULT NULL,
+  `vendor_id` bigint(20) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`vendor_group_id`),
+  UNIQUE KEY `group_name` (`group_name`,`vendor_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `vendor_other`
+--
+
+DROP TABLE IF EXISTS `vendor_other`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `vendor_other` (
+  `vendor_other_id` bigint(20) NOT NULL,
+  `code` varchar(20) DEFAULT NULL,
+  `name` varchar(50) DEFAULT NULL,
+  `address` varchar(100) DEFAULT NULL,
+  `phone` varchar(20) DEFAULT NULL,
+  `telephone` varchar(20) DEFAULT NULL,
+  `email` varchar(20) DEFAULT NULL,
+  `type_idcard` varchar(10) DEFAULT NULL,
+  `idcard_number` varchar(25) DEFAULT NULL,
+  `type` int(2) DEFAULT 0,
+  `reg_date` datetime DEFAULT NULL,
+  `operator_id` bigint(20) DEFAULT 0,
+  `term` int(10) DEFAULT 0,
+  `is_pkp` int(2) DEFAULT 0,
+  `npwp` varchar(45) DEFAULT NULL,
+  `contact_person` varchar(70) DEFAULT NULL,
+  `ap_coa_id` bigint(20) DEFAULT 0,
+  `ap_clereance_id` bigint(20) DEFAULT 0,
+  PRIMARY KEY (`vendor_other_id`),
+  UNIQUE KEY `codeUnique` (`code`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `waitress`
+--
+
+DROP TABLE IF EXISTS `waitress`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `waitress` (
+  `WAITRESS_ID` bigint(20) DEFAULT NULL,
+  `NAME` varchar(150) DEFAULT NULL,
+  `PASSWORD` varchar(50) DEFAULT NULL,
+  `status` int(11) NOT NULL DEFAULT 1,
+  `location_id` bigint(20) DEFAULT 0,
+  `code` varchar(50) DEFAULT NULL,
+  `login_id` varchar(50) DEFAULT NULL,
+  `level` int(3) DEFAULT 0,
+  UNIQUE KEY `waitress_id` (`WAITRESS_ID`),
+  KEY `name` (`NAME`),
+  KEY `location_id` (`location_id`),
+  KEY `status` (`status`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Final view structure for view `pos_stock_item_view`
+--
+
+/*!50001 DROP VIEW IF EXISTS `pos_stock_item_view`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `pos_stock_item_view` AS select distinct `ps`.`item_master_id` AS `item_master_id`,`pi`.`code` AS `code`,`pi`.`barcode` AS `barcode`,`pi`.`name` AS `name`,sum(`ps`.`qty` * `ps`.`in_out`) AS `qtystock` from (`pos_stock` `ps` join `pos_item_master` `pi` on(`ps`.`item_master_id` = `pi`.`item_master_id`)) where `ps`.`status` = _latin1'APPROVED' group by `pi`.`item_master_id` order by `pi`.`name` */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `pos_stock_view`
+--
+
+/*!50001 DROP VIEW IF EXISTS `pos_stock_view`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `pos_stock_view` AS select `pos_stock`.`item_master_id` AS `item_master_id`,`pos_stock`.`location_id` AS `location_id`,sum(`pos_stock`.`qty` * `pos_stock`.`in_out`) AS `qty` from `pos_stock` where `pos_stock`.`status` = _latin1'APPROVED' group by `pos_stock`.`item_master_id`,`pos_stock`.`location_id` */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `sales_cost_card`
+--
+
+/*!50001 DROP VIEW IF EXISTS `sales_cost_card`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `sales_cost_card` AS (select `p`.`sales_id` AS `sales_id`,sum(`p`.`cost_card_amount`) AS `cost_card` from (`pos_payment` `p` join `merchant` `m` on(`p`.`merchant_id` = `m`.`merchant_id`)) where `m`.`payment_by` = 1 and `p`.`pay_type` in (1,2) group by `p`.`sales_id`) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `sales_pending_view`
+--
+
+/*!50001 DROP VIEW IF EXISTS `sales_pending_view`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `sales_pending_view` AS select `psd`.`product_master_id` AS `item_master_id`,`im`.`code` AS `code`,`im`.`name` AS `name`,`ps`.`location_id` AS `location_id`,sum(`psd`.`qty`) AS `qty` from ((`pos_sales_detail` `psd` join `pos_sales` `ps` on(`psd`.`sales_id` = `ps`.`sales_id`)) join `pos_item_master` `im` on(`im`.`item_master_id` = `psd`.`product_master_id`)) where `ps`.`number` like _latin1'%P' group by `psd`.`product_master_id`,`ps`.`location_id` */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2026-04-13 14:15:20

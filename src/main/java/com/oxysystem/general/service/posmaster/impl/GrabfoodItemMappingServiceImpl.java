@@ -7,10 +7,10 @@ import com.oxysystem.general.dto.posmaster.grabFoodItemMapping.view.GrabfoodItem
 import com.oxysystem.general.dto.posmaster.grabFoodItemMapping.view.GrabfoodItemMappingViewDTO;
 import com.oxysystem.general.enums.grab.Product;
 import com.oxysystem.general.exception.ResourceNotFoundException;
-import com.oxysystem.general.model.db1.general.ApiApp;
-import com.oxysystem.general.model.db1.general.Location;
-import com.oxysystem.general.model.db1.posmaster.*;
-import com.oxysystem.general.repository.db1.posmaster.GrabfoodItemMappingRepository;
+import com.oxysystem.general.model.tenant.general.ApiApp;
+import com.oxysystem.general.model.tenant.general.Location;
+import com.oxysystem.general.model.tenant.posmaster.*;
+import com.oxysystem.general.repository.tenant.posmaster.GrabfoodItemMappingRepository;
 import com.oxysystem.general.response.SuccessResponse;
 import com.oxysystem.general.service.general.ApiAppService;
 import com.oxysystem.general.service.general.ApiAppSyncService;
@@ -50,7 +50,7 @@ public class GrabfoodItemMappingServiceImpl implements GrabfoodItemMappingServic
     }
 
     @Override
-    @Transactional(value = "db1TransactionManager",rollbackFor = {Throwable.class})
+    @Transactional(rollbackFor = {Throwable.class})
     public ResponseEntity<?> saveGrabfoodItem(GrabFoodItemByItemMasterDTO grabFoodItemByItemMasterDTO) {
         // Delete grab food item mapping if data exists
         if(!grabfoodItemMappingRepository.findGrabfoodItemMappingByItemMasterId(Long.valueOf(grabFoodItemByItemMasterDTO.getItemId())).isEmpty()){

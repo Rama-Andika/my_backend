@@ -1,6 +1,6 @@
 package com.oxysystem.general.service.general;
 
-import com.oxysystem.general.model.db1.general.PlaygroundRegistration;
+import com.oxysystem.general.model.tenant.general.PlaygroundRegistration;
 import org.springframework.http.ResponseEntity;
 
 public interface PlaygroundRegistrationService {

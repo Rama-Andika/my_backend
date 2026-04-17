@@ -1,13 +1,10 @@
 package com.oxysystem.general.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.oxysystem.general.exception.ResourceUnauthorizedException;
-import com.oxysystem.general.response.FailedResponse;
 import com.oxysystem.general.service.CustomUserDetailsService;
 import com.oxysystem.general.util.JwtUtil;
 import io.jsonwebtoken.Claims;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

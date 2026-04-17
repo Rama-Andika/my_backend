@@ -1,6 +1,6 @@
 package com.oxysystem.general.service.transaction;
 
-import com.oxysystem.general.model.db1.transaction.GrabMenuSyncStatus;
+import com.oxysystem.general.model.tenant.transaction.GrabMenuSyncStatus;
 
 import java.util.Optional;
 

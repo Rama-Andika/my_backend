@@ -2,8 +2,8 @@ package com.oxysystem.general.service.general.impl;
 
 import com.oxysystem.general.dto.general.dashboard.view.DashboardSummaryGrabDTO;
 import com.oxysystem.general.dto.general.dashboard.view.RecentSalesGrabDTO;
-import com.oxysystem.general.model.db1.general.DashboardSummaryGrab;
-import com.oxysystem.general.repository.db1.general.DashboardSummaryGrabRepository;
+import com.oxysystem.general.model.tenant.general.DashboardSummaryGrab;
+import com.oxysystem.general.repository.tenant.general.DashboardSummaryGrabRepository;
 import com.oxysystem.general.response.SuccessResponse;
 import com.oxysystem.general.service.general.DashboardGrabService;
 import com.oxysystem.general.service.transaction.sales.SalesService;

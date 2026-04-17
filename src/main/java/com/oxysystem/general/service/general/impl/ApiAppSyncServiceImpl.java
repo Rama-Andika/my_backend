@@ -2,9 +2,9 @@ package com.oxysystem.general.service.general.impl;
 
 import com.oxysystem.general.dto.general.apiAppSync.data.ApiAppSyncDTO;
 import com.oxysystem.general.dto.general.apiAppSync.view.ApiAppSyncViewDTO;
-import com.oxysystem.general.model.db1.general.ApiApp;
-import com.oxysystem.general.model.db1.general.ApiAppSync;
-import com.oxysystem.general.repository.db1.general.ApiAppSyncRepository;
+import com.oxysystem.general.model.tenant.general.ApiApp;
+import com.oxysystem.general.model.tenant.general.ApiAppSync;
+import com.oxysystem.general.repository.tenant.general.ApiAppSyncRepository;
 import com.oxysystem.general.service.general.ApiAppSyncService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -59,13 +59,13 @@ public class ApiAppSyncServiceImpl implements ApiAppSyncService {
     }
 
     @Override
-    @Transactional(value = "db1TransactionManager", rollbackFor = {Throwable.class})
+    @Transactional( rollbackFor = {Throwable.class})
     public void updateApiAppSyncStatusByApiSyncIds(Integer status, List<Long> apiSyncIds) {
         apiAppSyncRepository.updateApiAppSyncStatusByApiSyncIds(status, apiSyncIds);
     }
 
     @Override
-    @Transactional(value = "db1TransactionManager", rollbackFor = {Throwable.class})
+    @Transactional( rollbackFor = {Throwable.class})
     public void updateApiAppSyncStatusByApiSyncId(Integer status, Long apiSyncId) {
         apiAppSyncRepository.updateApiAppSyncStatusByApiSyncId(status, apiSyncId);
     }

@@ -1,8 +1,8 @@
 package com.oxysystem.general.service.admin.impl;
 
-import com.oxysystem.general.model.db1.admin.RefreshToken;
-import com.oxysystem.general.model.db1.admin.User;
-import com.oxysystem.general.repository.db1.admin.RefreshTokenRepository;
+import com.oxysystem.general.model.tenant.admin.RefreshToken;
+import com.oxysystem.general.model.tenant.admin.User;
+import com.oxysystem.general.repository.tenant.admin.RefreshTokenRepository;
 import com.oxysystem.general.service.admin.RefreshTokenService;
 import com.oxysystem.general.util.RefreshTokenGenerator;
 import org.springframework.stereotype.Service;
@@ -20,7 +20,7 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
     }
 
     @Override
-    @Transactional(value = "db1TransactionManager", rollbackFor = {Throwable.class})
+    @Transactional( rollbackFor = {Throwable.class})
     public String create(User user) {
         String rawToken = RefreshTokenGenerator.generate();
 
@@ -33,7 +33,7 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
     }
 
     @Override
-    @Transactional(value = "db1TransactionManager", rollbackFor = {Throwable.class})
+    @Transactional( rollbackFor = {Throwable.class})
     public User validateAndRotate(String rawToken) {
         String hash = RefreshTokenGenerator.hash(rawToken);
 

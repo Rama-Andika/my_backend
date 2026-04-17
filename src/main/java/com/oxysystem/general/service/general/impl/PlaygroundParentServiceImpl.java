@@ -2,17 +2,16 @@ package com.oxysystem.general.service.general.impl;
 
 import com.oxysystem.general.dto.general.children.data.ChildrenDTO;
 import com.oxysystem.general.dto.general.parent.data.ParentDTO;
-import com.oxysystem.general.dto.transaction.salesTaking.data.SalesTakingDTO;
 import com.oxysystem.general.mapper.transaction.SalesMapper;
-import com.oxysystem.general.model.db1.admin.User;
-import com.oxysystem.general.model.db1.general.PlaygroundChildren;
-import com.oxysystem.general.model.db1.general.PlaygroundParent;
-import com.oxysystem.general.model.db1.general.PlaygroundRegistration;
-import com.oxysystem.general.model.db1.posmaster.ItemMaster;
-import com.oxysystem.general.model.db1.posmaster.PriceType;
-import com.oxysystem.general.model.db1.transaction.PlaygroundSession;
-import com.oxysystem.general.model.db1.transaction.SalesTaking;
-import com.oxysystem.general.repository.db1.general.PlaygroundParentRepository;
+import com.oxysystem.general.model.tenant.admin.User;
+import com.oxysystem.general.model.tenant.general.PlaygroundChildren;
+import com.oxysystem.general.model.tenant.general.PlaygroundParent;
+import com.oxysystem.general.model.tenant.general.PlaygroundRegistration;
+import com.oxysystem.general.model.tenant.posmaster.ItemMaster;
+import com.oxysystem.general.model.tenant.posmaster.PriceType;
+import com.oxysystem.general.model.tenant.transaction.PlaygroundSession;
+import com.oxysystem.general.model.tenant.transaction.SalesTaking;
+import com.oxysystem.general.repository.tenant.general.PlaygroundParentRepository;
 import com.oxysystem.general.response.SuccessResponse;
 import com.oxysystem.general.service.admin.UserService;
 import com.oxysystem.general.service.general.PlaygroundChildrenService;
@@ -53,7 +52,7 @@ public class PlaygroundParentServiceImpl implements PlaygroundParentService {
     }
 
     @Override
-    @Transactional(value = "db1TransactionManager", rollbackFor = {Throwable.class})
+    @Transactional( rollbackFor = {Throwable.class})
     public ResponseEntity<?> save(ParentDTO body) {
         PlaygroundParent playgroundParent = new PlaygroundParent();
         playgroundParent.setName(body.getName());

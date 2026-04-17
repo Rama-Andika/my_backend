@@ -4,10 +4,10 @@ import com.oxysystem.general.dto.general.strukKasir.data.StrukKasirDTO;
 import com.oxysystem.general.dto.posmaster.strukKasir.view.StrukKasirViewDTO;
 import com.oxysystem.general.exception.ResourceNotFoundException;
 import com.oxysystem.general.mapper.general.StrukKasirMapper;
-import com.oxysystem.general.model.db1.admin.User;
-import com.oxysystem.general.model.db1.general.Location;
-import com.oxysystem.general.model.db1.posmaster.StrukKasir;
-import com.oxysystem.general.repository.db1.posmaster.StrukKasirRepository;
+import com.oxysystem.general.model.tenant.admin.User;
+import com.oxysystem.general.model.tenant.general.Location;
+import com.oxysystem.general.model.tenant.posmaster.StrukKasir;
+import com.oxysystem.general.repository.tenant.posmaster.StrukKasirRepository;
 import com.oxysystem.general.response.SuccessResponse;
 import com.oxysystem.general.service.admin.UserService;
 import com.oxysystem.general.service.general.LocationService;
@@ -16,7 +16,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 

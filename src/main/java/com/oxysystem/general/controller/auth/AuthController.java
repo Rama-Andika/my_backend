@@ -1,7 +1,7 @@
 package com.oxysystem.general.controller.auth;
 import com.oxysystem.general.dto.auth.data.auth.LoginDto;
 import com.oxysystem.general.dto.auth.data.auth.RefreshTokenDTO;
-import com.oxysystem.general.model.db1.admin.User;
+import com.oxysystem.general.model.tenant.admin.User;
 import com.oxysystem.general.response.FailedResponse;
 import com.oxysystem.general.response.LoginResponse;
 import com.oxysystem.general.response.SuccessResponse;

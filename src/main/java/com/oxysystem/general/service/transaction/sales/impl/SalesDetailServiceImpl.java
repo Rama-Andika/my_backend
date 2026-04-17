@@ -1,7 +1,7 @@
 package com.oxysystem.general.service.transaction.sales.impl;
 
-import com.oxysystem.general.model.db1.transaction.sales.SalesDetail;
-import com.oxysystem.general.repository.db1.transaction.sales.SalesDetailRepository;
+import com.oxysystem.general.model.tenant.transaction.sales.SalesDetail;
+import com.oxysystem.general.repository.tenant.transaction.sales.SalesDetailRepository;
 import com.oxysystem.general.service.transaction.sales.SalesDetailService;
 import org.springframework.stereotype.Service;
 

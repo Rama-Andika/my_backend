@@ -2,10 +2,10 @@ package com.oxysystem.general.service.transaction;
 
 import com.oxysystem.general.dto.general.children.data.ChildrenDTO;
 import com.oxysystem.general.dto.transaction.salesTaking.data.SalesTakingDTO;
-import com.oxysystem.general.model.db1.admin.User;
-import com.oxysystem.general.model.db1.general.PlaygroundRegistration;
-import com.oxysystem.general.model.db1.posmaster.ItemMaster;
-import com.oxysystem.general.model.db1.transaction.SalesTaking;
+import com.oxysystem.general.model.tenant.admin.User;
+import com.oxysystem.general.model.tenant.general.PlaygroundRegistration;
+import com.oxysystem.general.model.tenant.posmaster.ItemMaster;
+import com.oxysystem.general.model.tenant.transaction.SalesTaking;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;

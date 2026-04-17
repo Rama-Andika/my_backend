@@ -1,7 +1,7 @@
 package com.oxysystem.general.service.posmaster.impl;
 
-import com.oxysystem.general.model.db1.posmaster.ReturnPayment;
-import com.oxysystem.general.repository.db1.posmaster.ReturnPaymentRepository;
+import com.oxysystem.general.model.tenant.posmaster.ReturnPayment;
+import com.oxysystem.general.repository.tenant.posmaster.ReturnPaymentRepository;
 import com.oxysystem.general.service.posmaster.ReturnPaymentService;
 import org.springframework.stereotype.Service;
 

@@ -1,7 +1,7 @@
 package com.oxysystem.general.service.posmaster;
 
 import com.oxysystem.general.dto.posmaster.grabPackaging.data.GrabPackagingItemDTO;
-import com.oxysystem.general.model.db1.posmaster.GrabPackagingItem;
+import com.oxysystem.general.model.tenant.posmaster.GrabPackagingItem;
 import org.springframework.http.ResponseEntity;
 
 import java.util.Optional;

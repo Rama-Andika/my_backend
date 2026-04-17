@@ -1,6 +1,6 @@
 package com.oxysystem.general.service.posmaster;
 
-import com.oxysystem.general.model.db1.posmaster.ItemMasterImage;
+import com.oxysystem.general.model.tenant.posmaster.ItemMasterImage;
 
 import java.util.List;
 

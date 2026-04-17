@@ -1,7 +1,7 @@
 version: '3.8'
 services:
   backend-api:
-    # GANTI "usernameanda" dengan username Docker Hub Anda yang asli
+    # username docker hub
     image: ramaandikaa/my-backend:latest
     container_name: my-backend-app
     ports:

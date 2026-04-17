@@ -1,8 +1,7 @@
 package com.oxysystem.general.service.general;
 
 import com.oxysystem.general.dto.general.ApiAppSyncSetup.data.ApiAppSyncSetupDTO;
-import com.oxysystem.general.model.db1.general.ApiAppSyncSetup;
-import com.oxysystem.general.model.db1.general.ApiAppSync;
+import com.oxysystem.general.model.tenant.general.ApiAppSyncSetup;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;

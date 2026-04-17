@@ -1,8 +1,8 @@
 package com.oxysystem.general.service.general.impl;
 
 import com.oxysystem.general.dto.general.paymentMethod.view.PaymentMethodViewDTO;
-import com.oxysystem.general.model.db1.general.PaymentMethod;
-import com.oxysystem.general.repository.db1.general.PaymentMethodRepository;
+import com.oxysystem.general.model.tenant.general.PaymentMethod;
+import com.oxysystem.general.repository.tenant.general.PaymentMethodRepository;
 import com.oxysystem.general.response.SuccessResponse;
 import com.oxysystem.general.service.general.PaymentMethodService;
 import org.springframework.http.ResponseEntity;

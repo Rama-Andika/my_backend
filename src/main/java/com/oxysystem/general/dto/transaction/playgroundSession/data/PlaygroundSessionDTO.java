@@ -1,6 +1,6 @@
 package com.oxysystem.general.dto.transaction.playgroundSession.data;
 
-import com.oxysystem.general.model.db1.general.PlaygroundChildren;
+import com.oxysystem.general.model.tenant.general.PlaygroundChildren;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

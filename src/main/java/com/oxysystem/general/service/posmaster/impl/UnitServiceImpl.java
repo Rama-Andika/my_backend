@@ -1,11 +1,10 @@
 package com.oxysystem.general.service.posmaster.impl;
 
-import com.oxysystem.general.model.db1.posmaster.Unit;
-import com.oxysystem.general.repository.db1.posmaster.UnitRepository;
+import com.oxysystem.general.model.tenant.posmaster.Unit;
+import com.oxysystem.general.repository.tenant.posmaster.UnitRepository;
 import com.oxysystem.general.service.posmaster.UnitService;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.List;
 
 @Service

@@ -1,6 +1,6 @@
 package com.oxysystem.general.service.posmaster;
 
-import com.oxysystem.general.model.db1.posmaster.Shift;
+import com.oxysystem.general.model.tenant.posmaster.Shift;
 
 import java.util.Optional;
 

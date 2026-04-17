@@ -1,6 +1,6 @@
 package com.oxysystem.general.service.system;
 
-import com.oxysystem.general.model.db1.system.SystemMain;
+import com.oxysystem.general.model.tenant.system.SystemMain;
 import org.springframework.http.ResponseEntity;
 import reactor.core.publisher.Mono;
 

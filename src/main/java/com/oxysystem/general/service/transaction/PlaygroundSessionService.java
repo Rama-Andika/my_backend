@@ -1,6 +1,6 @@
 package com.oxysystem.general.service.transaction;
 
-import com.oxysystem.general.model.db1.transaction.PlaygroundSession;
+import com.oxysystem.general.model.tenant.transaction.PlaygroundSession;
 import org.springframework.http.ResponseEntity;
 
 public interface PlaygroundSessionService {

@@ -1,7 +1,7 @@
 package com.oxysystem.general.service.posmaster.impl;
 
-import com.oxysystem.general.model.db1.posmaster.Recipe;
-import com.oxysystem.general.repository.db1.posmaster.RecipeRepository;
+import com.oxysystem.general.model.tenant.posmaster.Recipe;
+import com.oxysystem.general.repository.tenant.posmaster.RecipeRepository;
 import com.oxysystem.general.service.posmaster.RecipeService;
 import org.springframework.stereotype.Service;
 

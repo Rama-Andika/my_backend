@@ -1,7 +1,7 @@
 package com.oxysystem.general.service.transaction.impl;
 
 import com.oxysystem.general.dto.transaction.playgroundSession.report.PlaygroundSessionReportDTO;
-import com.oxysystem.general.repository.db1.transaction.PlaygroundSessionReportRepository;
+import com.oxysystem.general.repository.tenant.transaction.PlaygroundSessionReportRepository;
 import com.oxysystem.general.response.PaginationResponse;
 import com.oxysystem.general.response.SuccessPaginationResponse;
 import com.oxysystem.general.service.transaction.PlaygroundSessionReportService;

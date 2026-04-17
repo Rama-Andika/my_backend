@@ -1,7 +1,7 @@
 package com.oxysystem.general.service.posmaster;
 
 import com.oxysystem.general.dto.posmaster.itemMaster.view.ItemMasterViewDTO;
-import com.oxysystem.general.model.db1.posmaster.ItemMaster;
+import com.oxysystem.general.model.tenant.posmaster.ItemMaster;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 

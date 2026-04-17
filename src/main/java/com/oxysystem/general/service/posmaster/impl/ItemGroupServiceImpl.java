@@ -1,9 +1,9 @@
 package com.oxysystem.general.service.posmaster.impl;
 
 import com.oxysystem.general.dto.posmaster.itemGroup.view.ItemGroupForSelectDTO;
-import com.oxysystem.general.model.db1.posmaster.ItemCategory;
-import com.oxysystem.general.model.db1.posmaster.ItemGroup;
-import com.oxysystem.general.repository.db1.posmaster.ItemGroupRepository;
+import com.oxysystem.general.model.tenant.posmaster.ItemCategory;
+import com.oxysystem.general.model.tenant.posmaster.ItemGroup;
+import com.oxysystem.general.repository.tenant.posmaster.ItemGroupRepository;
 import com.oxysystem.general.response.SuccessResponse;
 import com.oxysystem.general.service.posmaster.ItemGroupService;
 import org.springframework.http.ResponseEntity;

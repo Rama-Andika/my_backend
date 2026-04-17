@@ -1,6 +1,6 @@
 package com.oxysystem.general.service.posmaster;
 
-import com.oxysystem.general.model.db1.posmaster.VendorItem;
+import com.oxysystem.general.model.tenant.posmaster.VendorItem;
 
 import java.util.Optional;
 

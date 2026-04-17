@@ -1,6 +1,6 @@
 package com.oxysystem.general.service.posmaster;
 
-import com.oxysystem.general.model.db1.posmaster.PromotionGrabLocation;
+import com.oxysystem.general.model.tenant.posmaster.PromotionGrabLocation;
 
 import java.util.List;
 import java.util.Optional;

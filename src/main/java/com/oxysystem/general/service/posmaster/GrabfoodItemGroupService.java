@@ -1,7 +1,7 @@
 package com.oxysystem.general.service.posmaster;
 
 import com.oxysystem.general.dto.posmaster.grabFoodGroup.data.GrabFoodItemGroupDTO;
-import com.oxysystem.general.model.db1.posmaster.GrabfoodItemGroup;
+import com.oxysystem.general.model.tenant.posmaster.GrabfoodItemGroup;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;

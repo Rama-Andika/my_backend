@@ -3,10 +3,10 @@ package com.oxysystem.general.service.transaction.sales.impl;
 import com.oxysystem.general.dto.transaction.sales.view.SalesGrabDTO;
 import com.oxysystem.general.enums.DocumentStatus;
 import com.oxysystem.general.exception.ResourceNotFoundException;
-import com.oxysystem.general.model.db1.posmaster.ItemMaster;
-import com.oxysystem.general.model.db1.transaction.sales.SalesGrab;
-import com.oxysystem.general.model.db1.transaction.sales.SalesGrabDetail;
-import com.oxysystem.general.repository.db1.transaction.sales.SalesGrabRepository;
+import com.oxysystem.general.model.tenant.posmaster.ItemMaster;
+import com.oxysystem.general.model.tenant.transaction.sales.SalesGrab;
+import com.oxysystem.general.model.tenant.transaction.sales.SalesGrabDetail;
+import com.oxysystem.general.repository.tenant.transaction.sales.SalesGrabRepository;
 import com.oxysystem.general.response.PaginationResponse;
 import com.oxysystem.general.response.SuccessPaginationResponse;
 import com.oxysystem.general.response.SuccessResponse;
@@ -22,7 +22,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
@@ -50,13 +49,13 @@ public class SalesGrabServiceImpl implements SalesGrabService {
     }
 
     @Override
-    @Transactional(value = "db1TransactionManager")
+    @Transactional
     public void deleteSalesGrab(SalesGrab salesGrab) {
         salesGrabRepository.delete(salesGrab);
     }
 
     @Override
-    @Transactional(value = "db1TransactionManager", rollbackFor = {Throwable.class})
+    @Transactional( rollbackFor = {Throwable.class})
     public void updateSalesGrabDateByNumber(LocalDateTime date, String number) {
         salesGrabRepository.updateSalesGrabDateByNumber(date, number);
     }
@@ -134,7 +133,7 @@ public class SalesGrabServiceImpl implements SalesGrabService {
     }
 
     @Override
-    @Transactional(value = "db1TransactionManager",rollbackFor = {Throwable.class})
+    @Transactional(rollbackFor = {Throwable.class})
     public ResponseEntity<?> updateStatusSalesGrab(String number, String status) {
         SalesGrab salesGrab = salesGrabRepository.findSalesGrabByNumber(number).orElseThrow(() -> new ResourceNotFoundException("sales grab not found!"));
         salesGrab.setStatus(DocumentStatus.valueOf(status));
@@ -153,7 +152,7 @@ public class SalesGrabServiceImpl implements SalesGrabService {
     }
 
     @Override
-    @Transactional(value = "db1TransactionManager")
+    @Transactional
     public void deleteSalesGrabByNumber(String number) {
         salesGrabRepository.deleteSalesGrabByNumber(number);
     }

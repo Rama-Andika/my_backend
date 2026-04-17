@@ -1,8 +1,7 @@
 package com.oxysystem.general.service.general;
 
 import com.oxysystem.general.dto.general.location.view.LocationGrabForSelectDTO;
-import com.oxysystem.general.enums.grab.Product;
-import com.oxysystem.general.model.db1.general.Location;
+import com.oxysystem.general.model.tenant.general.Location;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;

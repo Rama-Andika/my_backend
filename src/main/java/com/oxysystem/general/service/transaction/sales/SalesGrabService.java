@@ -1,7 +1,6 @@
 package com.oxysystem.general.service.transaction.sales;
 
-import com.oxysystem.general.enums.DocumentStatus;
-import com.oxysystem.general.model.db1.transaction.sales.SalesGrab;
+import com.oxysystem.general.model.tenant.transaction.sales.SalesGrab;
 import org.springframework.http.ResponseEntity;
 
 import java.time.LocalDateTime;

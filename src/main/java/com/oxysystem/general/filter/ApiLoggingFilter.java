@@ -1,7 +1,7 @@
 package com.oxysystem.general.filter;
 
-import com.oxysystem.general.model.db1.ApiLog;
-import com.oxysystem.general.repository.db1.ApiLogRepository;
+import com.oxysystem.general.model.tenant.ApiLog;
+import com.oxysystem.general.repository.tenant.ApiLogRepository;
 import com.oxysystem.general.wrapper.CachedBodyHttpServletRequest;
 import com.oxysystem.general.wrapper.CachedBodyHttpServletResponse;
 import org.springframework.web.filter.OncePerRequestFilter;

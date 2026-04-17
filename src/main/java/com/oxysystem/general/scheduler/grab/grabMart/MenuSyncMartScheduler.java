@@ -1,7 +1,7 @@
 package com.oxysystem.general.scheduler.grab.grabMart;
 
 import com.oxysystem.general.dto.grab.data.UpdateMenuNotificationRequestDTO;
-import com.oxysystem.general.model.db1.posmaster.StrukKasir;
+import com.oxysystem.general.model.tenant.posmaster.StrukKasir;
 import com.oxysystem.general.service.grab.client.grabMart.GrabMartMenuSyncServiceImpl;
 import com.oxysystem.general.service.grab.client.grabMart.GrabMartOAuthServiceImpl;
 import com.oxysystem.general.service.posmaster.StrukKasirService;

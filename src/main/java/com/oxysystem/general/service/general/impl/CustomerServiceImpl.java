@@ -1,8 +1,8 @@
 package com.oxysystem.general.service.general.impl;
 
 import com.oxysystem.general.dto.general.customer.view.CustomerViewDTO;
-import com.oxysystem.general.model.db1.general.Customer;
-import com.oxysystem.general.repository.db1.general.CustomerRepository;
+import com.oxysystem.general.model.tenant.general.Customer;
+import com.oxysystem.general.repository.tenant.general.CustomerRepository;
 import com.oxysystem.general.response.PaginationResponse;
 import com.oxysystem.general.response.SuccessPaginationResponse;
 import com.oxysystem.general.service.general.CustomerService;

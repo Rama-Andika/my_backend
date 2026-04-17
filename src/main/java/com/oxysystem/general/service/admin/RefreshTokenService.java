@@ -1,6 +1,6 @@
 package com.oxysystem.general.service.admin;
 
-import com.oxysystem.general.model.db1.admin.User;
+import com.oxysystem.general.model.tenant.admin.User;
 
 public interface RefreshTokenService {
     String create(User user);

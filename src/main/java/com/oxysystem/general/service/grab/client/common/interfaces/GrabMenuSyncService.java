@@ -4,7 +4,7 @@ import com.oxysystem.general.dto.grab.data.BatchUpdateMenuRequestDTO;
 import com.oxysystem.general.dto.grab.data.SubmitOrderRequestDTO;
 import com.oxysystem.general.dto.grab.data.UpdateMenuNotificationRequestDTO;
 import com.oxysystem.general.dto.grab.data.UpdateMenuRecordRequestDTO;
-import com.oxysystem.general.model.db1.general.Location;
+import com.oxysystem.general.model.tenant.general.Location;
 import org.springframework.http.ResponseEntity;
 import reactor.core.publisher.Mono;
 

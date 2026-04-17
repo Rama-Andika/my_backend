@@ -3,7 +3,7 @@ package com.oxysystem.general.scheduler.grab.grabFood;
 import com.oxysystem.general.dto.grab.data.ListOrderResponseDTO;
 import com.oxysystem.general.dto.transaction.sales.view.SalesViewDTO;
 import com.oxysystem.general.enums.grab.Product;
-import com.oxysystem.general.model.db1.system.SystemMain;
+import com.oxysystem.general.model.tenant.system.SystemMain;
 import com.oxysystem.general.service.grab.client.grabFood.GrabFoodOAuthServiceImpl;
 import com.oxysystem.general.service.grab.client.grabFood.GrabFoodOrderSyncServiceImpl;
 import com.oxysystem.general.service.system.SystemMainService;

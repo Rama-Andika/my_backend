@@ -1,7 +1,7 @@
 package com.oxysystem.general.service.posmaster.impl;
 
-import com.oxysystem.general.model.db1.posmaster.GrabmartItemCategory;
-import com.oxysystem.general.repository.db1.posmaster.GrabmartItemCategoryRepository;
+import com.oxysystem.general.model.tenant.posmaster.GrabmartItemCategory;
+import com.oxysystem.general.repository.tenant.posmaster.GrabmartItemCategoryRepository;
 import com.oxysystem.general.service.posmaster.GrabmartItemCategoryService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,7 +33,7 @@ public class GrabmartItemCategoryServiceImpl implements GrabmartItemCategoryServ
     }
 
     @Override
-    @Transactional(value = "db1TransactionManager", rollbackFor = {Throwable.class})
+    @Transactional( rollbackFor = {Throwable.class})
     public void saveAll(List<GrabmartItemCategory> grabmartItemCategories) {
         grabmartItemCategoryRepository.saveAll(grabmartItemCategories);
     }

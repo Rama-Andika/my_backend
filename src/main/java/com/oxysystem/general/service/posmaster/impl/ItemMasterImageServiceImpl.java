@@ -1,8 +1,7 @@
 package com.oxysystem.general.service.posmaster.impl;
 
-import com.oxysystem.general.model.db1.posmaster.ItemMasterImage;
-import com.oxysystem.general.repository.db1.posmaster.ItemMasterImageRepository;
-import com.oxysystem.general.repository.db1.posmaster.ItemMasterRepository;
+import com.oxysystem.general.model.tenant.posmaster.ItemMasterImage;
+import com.oxysystem.general.repository.tenant.posmaster.ItemMasterImageRepository;
 import com.oxysystem.general.service.posmaster.ItemMasterImageService;
 import org.springframework.stereotype.Service;
 

@@ -1,7 +1,6 @@
 package com.oxysystem.general.service.posmaster;
 
-import com.oxysystem.general.model.db1.posmaster.GrabmartItemCategory;
-import com.oxysystem.general.model.db1.posmaster.GrabmartItemCategoryMapping;
+import com.oxysystem.general.model.tenant.posmaster.GrabmartItemCategory;
 
 import java.util.List;
 import java.util.Optional;

@@ -1,7 +1,7 @@
 package com.oxysystem.general.service.transaction.impl;
 
-import com.oxysystem.general.model.db1.transaction.GrabMenuSyncStatus;
-import com.oxysystem.general.repository.db1.transaction.GrabMenuSyncStatusRepository;
+import com.oxysystem.general.model.tenant.transaction.GrabMenuSyncStatus;
+import com.oxysystem.general.repository.tenant.transaction.GrabMenuSyncStatusRepository;
 import com.oxysystem.general.service.transaction.GrabMenuSyncStatusService;
 import org.springframework.stereotype.Service;
 

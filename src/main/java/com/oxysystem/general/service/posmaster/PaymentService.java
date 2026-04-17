@@ -1,6 +1,6 @@
 package com.oxysystem.general.service.posmaster;
 
-import com.oxysystem.general.model.db1.posmaster.Payment;
+import com.oxysystem.general.model.tenant.posmaster.Payment;
 
 import java.util.List;
 import java.util.Optional;

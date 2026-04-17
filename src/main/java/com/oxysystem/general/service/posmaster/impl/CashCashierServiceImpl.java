@@ -1,7 +1,7 @@
 package com.oxysystem.general.service.posmaster.impl;
 
-import com.oxysystem.general.model.db1.posmaster.CashCashier;
-import com.oxysystem.general.repository.db1.posmaster.CashCashierRepository;
+import com.oxysystem.general.model.tenant.posmaster.CashCashier;
+import com.oxysystem.general.repository.tenant.posmaster.CashCashierRepository;
 import com.oxysystem.general.service.posmaster.CashCashierService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,7 +18,7 @@ public class CashCashierServiceImpl implements CashCashierService {
     }
 
     @Override
-    @Transactional(value = "db1TransactionManager", rollbackFor = {Throwable.class})
+    @Transactional( rollbackFor = {Throwable.class})
     public CashCashier save(CashCashier cashCashier) {
         return cashCashierRepository.save(cashCashier);
     }

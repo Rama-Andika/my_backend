@@ -2,9 +2,9 @@ package com.oxysystem.general.service.posmaster.impl;
 
 import com.oxysystem.general.dto.posmaster.priceType.data.PriceTypeDTO;
 import com.oxysystem.general.exception.ResourceNotFoundException;
-import com.oxysystem.general.model.db1.general.Location;
-import com.oxysystem.general.model.db1.posmaster.PriceType;
-import com.oxysystem.general.repository.db1.posmaster.PriceTypeRepository;
+import com.oxysystem.general.model.tenant.general.Location;
+import com.oxysystem.general.model.tenant.posmaster.PriceType;
+import com.oxysystem.general.repository.tenant.posmaster.PriceTypeRepository;
 import com.oxysystem.general.response.SuccessResponse;
 import com.oxysystem.general.service.general.LocationService;
 import com.oxysystem.general.service.posmaster.PriceTypeService;

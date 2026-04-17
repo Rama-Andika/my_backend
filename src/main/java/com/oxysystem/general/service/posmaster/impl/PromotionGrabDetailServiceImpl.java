@@ -1,10 +1,9 @@
 package com.oxysystem.general.service.posmaster.impl;
 
-import com.oxysystem.general.model.db1.posmaster.PromotionGrabDetail;
-import com.oxysystem.general.repository.db1.posmaster.PromotionGrabDetailRepository;
+import com.oxysystem.general.model.tenant.posmaster.PromotionGrabDetail;
+import com.oxysystem.general.repository.tenant.posmaster.PromotionGrabDetailRepository;
 import com.oxysystem.general.service.posmaster.PromotionGrabDetailService;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;

@@ -5,7 +5,7 @@ import com.oxysystem.general.dto.grab.view.ListMartCategoryDTO;
 import com.oxysystem.general.enums.grab.Product;
 import com.oxysystem.general.exception.GrabException;
 import com.oxysystem.general.exception.ResourceNotFoundException;
-import com.oxysystem.general.model.db1.general.Location;
+import com.oxysystem.general.model.tenant.general.Location;
 import com.oxysystem.general.response.grab.GrabFailedResponse;
 import com.oxysystem.general.response.SuccessResponse;
 import com.oxysystem.general.service.general.LocationService;

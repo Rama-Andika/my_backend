@@ -1,8 +1,8 @@
 package com.oxysystem.general.service.general.impl;
 
 import com.oxysystem.general.dto.general.bank.view.BankViewDTO;
-import com.oxysystem.general.model.db1.general.Bank;
-import com.oxysystem.general.repository.db1.general.BankRepository;
+import com.oxysystem.general.model.tenant.general.Bank;
+import com.oxysystem.general.repository.tenant.general.BankRepository;
 import com.oxysystem.general.response.SuccessResponse;
 import com.oxysystem.general.service.general.BankService;
 import org.springframework.http.ResponseEntity;

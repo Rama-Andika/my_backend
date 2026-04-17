@@ -4,8 +4,8 @@ import com.oxysystem.general.dto.posmaster.grabFoodGroup.data.GrabFoodItemGroupD
 import com.oxysystem.general.dto.posmaster.grabFoodGroup.view.GrabFoodItemGroupViewDTO;
 import com.oxysystem.general.dto.posmaster.grabFoodGroup.view.GrabfoodItemGroupForSelectDTO;
 import com.oxysystem.general.exception.ResourceNotFoundException;
-import com.oxysystem.general.model.db1.posmaster.GrabfoodItemGroup;
-import com.oxysystem.general.repository.db1.posmaster.GrabfoodItemGroupRepository;
+import com.oxysystem.general.model.tenant.posmaster.GrabfoodItemGroup;
+import com.oxysystem.general.repository.tenant.posmaster.GrabfoodItemGroupRepository;
 import com.oxysystem.general.response.SuccessResponse;
 import com.oxysystem.general.service.posmaster.GrabfoodItemGroupService;
 import org.springframework.http.ResponseEntity;

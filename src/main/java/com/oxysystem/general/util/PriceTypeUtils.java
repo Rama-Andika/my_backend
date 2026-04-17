@@ -1,6 +1,6 @@
 package com.oxysystem.general.util;
 
-import com.oxysystem.general.model.db1.posmaster.PriceType;
+import com.oxysystem.general.model.tenant.posmaster.PriceType;
 
 import java.lang.reflect.Field;
 

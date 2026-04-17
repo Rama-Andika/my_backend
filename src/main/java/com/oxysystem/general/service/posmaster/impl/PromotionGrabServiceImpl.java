@@ -12,10 +12,10 @@ import com.oxysystem.general.enums.grab.CampaignType;
 import com.oxysystem.general.enums.grab.Product;
 import com.oxysystem.general.exception.GrabException;
 import com.oxysystem.general.exception.ResourceNotFoundException;
-import com.oxysystem.general.model.db1.admin.User;
-import com.oxysystem.general.model.db1.general.Location;
-import com.oxysystem.general.model.db1.posmaster.*;
-import com.oxysystem.general.repository.db1.posmaster.PromotionGrabRepository;
+import com.oxysystem.general.model.tenant.admin.User;
+import com.oxysystem.general.model.tenant.general.Location;
+import com.oxysystem.general.model.tenant.posmaster.*;
+import com.oxysystem.general.repository.tenant.posmaster.PromotionGrabRepository;
 import com.oxysystem.general.response.PaginationResponse;
 import com.oxysystem.general.response.SuccessPaginationResponse;
 import com.oxysystem.general.response.SuccessResponse;
@@ -75,7 +75,7 @@ public class PromotionGrabServiceImpl implements PromotionGrabService {
     private final GrabFoodCampaignServiceImpl grabFoodCampaignService;
 
     @Override
-    @Transactional(value = "db1TransactionManager", rollbackFor = {Throwable.class})
+    @Transactional( rollbackFor = {Throwable.class})
     public ResponseEntity<?> save(PromotionGrabDTO promotionGrabDTO) {
         PromotionGrab promotionGrab = new PromotionGrab();
 
@@ -173,7 +173,7 @@ public class PromotionGrabServiceImpl implements PromotionGrabService {
     }
 
     @Override
-    @Transactional(value = "db1TransactionManager", rollbackFor = {Throwable.class})
+    @Transactional( rollbackFor = {Throwable.class})
     public ResponseEntity<?> update(Long id, PromotionGrabDTO promotionGrabDTO) {
         PromotionGrab promotionGrab = promotionGrabRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("promotion not found!"));
 
@@ -496,7 +496,7 @@ public class PromotionGrabServiceImpl implements PromotionGrabService {
     }
 
     @Override
-    @Transactional(value = "db1TransactionManager", rollbackFor = {Throwable.class})
+    @Transactional( rollbackFor = {Throwable.class})
     public ResponseEntity<?> deletePromotionGrabDetail(Long detailId) {
         PromotionGrabDetail promotionGrabDetail = promotionGrabDetailService.findById(detailId).orElseThrow(() ->  new ResourceNotFoundException("promotion grab detail not found!"));
         promotionGrabDetailService.delete(promotionGrabDetail);
@@ -505,7 +505,7 @@ public class PromotionGrabServiceImpl implements PromotionGrabService {
     }
 
     @Override
-    @Transactional(value = "db1TransactionManager", rollbackFor = {Throwable.class})
+    @Transactional( rollbackFor = {Throwable.class})
     public ResponseEntity<?> terminatePromotionGrab(Long id) {
         PromotionGrab promotionGrab = promotionGrabRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("promotion grab not found!"));
         promotionGrab.setStatus(DocumentStatus.TERMINATED);

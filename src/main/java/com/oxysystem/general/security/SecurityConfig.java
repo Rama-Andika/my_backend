@@ -1,6 +1,7 @@
 package com.oxysystem.general.security;
 
 import com.oxysystem.general.filter.JwtAuthorizationFilter;
+import com.oxysystem.general.filter.TenantFilter;
 import com.oxysystem.general.service.CustomUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,10 +20,12 @@ public class SecurityConfig  {
 
     private final CustomUserDetailsService userDetailsService;
     private final JwtAuthorizationFilter jwtAuthorizationFilter;
+    private final TenantFilter tenantFilter; // T
 
-    public SecurityConfig(CustomUserDetailsService userDetailsService, JwtAuthorizationFilter jwtAuthorizationFilter) {
+    public SecurityConfig(CustomUserDetailsService userDetailsService, JwtAuthorizationFilter jwtAuthorizationFilter, TenantFilter tenantFilter) {
         this.userDetailsService = userDetailsService;
         this.jwtAuthorizationFilter = jwtAuthorizationFilter;
+        this.tenantFilter = tenantFilter;
     }
 
     @Bean
@@ -37,7 +40,9 @@ public class SecurityConfig  {
                         "/api/export/**").permitAll()
                 .anyRequest().authenticated()
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and().addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class);
+                .and()
+                .addFilterBefore(tenantFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterAfter(jwtAuthorizationFilter, TenantFilter.class);
 
         return http.build();
     }
@@ -56,8 +61,4 @@ public class SecurityConfig  {
     public NoOpPasswordEncoder passwordEncoder() {
         return (NoOpPasswordEncoder) NoOpPasswordEncoder.getInstance();
     }
-
-
-
-
 }

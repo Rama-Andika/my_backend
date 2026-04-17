@@ -1,7 +1,7 @@
 package com.oxysystem.general.service.admin.impl;
 
-import com.oxysystem.general.model.db1.admin.User;
-import com.oxysystem.general.repository.db1.admin.UserRepository;
+import com.oxysystem.general.model.tenant.admin.User;
+import com.oxysystem.general.repository.tenant.admin.UserRepository;
 import com.oxysystem.general.service.admin.UserService;
 import org.springframework.stereotype.Service;
 import javax.persistence.criteria.Predicate;

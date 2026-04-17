@@ -4,8 +4,8 @@ import com.oxysystem.general.dto.general.location.view.GrabPackagingItemLocation
 import com.oxysystem.general.dto.general.location.view.LocationGrabForSelectDTO;
 import com.oxysystem.general.dto.general.location.view.LocationViewDTO;
 import com.oxysystem.general.enums.grab.Product;
-import com.oxysystem.general.model.db1.general.Location;
-import com.oxysystem.general.repository.db1.general.LocationRepository;
+import com.oxysystem.general.model.tenant.general.Location;
+import com.oxysystem.general.repository.tenant.general.LocationRepository;
 import com.oxysystem.general.response.PaginationResponse;
 import com.oxysystem.general.response.SuccessPaginationResponse;
 import com.oxysystem.general.response.SuccessResponse;

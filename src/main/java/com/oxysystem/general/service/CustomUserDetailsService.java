@@ -1,7 +1,7 @@
 package com.oxysystem.general.service;
 import com.oxysystem.general.exception.ResourceNotFoundException;
-import com.oxysystem.general.model.db1.admin.User;
-import com.oxysystem.general.repository.db1.admin.UserRepository;
+import com.oxysystem.general.model.tenant.admin.User;
+import com.oxysystem.general.repository.tenant.admin.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

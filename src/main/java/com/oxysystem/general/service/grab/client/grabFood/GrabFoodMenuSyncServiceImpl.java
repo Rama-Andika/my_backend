@@ -3,7 +3,7 @@ package com.oxysystem.general.service.grab.client.grabFood;
 import com.oxysystem.general.dto.grab.data.*;
 import com.oxysystem.general.enums.grab.Product;
 import com.oxysystem.general.exception.GrabException;
-import com.oxysystem.general.model.db1.general.Location;
+import com.oxysystem.general.model.tenant.general.Location;
 import com.oxysystem.general.service.grab.client.common.GrabMenuSyncCommon;
 import com.oxysystem.general.service.grab.client.common.interfaces.GrabMenuSyncService;
 import lombok.extern.slf4j.Slf4j;

@@ -1,6 +1,6 @@
 package com.oxysystem.general.service.admin;
 
-import com.oxysystem.general.model.db1.admin.User;
+import com.oxysystem.general.model.tenant.admin.User;
 
 import java.util.List;
 import java.util.Optional;

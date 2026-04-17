@@ -1,7 +1,7 @@
 package com.oxysystem.general.mapper.general;
 
 import com.oxysystem.general.dto.general.strukKasir.data.StrukKasirDTO;
-import com.oxysystem.general.model.db1.posmaster.StrukKasir;
+import com.oxysystem.general.model.tenant.posmaster.StrukKasir;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;

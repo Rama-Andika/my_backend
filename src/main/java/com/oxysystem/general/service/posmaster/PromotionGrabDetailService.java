@@ -1,6 +1,6 @@
 package com.oxysystem.general.service.posmaster;
 
-import com.oxysystem.general.model.db1.posmaster.PromotionGrabDetail;
+import com.oxysystem.general.model.tenant.posmaster.PromotionGrabDetail;
 
 import java.util.Optional;
 

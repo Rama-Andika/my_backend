@@ -1,7 +1,7 @@
 package com.oxysystem.general.service.general.impl;
 
 import com.oxysystem.general.dto.general.company.view.CompanyViewDTO;
-import com.oxysystem.general.repository.db1.general.CompanyRepository;
+import com.oxysystem.general.repository.tenant.general.CompanyRepository;
 import com.oxysystem.general.response.SuccessResponse;
 import com.oxysystem.general.service.general.CompanyService;
 import org.springframework.http.ResponseEntity;

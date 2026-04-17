@@ -1,6 +1,6 @@
 package com.oxysystem.general.service.general;
 
-import com.oxysystem.general.model.db1.general.Merchant;
+import com.oxysystem.general.model.tenant.general.Merchant;
 import org.springframework.http.ResponseEntity;
 
 import java.util.Optional;

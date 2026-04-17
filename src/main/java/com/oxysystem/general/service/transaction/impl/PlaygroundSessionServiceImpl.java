@@ -2,8 +2,8 @@ package com.oxysystem.general.service.transaction.impl;
 
 import com.oxysystem.general.dto.transaction.playgroundSession.view.PlaygroundSessionViewDTO;
 import com.oxysystem.general.exception.ResourceNotFoundException;
-import com.oxysystem.general.model.db1.transaction.PlaygroundSession;
-import com.oxysystem.general.repository.db1.transaction.PlaygroundSessionRepository;
+import com.oxysystem.general.model.tenant.transaction.PlaygroundSession;
+import com.oxysystem.general.repository.tenant.transaction.PlaygroundSessionRepository;
 import com.oxysystem.general.response.PaginationResponse;
 import com.oxysystem.general.response.SuccessPaginationResponse;
 import com.oxysystem.general.response.SuccessResponse;

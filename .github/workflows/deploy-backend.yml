@@ -72,7 +72,7 @@ jobs:
             
             # Matikan aplikasi Java versi lama SECARA AMAN (anti bunuh diri)
             # Trik [j]ava membuat pencarian mengabaikan proses grep/bash itu sendiri
-            PID=$(ps aux | grep '[j]ava -jar.*akidsmaginepg-backend.jar' | awk '{print $2}')
+            PID=$(ps aux | grep '[j]ava -jar.*my-backend.jar' | awk '{print $2}')
             if [ -n "$PID" ]; then
               echo "Menemukan aplikasi lama dengan PID $PID, mematikan..."
               kill -9 $PID || true

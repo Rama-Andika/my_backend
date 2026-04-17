@@ -42,7 +42,7 @@ jobs:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_KEY }}
-          source: "target/akidsmaginepg-backend.jar"
+          source: "target/my-backend.jar"
           target: "/home/ubuntu/"
           strip_components: 1
 
@@ -55,7 +55,7 @@ jobs:
           script: |
             echo "Mencari aplikasi yang sedang berjalan..."
             # Cari PID khusus untuk proses java, abaikan proses grep/bash
-            PID=$(ps aux | grep 'java -jar /home/ubuntu/akidsmaginepg-backend.jar' | grep -v grep | awk '{print $2}')
+            PID=$(ps aux | grep 'java -jar /home/ubuntu/my-backend.jar' | grep -v grep | awk '{print $2}')
             
             if [ -n "$PID" ]; then
               echo "Mematikan aplikasi lama dengan PID: $PID"
@@ -66,5 +66,5 @@ jobs:
             
             echo "Menjalankan aplikasi versi terbaru..."
             # Tambahkan < /dev/null agar SSH tidak menggantung
-            nohup java -jar /home/ubuntu/akidsmaginepg-backend.jar --spring.profiles.active=prod > /home/ubuntu/log.txt 2>&1 < /dev/null &
+            nohup java -jar /home/ubuntu/my-backend.jar --spring.profiles.active=prod > /home/ubuntu/log.txt 2>&1 < /dev/null &
             echo "Deploy selesai!"

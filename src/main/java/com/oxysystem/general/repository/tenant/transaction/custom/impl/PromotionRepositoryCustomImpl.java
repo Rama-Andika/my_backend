@@ -75,7 +75,7 @@ public class PromotionRepositoryCustomImpl implements PromotionRepositoryCustom 
         }
         if(subType != null){
             query.setParameter("subType", subType);
-            queryCount.setParameter("subTypehttp://localhost:5173/akidsmaginepg", subType);
+            queryCount.setParameter("subType", subType);
         }
 
         query.setFirstResult((int)  pageable.getOffset());

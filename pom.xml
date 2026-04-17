@@ -9,11 +9,11 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.oxysystem-backend</groupId>
-	<artifactId>akidsmaginepg-backend</artifactId>
+	<artifactId>my-backend</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
-	<name>oxysystem-backend</name>
-	<description>Oxysystem Backend</description>
+	<name>my-backend</name>
+	<description>My Backend</description>
 	<properties>
 		<java.version>1.8</java.version>
 	</properties>

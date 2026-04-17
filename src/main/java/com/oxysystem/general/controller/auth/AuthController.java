@@ -8,6 +8,7 @@ import com.oxysystem.general.response.SuccessResponse;
 import com.oxysystem.general.service.admin.RefreshTokenService;
 import com.oxysystem.general.service.admin.UserService;
 import com.oxysystem.general.util.JwtUtil;
+import com.oxysystem.general.config.tenant.TenantContext;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -61,7 +62,7 @@ public class AuthController {
             User user = userService.findByUsername(dto.getUsername())
                     .orElseThrow(() -> new RuntimeException("User not found"));
 
-            String accessToken = jwtUtil.generateAccessToken(user.getUsername());
+            String accessToken = jwtUtil.generateAccessToken(user.getUsername(), TenantContext.getCurrentTenant());
 
             refreshTokenService.delete(user.getUserId());
 
@@ -84,7 +85,7 @@ public class AuthController {
     public ResponseEntity<?> refreshToken(@RequestBody RefreshTokenDTO req) {
         User user = refreshTokenService.validateAndRotate(req.getRefreshToken());
 
-        String accessToken = jwtUtil.generateAccessToken(user.getUsername());
+        String accessToken = jwtUtil.generateAccessToken(user.getUsername(), TenantContext.getCurrentTenant());
         String newRefreshToken = refreshTokenService.create(user);
 
         LoginResponse loginResponse = new LoginResponse(String.valueOf(user.getUserId()), user.getFullName(), user.getUserGroup().getGroupName(), user.getUserLevel(), accessToken, newRefreshToken);

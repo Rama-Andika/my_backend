@@ -15,8 +15,9 @@ public class JwtUtil {
         return Keys.hmacShaKeyFor(secret_key.getBytes(StandardCharsets.UTF_8));
     }
 
-    public String generateAccessToken(String username) {
+    public String generateAccessToken(String username, String tenantId) {
         return Jwts.builder()
+                .claim("tenantId", tenantId)
                 .setSubject(username)
                 .setIssuer("oxysystem-auth")
                 .setIssuedAt(new Date())

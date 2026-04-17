@@ -4,6 +4,7 @@ import com.oxysystem.general.dto.grab.data.OAuthRequestDTO;
 import com.oxysystem.general.dto.grab.data.OAuthResponseDTO;
 import com.oxysystem.general.exception.ResourceUnauthorizedException;
 import com.oxysystem.general.util.JwtUtil;
+import com.oxysystem.general.config.tenant.TenantContext;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -18,7 +19,7 @@ public class GrabPartnerOAuthCommon {
         if(!oAuthRequestDTO.getClientId().equals(clientId) || !oAuthRequestDTO.getClientSecret().equals(clientSecret)){
             throw new ResourceUnauthorizedException("invalid client credentials");
         }
-        String accessToken = jwtUtil.generateAccessToken(username);
+        String accessToken = jwtUtil.generateAccessToken(username, TenantContext.getCurrentTenant());
 
         return new OAuthResponseDTO(accessToken, "Bearer", 604_800);
     }

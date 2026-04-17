@@ -45,6 +45,16 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
             String token = header.substring(7);
             Claims claims = jwtUtil.parse(token);
 
+            // === TENANT ISOLATION SECURITY CHECK ===
+            String tokenTenantId = claims.get("tenantId", String.class);
+            String currentTenant = com.oxysystem.general.config.tenant.TenantContext.getCurrentTenant();
+
+            if (tokenTenantId == null || !tokenTenantId.equals(currentTenant)) {
+                response.setStatus(HttpStatus.UNAUTHORIZED.value());
+                return;
+            }
+            // =======================================
+
             UserDetails userDetails;
 
             String username = claims.getSubject();

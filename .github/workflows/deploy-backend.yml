@@ -1,17 +1,22 @@
-name: Deploy Backend with Docker
+name: Deploy Backend to ECS
 
 on:
   push:
     branches:
       - main
 
+env:
+  # Konfigurasi Docker
+  DOCKER_IMAGE: ramaandikaa/my-backend:latest
+
+  # Konfigurasi AWS ECS
+  AWS_REGION: ap-southeast-3
+  ECS_CLUSTER: main-cluster
+  ECS_SERVICE: my-backend-task-service-il7ika2m
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-
-    env:
-      # GANTI "usernameanda" di bawah ini!
-      DOCKER_IMAGE: ramaandikaa/my-backend:latest
 
     steps:
       - name: Checkout Code
@@ -46,48 +51,18 @@ jobs:
           docker build -t ${{ env.DOCKER_IMAGE }} .
           docker push ${{ env.DOCKER_IMAGE }}
 
-      - name: Copy docker-compose.yml to EC2
-        uses: appleboy/scp-action@v0.1.7
-        with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USERNAME }}
-          key: ${{ secrets.EC2_KEY }}
-          source: "docker-compose.yml"
-          target: "/home/ubuntu/"
+      # --- INTEGRASI AWS ECS ---
 
-      - name: Deploy to EC2
-        uses: appleboy/ssh-action@v1.0.3
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
         with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USERNAME }}
-          key: ${{ secrets.EC2_KEY }}
-          script: |
-            # Pastikan Docker & Docker Compose terinstall di EC2
-            if ! [ -x "$(command -v docker)" ]; then
-              echo "Menginstall Docker..."
-              curl -fsSL https://get.docker.com -o get-docker.sh
-              sudo sh get-docker.sh
-              sudo usermod -aG docker ubuntu
-            fi
-            
-            # Matikan aplikasi Java versi lama SECARA AMAN (anti bunuh diri)
-            # Trik [j]ava membuat pencarian mengabaikan proses grep/bash itu sendiri
-            PID=$(ps aux | grep '[j]ava -jar.*my-backend.jar' | awk '{print $2}')
-            if [ -n "$PID" ]; then
-              echo "Menemukan aplikasi lama dengan PID $PID, mematikan..."
-              kill -9 $PID || true
-            else
-              echo "Tidak ada aplikasi Java lama yang berjalan."
-            fi
-            
-            # Masuk ke folder home, jalankan Docker Compose
-            cd /home/ubuntu
-            echo "Menarik Docker Image terbaru..."
-            docker compose pull 
-            
-            echo "Menyalakan Container..."
-            docker compose up -d 
-            
-            # Bersihkan image lama agar disk EC2 tidak penuh
-            docker image prune -f
-            echo "Deploy Docker selesai!"
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Perintahkan ECS untuk Deploy (Force New Deployment)
+        run: |
+          aws ecs update-service \
+            --cluster ${{ env.ECS_CLUSTER }} \
+            --service ${{ env.ECS_SERVICE }} \
+            --force-new-deployment

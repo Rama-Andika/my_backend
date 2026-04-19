@@ -95,6 +95,6 @@ public class AuthController {
 
     @GetMapping("/")
     public String index(){
-        return "Hello World!";
+        return "Hello World Test!";
     }
 }
